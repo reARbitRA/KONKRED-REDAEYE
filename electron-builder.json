@@ -1,0 +1,25 @@
+{
+  "appId": "com.arbitra.konkredredaeye",
+  "productName": "KONKRED REDAEYE v26-223",
+  "directories": {
+    "output": "release/${version}"
+  },
+  "files": [
+    "dist",
+    "electron"
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ]
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  }
+}

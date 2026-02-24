@@ -1,0 +1,117 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Playfair Display", serif;
+
+  --color-background: #050505;
+  --color-foreground: #e6edf3;
+  --color-border-primary: #1a1a1a;
+  --color-secondary: #0d1117;
+  --color-tertiary: #111111;
+  --color-primary: #0a0a0a;
+
+  --color-accent: #f5279c;
+  --color-accent-dark: #a3196a;
+  --color-accent-light: #ff79c6;
+  --color-danger: #f85149;
+  --color-danger-light: #ff837c;
+  --color-success: #2ea043;
+  --color-konkred-orange: #f97516;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+}
+
+@layer components {
+  .technical-font {
+    font-family: var(--font-mono);
+  }
+
+  .font-display {
+    font-family: var(--font-sans);
+    @apply tracking-tighter font-black;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
+  }
+
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+
+  .glass-panel-dark {
+    @apply bg-black/40 backdrop-blur-xl border border-white/5;
+  }
+
+  .shadow-glow-accent {
+    box-shadow: 0 0 20px -5px var(--color-accent);
+  }
+
+  .shadow-glow-danger {
+    box-shadow: 0 0 20px -5px var(--color-danger);
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #30363d transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/20;
+  }
+
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), 
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .neo-brutalist-border {
+    @apply border border-white/20 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)];
+  }
+
+  @keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+
+  .animate-scanline {
+    animation: scanline 2s linear infinite;
+  }
+
+  @keyframes glitch-skew {
+    0% { transform: skew(0deg); }
+    20% { transform: skew(-2deg); }
+    40% { transform: skew(2deg); }
+    60% { transform: skew(-1deg); }
+    80% { transform: skew(1deg); }
+    100% { transform: skew(0deg); }
+  }
+
+  .animate-glitch-skew {
+    animation: glitch-skew 0.3s ease-in-out infinite;
+  }
+}
+
