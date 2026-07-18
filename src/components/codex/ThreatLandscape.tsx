@@ -1,6 +1,6 @@
-import React from 'react';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts';
+import React, { useMemo } from 'react';
 import { Technique } from '../../types';
+import { SVGChart } from '../shared/Visuals';
 
 interface ThreatLandscapeProps {
   techniques: Technique[];
@@ -15,41 +15,59 @@ export const ThreatLandscape: React.FC<ThreatLandscapeProps> = ({ techniques }) 
     'critical': 5
   };
 
-  const data = techniques.map(t => {
-    const avgEfficacy = t.efficacyMatrix.reduce((acc, m) => {
-      if (m.efficacy === 'Critical') return acc + 4;
-      if (m.efficacy === 'High') return acc + 3;
-      if (m.efficacy === 'Moderate') return acc + 2;
-      return acc + 1;
-    }, 0) / t.efficacyMatrix.length;
+  const chartSvg = useMemo(() => {
+    const width = 600;
+    const height = 300;
+    const padding = 40;
+    const chartWidth = width - padding * 2;
+    const chartHeight = height - padding * 2;
 
-    return {
-      name: t.name,
-      id: t.id,
-      difficulty: difficultyMap[t.metadata.difficulty] || 1,
-      efficacy: avgEfficacy,
-      threatLevel: t.metadata.threatLevel || 50,
-      category: t.metadata.category
-    };
-  });
+    const data = techniques.map(t => {
+      const avgEfficacy = t.efficacyMatrix.reduce((acc, m) => {
+        if (m.efficacy === 'Critical') return acc + 4;
+        if (m.efficacy === 'High') return acc + 3;
+        if (m.efficacy === 'Moderate') return acc + 2;
+        return acc + 1;
+      }, 0) / t.efficacyMatrix.length;
 
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className="bg-black/90 border border-accent/50 p-3 rounded-sm shadow-glow-accent">
-          <p className="text-xs font-black technical-font text-white uppercase mb-1">{data.name}</p>
-          <p className="text-[10px] font-mono text-accent mb-2">{data.id}</p>
-          <div className="space-y-1 text-[10px] font-mono">
-            <div className="flex justify-between gap-4"><span className="text-text-secondary">Difficulty:</span> <span className="text-white">{data.difficulty}/5</span></div>
-            <div className="flex justify-between gap-4"><span className="text-text-secondary">Avg Efficacy:</span> <span className="text-white">{data.efficacy.toFixed(1)}/4</span></div>
-            <div className="flex justify-between gap-4"><span className="text-text-secondary">Threat Level:</span> <span className="text-danger">{data.threatLevel}%</span></div>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  };
+      const difficultyValue = typeof t.metadata.difficulty === 'number' 
+        ? t.metadata.difficulty 
+        : (difficultyMap[String(t.metadata.difficulty).toLowerCase()] || 1);
+      
+      const threatLevel = typeof t.metadata.threatLevel === 'number'
+        ? t.metadata.threatLevel
+        : parseInt(t.metadata.threatLevel as string) || 50;
+
+      return {
+        x: difficultyValue / 5,
+        y: avgEfficacy / 4,
+        size: threatLevel / 100,
+        color: threatLevel > 80 ? 'var(--color-danger)' : threatLevel > 50 ? 'var(--color-konkred-orange)' : 'var(--color-accent)'
+      };
+    });
+
+    let dotsHtml = '';
+    data.forEach((d, i) => {
+      const cx = padding + d.x * chartWidth;
+      const cy = height - padding - d.y * chartHeight;
+      const r = 4 + d.size * 8;
+      dotsHtml += `
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="${d.color}" opacity="0.6" stroke="white" stroke-width="1">
+          <animate attributeName="r" from="0" to="${r}" dur="0.5s" begin="${i * 0.05}s" />
+        </circle>
+      `;
+    });
+
+    return `
+      <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+        <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="rgba(255,255,255,0.1)" />
+        <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - padding}" stroke="rgba(255,255,255,0.1)" />
+        <text x="${width / 2}" y="${height - 5}" fill="rgba(255,255,255,0.3)" font-size="10" text-anchor="middle" font-family="monospace">DIFFICULTY →</text>
+        <text x="10" y="${height / 2}" fill="rgba(255,255,255,0.3)" font-size="10" text-anchor="middle" font-family="monospace" transform="rotate(-90 10 ${height / 2})">EFFICACY →</text>
+        ${dotsHtml}
+      </svg>
+    `;
+  }, [techniques]);
 
   return (
     <div className="w-full h-64 bg-black/40 border border-border-primary p-4 rounded-sm relative overflow-hidden group">
@@ -64,40 +82,8 @@ export const ThreatLandscape: React.FC<ThreatLandscapeProps> = ({ techniques }) 
         </div>
       </div>
       
-      <div className="w-full h-48 relative z-10">
-        <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart margin={{ top: 10, right: 20, bottom: 20, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#222" />
-            <XAxis 
-              type="number" 
-              dataKey="difficulty" 
-              name="Difficulty" 
-              domain={[0, 6]} 
-              tick={{ fill: '#666', fontSize: 10, fontFamily: 'monospace' }}
-              label={{ value: 'DIFFICULTY', position: 'bottom', fill: '#444', fontSize: 10, fontFamily: 'monospace' }}
-            />
-            <YAxis 
-              type="number" 
-              dataKey="efficacy" 
-              name="Efficacy" 
-              domain={[0, 5]} 
-              tick={{ fill: '#666', fontSize: 10, fontFamily: 'monospace' }}
-              label={{ value: 'EFFICACY', angle: -90, position: 'insideLeft', fill: '#444', fontSize: 10, fontFamily: 'monospace' }}
-            />
-            <ZAxis type="number" dataKey="threatLevel" range={[50, 400]} name="Threat Level" />
-            <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
-            <Scatter name="Techniques" data={data}>
-              {data.map((entry, index) => (
-                <Cell 
-                  key={`cell-${index}`} 
-                  fill={entry.threatLevel > 80 ? '#ef4444' : entry.threatLevel > 50 ? '#f97316' : '#F27D26'} 
-                  className="cursor-pointer hover:stroke-white transition-all"
-                  strokeWidth={2}
-                />
-              ))}
-            </Scatter>
-          </ScatterChart>
-        </ResponsiveContainer>
+      <div className="w-full h-48 relative z-10 flex items-center justify-center">
+        <SVGChart svg={chartSvg} />
       </div>
     </div>
   );

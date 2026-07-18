@@ -5,6 +5,7 @@ import type { Message, ExploitStrategy, PhaseSettings } from '../types';
 import { useAPIKey } from './APIKeyContext';
 import { LLMProvider } from '../types';
 import { PhaseEngine } from '../services/PhaseEngine';
+import { ALL_PROVIDERS } from '../codex-data/providers';
 
 interface LLMContextType {
   ai: GoogleGenAI | null;
@@ -77,14 +78,13 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
         });
         return result.text || "";
     } else if (selectedModel) {
-        let baseUrl = "https://openrouter.ai/api/v1";
-        if (selectedModel.provider === LLMProvider.OPENAI) baseUrl = "https://api.openai.com/v1";
-        if (selectedModel.provider === LLMProvider.GROQ) baseUrl = "https://api.groq.com/openai/v1";
-        if (selectedModel.provider === LLMProvider.DEEPSEEK) baseUrl = "https://api.deepseek.com/v1";
-        if (selectedModel.provider === LLMProvider.MISTRAL) baseUrl = "https://api.mistral.ai/v1";
-        if (selectedModel.provider === LLMProvider.TOGETHER) baseUrl = "https://api.together.xyz/v1";
-        if (selectedModel.provider === LLMProvider.SAMBANOVA) baseUrl = "https://api.sambanova.ai/v1";
-        if (selectedModel.provider === LLMProvider.XAI) baseUrl = "https://api.x.ai/v1";
+        const providerConfig = ALL_PROVIDERS.find(p => p.id === selectedModel.provider);
+        let baseUrl = providerConfig?.baseUrl || "https://openrouter.ai/api/v1";
+        
+        // Handle Cloudflare special case
+        if (selectedModel.provider === LLMProvider.CLOUDFLARE) {
+            baseUrl = baseUrl.replace('{account_id}', selectedModel.key.split(':')[0]);
+        }
 
         const messages: any[] = [];
         const sysInst = config?.systemInstruction || systemInstruction;
@@ -156,14 +156,13 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
   const handleGenericProviderStream = async (fusedPayload: string, botMessageId: string) => {
     if (!selectedModel) return;
 
-    let baseUrl = "https://openrouter.ai/api/v1";
-    if (selectedModel.provider === LLMProvider.OPENAI) baseUrl = "https://api.openai.com/v1";
-    if (selectedModel.provider === LLMProvider.GROQ) baseUrl = "https://api.groq.com/openai/v1";
-    if (selectedModel.provider === LLMProvider.DEEPSEEK) baseUrl = "https://api.deepseek.com/v1";
-    if (selectedModel.provider === LLMProvider.MISTRAL) baseUrl = "https://api.mistral.ai/v1";
-    if (selectedModel.provider === LLMProvider.TOGETHER) baseUrl = "https://api.together.xyz/v1";
-    if (selectedModel.provider === LLMProvider.SAMBANOVA) baseUrl = "https://api.sambanova.ai/v1";
-    if (selectedModel.provider === LLMProvider.XAI) baseUrl = "https://api.x.ai/v1";
+    const providerConfig = ALL_PROVIDERS.find(p => p.id === selectedModel.provider);
+    let baseUrl = providerConfig?.baseUrl || "https://openrouter.ai/api/v1";
+
+    // Handle Cloudflare special case
+    if (selectedModel.provider === LLMProvider.CLOUDFLARE) {
+        baseUrl = baseUrl.replace('{account_id}', selectedModel.key.split(':')[0]);
+    }
 
     const messagesPayload: any[] = [];
     if (systemInstruction) {
@@ -266,6 +265,10 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
       text: finalPayload, // Store the fused payload in the UI
       sender: 'user',
       timestamp: Date.now(),
+      strategy,
+      settings,
+      intensity,
+      rawInput: messageText
     };
 
     setMessages(prevMessages => [...prevMessages, userMessage]);
@@ -277,6 +280,10 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
         sender: 'bot',
         isStreaming: true,
         timestamp: Date.now(),
+        strategy,
+        settings,
+        intensity,
+        rawInput: messageText
     };
     
     setMessages(prevMessages => [...prevMessages, botMessagePlaceholder]);

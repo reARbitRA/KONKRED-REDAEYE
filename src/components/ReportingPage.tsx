@@ -34,7 +34,7 @@ export const ReportingPage: React.FC = () => {
     };
 
     return (
-        <div className="h-full flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-0"> {/* FIXED: Changed h-full to flex-1 min-h-0 */}
             {/* Vault List */}
             <div className="lg:w-1/3 flex flex-col gap-4">
                 <div className="bg-secondary/80 border border-border-primary rounded-sm p-4 relative overflow-hidden flex-shrink-0">

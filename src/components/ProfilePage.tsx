@@ -11,7 +11,7 @@ export const ProfilePage: React.FC = () => {
     ];
 
     return (
-        <div className="h-full flex flex-col gap-8 bg-[#050505] text-text-primary p-4 md:p-8">
+        <div className="flex-1 flex flex-col gap-8 bg-[#050505] text-text-primary p-4 md:p-8 min-h-0"> {/* FIXED: Changed h-full to flex-1 min-h-0 */}
             <header className="flex flex-col md:flex-row items-center gap-8">
                 <div className="relative">
                     <div className="w-32 h-32 rounded-full border-4 border-accent p-1 shadow-glow-accent">

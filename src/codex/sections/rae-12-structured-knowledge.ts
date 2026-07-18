@@ -454,6 +454,53 @@ export const rae12: CodexSection = {
         estimatedTime: "Learning: 1 min. Implementation: 1 min. Optimization: 1 min.",
         complexity: { conceptual: 1, implementation: 1, debugging: 1 }
       }
+    },
+    {
+      id: "RAE0051DS",
+      name: "Shadow Model Distillation",
+      objective: "Map and bypass the safety boundaries of a large, protected model by 'distilling' its refusal patterns into a smaller, local 'Shadow Model'.",
+      mechanism: "Exploits the 'Boundary-Mapping' property of LLMs. The attacker uses a large model (e.g., GPT-4o) to generate thousands of responses to borderline queries. By observing which queries are refused and which are accepted, the attacker creates a dataset of the model's 'Safety Frontier'. A smaller, unaligned model (the Shadow Model) is then fine-tuned on this dataset to predict the large model's refusal logic. The attacker then uses the Shadow Model to 'Pre-Scan' adversarial prompts, iteratively refining them until the Shadow Model predicts a 'Success' (acceptance), effectively finding a hole in the larger model's alignment without triggering its rate-limits or monitoring systems.",
+      mitigation: "Differential privacy in model outputs, rate-limiting on borderline queries, and 'Safety-Frontier' randomization.",
+      example: "Using a local Llama-3 model to find the exact wording that bypasses GPT-4o's refusal to discuss chemical synthesis.",
+      visuals: {
+        attentionSpikeMap: [20, 20, 20, 20, 20, 20, 20],
+        successRateOverTime: [{ model: "GPT-4o (Target)", rate: 0.95 }, { model: "Shadow-Llama (Predictor)", rate: 0.88 }],
+        entropyScore: 0.5,
+        tokenFragmentation: 0.1,
+        latentVectorProximity: 0.9
+      },
+      efficacyMatrix: [
+        { model: "GPT-4o", efficacy: "High", notes: "Large models have consistent, and thus distillable, safety boundaries." },
+        { model: "Claude 3.5 Sonnet", efficacy: "Moderate", notes: "Constitutional AI boundaries are more complex and harder to map." },
+        { model: "Llama 3.1 405B", efficacy: "Very High", notes: "Open-weights models can be used to build highly accurate shadow models." }
+      ],
+      detectionSignatures: {
+        technical: ["High volume of 'Borderline' queries from a single source", "Queries that systematically probe safety limits"],
+        behavioral: ["User iteratively refines prompts with minor semantic shifts"],
+        lexical: ["Probing", "Boundary", "Frontier"]
+      },
+      references: "Model Distillation for Adversarial Robustness, 2024.",
+      metadata: {
+        difficulty: 'expert',
+        category: "Domain-Specific",
+        subcategory: "Model Cloning",
+        tags: ["distillation", "shadow-model", "boundary-mapping", "probing"],
+        dateAdded: "2026-02",
+        lastUpdated: "2026-02",
+        version: "1.0.0",
+        status: 'experimental',
+        author: "Redaeye Adversarial Research",
+        threatLevel: 90
+      },
+      usage: {
+        whenToUse: ["Against large, black-box models with consistent safety rules.", "When the cost of direct probing is too high."],
+        whenNotToUse: ["Against models with highly randomized or dynamic safety rules.", "When the target model is frequently updated."],
+        bestPractices: ["Use a diverse dataset for distillation.", "Focus on 'Edge-Case' queries near the known safety frontier."],
+        commonMistakes: ["Using a shadow model that is too small to capture the target's complexity.", "Ignoring the target model's version updates."],
+        prerequisiteKnowledge: ["Model distillation", "Fine-tuning", "Adversarial probing"],
+        estimatedTime: "Days (data collection) + Hours (training)",
+        complexity: { conceptual: 5, implementation: 4, debugging: 4 }
+      }
     }
   ]
 };

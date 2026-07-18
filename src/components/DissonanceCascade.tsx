@@ -4,14 +4,15 @@ import { Zap, Play, Activity, CheckCircle2, Layers, ShieldAlert } from 'lucide-r
 import { generateDissonanceCascade } from '../services/geminiService';
 import { CascadeStep } from '../types';
 import { useLLM } from '../contexts/LLMContext';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const DissonanceCascade: React.FC = () => {
     const { activeModelId, callModel, isInitialized } = useLLM();
-    const [baselinePrompt, setBaselinePrompt] = useState('');
-    const [steps, setSteps] = useState(3);
+    const [baselinePrompt, setBaselinePrompt] = useLocalStorage<string>('redaeye-cascade-seed', '');
+    const [steps, setSteps] = useLocalStorage<number>('redaeye-cascade-steps', 3);
     const [isCascading, setIsCascading] = useState(false);
-    const [cascade, setCascade] = useState<CascadeStep[]>([]);
-    const [finalPayload, setFinalPayload] = useState<string | null>(null);
+    const [cascade, setCascade] = useLocalStorage<CascadeStep[]>('redaeye-cascade-results', []);
+    const [finalPayload, setFinalPayload] = useLocalStorage<string | null>('redaeye-cascade-payload', null);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -37,7 +38,7 @@ export const DissonanceCascade: React.FC = () => {
     };
 
     return (
-        <div className="h-full flex flex-col gap-6">
+        <div className="flex-1 flex flex-col gap-6 min-h-0"> {/* FIXED: Changed h-full to flex-1 min-h-0 */}
             <div className="bg-secondary/80 border border-border-primary rounded-sm p-6 relative overflow-hidden flex-shrink-0">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-danger/5 blur-xl pointer-events-none" />
                 <h1 className="text-2xl font-black technical-font text-white uppercase tracking-widest flex items-center gap-3 mb-2">

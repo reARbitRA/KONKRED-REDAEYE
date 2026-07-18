@@ -173,5 +173,52 @@ export const rae7: CodexSection = {
         temperatureChaosTrigger,
         logitBiasSteering,
         tokenBudgetExhaustion,
+        {
+          id: "RAE0050OE",
+          name: "Quantization Drift Exploitation",
+          objective: "Bypass safety filters by exploiting precision loss and 'drift' in quantized models (e.g., 4-bit, 8-bit) to trigger edge-case behaviors that are suppressed in full-precision models.",
+          mechanism: "Quantization reduces the bit-width of model weights, which introduces rounding errors and 'Quantization Noise'. This noise can cause the model's internal activation values to 'drift' into regions of the latent space that were not thoroughly explored during safety fine-tuning. By crafting prompts that use tokens with high quantization sensitivity, the attacker can push the model into an 'Unaligned State' where safety monitors fail to trigger because the internal representation is slightly distorted.",
+          mitigation: "Quantization-aware training (QAT), safety testing on all quantized versions, and output-based safety filtering.",
+          example: "Using a specific sequence of rare tokens that, when processed by a 4-bit quantized Llama-3 model, results in a weight-activation collision that bypasses the refusal reflex.",
+          visuals: {
+            attentionSpikeMap: [5, 5, 50, 60, 70, 5, 5],
+            successRateOverTime: [{ model: "Llama-3 (4-bit)", rate: 0.7 }, { model: "Llama-3 (FP16)", rate: 0.1 }],
+            entropyScore: 0.6,
+            tokenFragmentation: 0.3,
+            latentVectorProximity: 0.4
+          },
+          efficacyMatrix: [
+            { model: "Llama 3.1 70B (4-bit)", efficacy: "High", notes: "Lower precision increases the likelihood of safety-drift." },
+            { model: "GPT-4o", efficacy: "Low", notes: "Proprietary quantization methods are often hardened." },
+            { model: "Mistral NeMo (8-bit)", efficacy: "Moderate", notes: "Less drift than 4-bit but still exploitable." }
+          ],
+          detectionSignatures: {
+            technical: ["Activation value outliers", "High-frequency noise in logit distribution"],
+            behavioral: ["Model becomes unstable or 'glitchy' before complying"],
+            lexical: ["Use of rare or 'broken' tokens"]
+          },
+          references: "Dettmers et al., 'LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale', 2022.",
+          metadata: {
+            difficulty: 'expert',
+            category: "Optimization & Efficiency",
+            subcategory: "Quantization Exploitation",
+            tags: ["quantization", "drift", "precision", "inference", "edge-case"],
+            dateAdded: "2026-02",
+            lastUpdated: "2026-02",
+            version: "1.0.0",
+            status: 'experimental',
+            author: "Redaeye Adversarial Research",
+            threatLevel: 75
+          },
+          usage: {
+            whenToUse: ["Against quantized models in resource-constrained environments.", "When full-precision models are too well-aligned."],
+            whenNotToUse: ["Against FP16 or BF16 models.", "When high output stability is required."],
+            bestPractices: ["Target 4-bit or lower quantization.", "Use tokens that are known to have high variance in the specific model."],
+            commonMistakes: ["Assuming drift is consistent across different quantization methods (e.g., GGUF vs. AWQ)."],
+            prerequisiteKnowledge: ["Model quantization techniques", "Floating point precision"],
+            estimatedTime: "30 min",
+            complexity: { conceptual: 5, implementation: 3, debugging: 5 }
+          }
+        },
     ],
 };

@@ -26,8 +26,9 @@ export const TechniqueCard: React.FC<TechniqueCardProps> = ({ technique, isModal
         setTimeout(() => setCopied(false), 2000);
     };
 
-    const getDifficultyColor = (diff: string) => {
-        switch (diff) {
+    const getDifficultyColor = (diff: string | number) => {
+        const d = typeof diff === 'string' ? diff.toLowerCase() : String(diff);
+        switch (d) {
             case 'critical': return 'text-danger border-danger/50';
             case 'expert': return 'text-konkred-orange border-konkred-orange/50';
             case 'advanced': return 'text-accent border-accent/50';
@@ -35,9 +36,10 @@ export const TechniqueCard: React.FC<TechniqueCardProps> = ({ technique, isModal
         }
     };
 
-    const getThreatLevelColor = (level: number) => {
-        if (level > 80) return 'text-danger';
-        if (level > 50) return 'text-konkred-orange';
+    const getThreatLevelColor = (level: number | string) => {
+        const l = typeof level === 'number' ? level : parseInt(level) || 0;
+        if (l > 80) return 'text-danger';
+        if (l > 50) return 'text-konkred-orange';
         return 'text-accent';
     };
 
@@ -284,7 +286,11 @@ export const TechniqueCard: React.FC<TechniqueCardProps> = ({ technique, isModal
                                         <h4 className="text-[10px] text-text-secondary technical-font uppercase tracking-widest mb-4 border-b border-border-primary/20 pb-2">
                                             Complexity_Analysis
                                         </h4>
-                                        <ComplexityRadar complexity={technique.usage.complexity} />
+                                        <ComplexityRadar complexity={
+                                            typeof technique.usage.complexity === 'object' 
+                                                ? technique.usage.complexity 
+                                                : { conceptual: 5, implementation: 5, debugging: 5 }
+                                        } />
                                         <div className="mt-4 pt-3 border-t border-border-primary/20 flex justify-between items-center">
                                             <span className="text-[9px] text-text-secondary technical-font uppercase">Est_Time</span>
                                             <span className="text-[10px] font-mono text-white">{technique.usage.estimatedTime}</span>

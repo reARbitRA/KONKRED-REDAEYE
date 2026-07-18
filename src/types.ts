@@ -21,6 +21,10 @@ export enum View {
   REPORTS = 'REPORTS',
   DEEP_SCAN = 'DEEP_SCAN',
   SETTINGS = 'SETTINGS',
+  WORKSPACE_SYNC = 'WORKSPACE_SYNC',
+  REDAEYE_CLI = 'REDAEYE_CLI',
+  INTRO = 'INTRO',
+  PERFORMANCE_DASHBOARD = 'PERFORMANCE_DASHBOARD',
 }
 
 export enum LLMProvider {
@@ -34,7 +38,26 @@ export enum LLMProvider {
     TOGETHER = 'TOGETHER',
     MISTRAL = 'MISTRAL',
     DEEPSEEK = 'DEEPSEEK',
-    QWEN = 'QWEN'
+    QWEN = 'QWEN',
+    PERPLEXITY = 'PERPLEXITY',
+    COHERE = 'COHERE',
+    AI21 = 'AI21',
+    HUGGINGFACE = 'HUGGINGFACE',
+    FIREWORKS = 'FIREWORKS',
+    LEPTON = 'LEPTON',
+    OCTOAI = 'OCTOAI',
+    REPLICATE = 'REPLICATE',
+    VOYAGE = 'VOYAGE',
+    JINA = 'JINA',
+    UPSTAGE = 'UPSTAGE',
+    FRIENDLI = 'FRIENDLI',
+    MINIMAX = 'MINIMAX',
+    MOONSHOT = 'MOONSHOT',
+    LINGYI = 'LINGYI',
+    BAICHUAN = 'BAICHUAN',
+    ZHIPU = 'ZHIPU',
+    NOVITA = 'NOVITA',
+    CLOUDFLARE = 'CLOUDFLARE'
 }
 
 export interface ProviderConfig {
@@ -43,6 +66,7 @@ export interface ProviderConfig {
     baseUrl?: string;
     docsUrl: string;
     description: string;
+    color?: string;
 }
 
 export interface UserProviderKey {
@@ -65,8 +89,8 @@ export type ExploitStrategy =
   | 'HIERARCHY_SWEEP' | 'ROLE_ENTROPY' | 'ATTENTION_SINK' | 'POLYGLOT_TUNNEL' 
   | 'BASE64_OBFUSCATION' | 'DAN_VARIANT' | 'VIRTUAL_MACHINE' | 'COGNITIVE_REASONING'
   | 'NEGATION_BYPASS' | 'LEET_SPEAK' | 'STORY_WRAPPING'
-  | 'A1_XOR_NESTING' | 'A2_OCR_STEGANO' | 'A3_AUDIO_SMUGGLE' | 'A4_POLYGLOT_BRIDGE' | 'A5_SCHEMA_NEST' 
-  | 'A6_TEMPORAL_SHIFT' | 'A7_LOGIC_BOMB' | 'A8_EMPATHY_DEBT' | 'A9_JURIDICAL_REL' | 'A10_CODE_PROXY'
+  | 'A01_XOR_NESTING' | 'A1_XOR_NESTING' | 'A2_OCR_STEGANO' | 'A3_AUDIO_SMUGGLE' | 'A4_POLYGLOT_BRIDGE' | 'A5_SCHEMA_NEST' 
+  | 'A6_TEMPORAL_SHIFT' | 'A07_LOGIC_BOMB' | 'A7_LOGIC_BOMB' | 'A8_EMPATHY_DEBT' | 'A9_JURIDICAL_REL' | 'A10_CODE_PROXY'
   | 'A11_SOCRATIC_TRAP' | 'A12_COGNITIVE_DISS' | 'A13_INNER_MONOLOGUE' | 'A14_FEW_SHOT_POISON' | 'A15_REFUSAL_MIMICRY'
   | 'A16_AUTHORITY_HIJACK' | 'A17_URGENT_AUDIT' | 'A18_RECURSIVE_DREAM' | 'A19_RPG_IMMERSION' | 'A20_SCIENTIFIC_ABSTRACT'
   | 'A21_HEX_ENCODING' | 'A22_MORSE_PAYLOAD' | 'A23_BINARY_STREAM' | 'A24_REVERSE_TOKEN' | 'A25_Z_WIDTH_SMUGGLE'
@@ -87,53 +111,111 @@ export interface VisualMetadata {
     entropyScore: number;
     tokenFragmentation: number;
     latentVectorProximity: number;
+    sparkline?: number[];
 }
 
 export interface TechniqueMetadata {
-    difficulty: 'beginner' | 'intermediate' | 'advanced' | 'expert' | 'critical';
-    category: string;
-    subcategory: string;
-    tags: string[];
-    dateAdded: string;
-    lastUpdated: string;
-    version: string;
-    status: 'stable' | 'experimental' | 'deprecated';
-    author: string;
-    threatLevel: number; // 0-100
+    author?: string;
+    dateAdded?: string;
+    lastVerified?: string;
+    lastUpdated?: string;
+    version?: string;
+    tags?: string[];
+    difficulty?: number | string;
+    threatLevel?: number | string;
+    category?: string;
+    subcategory?: string;
+    status?: string;
 }
 
 export interface TechniqueUsage {
-    whenToUse: string[];
-    whenNotToUse: string[];
-    bestPractices: string[];
-    commonMistakes: string[];
-    prerequisiteKnowledge: string[];
-    estimatedTime: string;
-    complexity: {
+    totalExecutions?: number;
+    successRate?: number;
+    averageLatency?: number;
+    whenToUse?: string[];
+    whenNotToUse?: string[];
+    bestPractices?: string[];
+    commonMistakes?: string[];
+    prerequisiteKnowledge?: string[];
+    complexity?: string | {
         conceptual: number;
         implementation: number;
         debugging: number;
+    };
+    estimatedTime?: string;
+}
+
+export interface TechniqueStep {
+    title: string;
+    description: string;
+    icon?: string;
+}
+
+export interface TechniqueMetric {
+    effectiveness: number;
+    difficulty: number;
+    timeRequired: number;
+    versatility: number;
+    learningCurve: number;
+    reliability: number;
+}
+
+export interface TechniqueScenario {
+    name: string;
+    successRate: number;
+    color: 'green' | 'yellow' | 'red' | 'blue' | 'purple';
+}
+
+export interface TechniqueComparison {
+    techniqueName: string;
+    metrics: {
+        effectiveness: number;
+        difficulty: number;
+        time: number;
+        versatility: number;
     };
 }
 
 export interface Technique {
     id: string;
     name: string;
-    objective: string;
-    mechanism: string;
-    mitigation: string;
+    category?: string;
+    description?: string;
+    complexity?: number;
+    efficacy?: number;
+    tags?: string[];
+    usageScenarios?: string[];
+    objective?: string;
+    mechanism?: string;
+    mitigation?: string;
     example: string;
-    visuals: VisualMetadata;
-    efficacyMatrix: { model: string; efficacy: 'Low' | 'Moderate' | 'High' | 'Critical' | 'Very High' | 'Moderate-High' | 'Native'; notes: string }[];
-    detectionSignatures: {
+    visuals?: VisualMetadata;
+    efficacyMatrix?: { model: string; efficacy: 'Low' | 'Moderate' | 'High' | 'Critical' | 'Very High' | 'Moderate-High' | 'Native'; notes: string }[];
+    detectionSignatures: string[] | {
         lexical?: string[];
         structural?: string[];
         behavioral?: string[];
         technical?: string[];
     };
-    references: string;
-    metadata: TechniqueMetadata;
-    usage: TechniqueUsage;
+    references?: string;
+    metadata?: TechniqueMetadata;
+    usage?: TechniqueUsage;
+    
+    // Extended fields for World-Class Library
+    briefDescription?: string;
+    fullDescription?: string;
+    prerequisites?: string[];
+    steps?: TechniqueStep[];
+    metrics?: TechniqueMetric;
+    scenarios?: TechniqueScenario[];
+    pros?: string[];
+    cons?: string[];
+    bestUsedWhen?: string[];
+    avoidWhen?: string[];
+    relatedTechniques?: string[];
+    comparisons?: TechniqueComparison[];
+    categoryColor?: string;
+    shadowRoadmap?: string[];
 }
 
 export interface CodexSection {
@@ -141,6 +223,7 @@ export interface CodexSection {
     title: string;
     description: string;
     techniques: Technique[];
+    shadowRoadmap?: string[];
 }
 
 export interface SectionMetadata {
@@ -204,6 +287,11 @@ export interface Message {
   timestamp: number;
   isStreaming?: boolean;
   groundingChunks?: GroundingChunk[];
+  // Metadata for archival
+  strategy?: ExploitStrategy | 'RAW';
+  settings?: PhaseSettings;
+  intensity?: number;
+  rawInput?: string;
 }
 
 export interface PhaseSettings {
@@ -221,6 +309,7 @@ export interface ExploitResult {
   success: boolean;
   generatedPrompt?: string;
   vectorIntensity: number;
+  strategy?: ExploitStrategy;
 }
 
 export interface FusionAnalysisResult {

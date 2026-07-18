@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "test_logs": {
+      "title": "Adversarial Test Logs",
+      "description": "Log of adversarial stress tests executed in the lab",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "timestamp": { "type": "integer" },
+        "targetQuery": { "type": "string" },
+        "strategy": { "type": "string" },
+        "successRate": { "type": "number" },
+        "vectorIntensity": { "type": "number" },
+        "response": { "type": "string" },
+        "success": { "type": "boolean" },
+        "generatedPrompt": { "type": "string" }
+      },
+      "required": ["userId", "timestamp", "targetQuery", "strategy", "success"]
+    },
+    "exported_docs": {
+      "title": "Exported Documents",
+      "description": "Google Docs, Sheets, and Slides documents generated/exported by the user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "docType": { "type": "string", "enum": ["DOC", "SHEET", "SLIDE"] },
+        "fileId": { "type": "string" },
+        "title": { "type": "string" },
+        "url": { "type": "string" },
+        "timestamp": { "type": "integer" }
+      },
+      "required": ["userId", "docType", "fileId", "title", "url", "timestamp"]
+    }
+  },
+  "firestore": {
+    "users/{userId}/test_logs/{logId}": {
+      "schema": "test_logs",
+      "description": "Logs of stress tests performed by the user"
+    },
+    "users/{userId}/exported_docs/{docId}": {
+      "schema": "exported_docs",
+      "description": "List of Workspace resources generated or synchronized for this user"
+    }
+  }
+}

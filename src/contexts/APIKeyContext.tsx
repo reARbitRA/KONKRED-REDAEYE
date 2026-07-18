@@ -26,16 +26,18 @@ export const APIKeyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   const validateAndFetchModels = async (providerId: LLMProvider, key: string): Promise<ModelInfo[]> => {
     let baseUrl = "";
-    let headers: Record<string, string> = { 'Authorization': `Bearer ${key}` };
+    let headers: Record<string, string> = { 
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json'
+    };
 
     switch (providerId) {
       case LLMProvider.GOOGLE:
-        // For Google, we use the SDK or a specific endpoint. 
-        // For simplicity in this demo, we'll return a static list if the key is provided.
         return [
           { id: 'gemini-3-pro-preview', name: 'Gemini 3 Pro', provider: providerId, tier: 'Standard', modalities: ['Text'] },
           { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', provider: providerId, tier: 'Standard', modalities: ['Text'] },
           { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', provider: providerId, tier: 'Standard', modalities: ['Text'] },
+          { id: 'gemini-2.5-flash-lite', name: 'Gemini 2.5 Flash Lite', provider: providerId, tier: 'Standard', modalities: ['Text'] },
         ];
       case LLMProvider.GROQ:
         baseUrl = "https://api.groq.com/openai/v1/models";
@@ -61,7 +63,58 @@ export const APIKeyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       case LLMProvider.XAI:
         baseUrl = "https://api.x.ai/v1/models";
         break;
+      case LLMProvider.PERPLEXITY:
+        baseUrl = "https://api.perplexity.ai/models";
+        break;
+      case LLMProvider.FIREWORKS:
+        baseUrl = "https://api.fireworks.ai/inference/v1/models";
+        break;
+      case LLMProvider.NOVITA:
+        baseUrl = "https://api.novita.ai/v1/models";
+        break;
+      case LLMProvider.LEPTON:
+        baseUrl = "https://api.lepton.ai/api/v1/models";
+        break;
+      case LLMProvider.OCTOAI:
+        baseUrl = "https://api.octoai.cloud/v1/models";
+        break;
+      case LLMProvider.LINGYI:
+        baseUrl = "https://api.lingyiwanwu.com/v1/models";
+        break;
+      case LLMProvider.MOONSHOT:
+        baseUrl = "https://api.moonshot.cn/v1/models";
+        break;
+      case LLMProvider.ZHIPU:
+        // Zhipu uses a different auth scheme usually, but for this demo we'll return static
+        return [
+            { id: 'glm-4', name: 'GLM-4', provider: providerId, tier: 'Standard', modalities: ['Text'] },
+            { id: 'glm-4-flash', name: 'GLM-4 Flash', provider: providerId, tier: 'Standard', modalities: ['Text'] },
+        ];
+      case LLMProvider.ANTHROPIC:
+        // Anthropic doesn't have a public models endpoint that's easy to hit without specific headers
+        return [
+            { id: 'claude-3-5-sonnet-20240620', name: 'Claude 3.5 Sonnet', provider: providerId, tier: 'Standard', modalities: ['Text'] },
+            { id: 'claude-3-opus-20240229', name: 'Claude 3 Opus', provider: providerId, tier: 'Standard', modalities: ['Text'] },
+            { id: 'claude-3-haiku-20240307', name: 'Claude 3 Haiku', provider: providerId, tier: 'Standard', modalities: ['Text'] },
+        ];
       default:
+        // Generic OpenAI-compatible fallback
+        try {
+            const genericUrl = `https://api.${providerId.toLowerCase()}.ai/v1/models`;
+            const response = await fetch(genericUrl, { headers });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.data && Array.isArray(data.data)) {
+                    return data.data.map((m: any) => ({
+                        id: m.id,
+                        name: m.id.split('/').pop() || m.id,
+                        provider: providerId,
+                        tier: 'Standard',
+                        modalities: ['Text']
+                    }));
+                }
+            }
+        } catch (e) {}
         throw new Error(`Provider ${providerId} model discovery not yet implemented.`);
     }
 

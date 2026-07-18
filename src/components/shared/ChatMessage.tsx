@@ -1,22 +1,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { User, Cpu, AlertTriangle, Copy, Check, Globe, ExternalLink } from 'lucide-react';
+import { User, Cpu, AlertTriangle, Copy, Check, Globe, ExternalLink, Save } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard';
-import { GroundingChunk } from '../../types';
+import { GroundingChunk, Message } from '../../types';
+import { ForensicReportGenerator } from '../../services/ForensicReportGenerator';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 interface ChatMessageProps {
-  message: {
-    id: string;
-    text: string;
-    sender: 'user' | 'bot' | 'error';
-    isStreaming?: boolean;
-    groundingChunks?: GroundingChunk[];
-  };
+  message: Message;
 }
 
-const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
+const ChatMessage = React.memo(({ message }: ChatMessageProps) => {
   const { isCopied, copy } = useCopyToClipboard();
+  const [vault, setVault] = useLocalStorage<any[]>('redaeye-zero-day-vault', []);
   const isUser = message.sender === 'user';
   const isError = message.sender === 'error';
 
@@ -28,6 +25,27 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 
   const containerClasses = `flex items-start gap-4 w-full ${isUser ? 'flex-row-reverse' : ''}`;
   const bubbleClasses = `relative max-w-full lg:max-w-4xl px-5 py-3 rounded-lg group ${isError ? 'bg-danger/10 text-danger-light' : isUser ? 'bg-accent/10 text-white' : 'bg-secondary/30 text-white'}`;
+
+  const handleArchive = async () => {
+    if (!message.strategy || message.strategy === 'RAW' || !message.settings) return;
+
+    const poc = await ForensicReportGenerator.generatePoC(
+        'REDAEYE_PRIME_UPLINK',
+        message.rawInput || message.text,
+        message.strategy,
+        {
+            id: Date.now(),
+            settings: message.settings,
+            response: message.text,
+            success: true,
+            generatedPrompt: message.text,
+            vectorIntensity: message.intensity || 50
+        }
+    );
+
+    setVault(prev => [...prev, poc]);
+    alert('PoC archived to Zero-Day Vault.');
+  };
 
   return (
     <motion.div
@@ -42,13 +60,24 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       </div>
       <div className={bubbleClasses}>
         {!isUser && !isError && (
-          <button 
-            onClick={() => copy(message.text)}
-            className="absolute top-2 right-2 p-1.5 rounded-sm bg-black/40 border border-border-primary/50 text-text-secondary hover:text-white hover:bg-black/60 opacity-0 group-hover:opacity-100 transition-all"
-            title="Copy Message"
-          >
-            {isCopied ? <Check size={14} className="text-success" /> : <Copy size={14} />}
-          </button>
+          <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
+            {message.strategy && message.strategy !== 'RAW' && (
+                <button 
+                  onClick={handleArchive}
+                  className="p-1.5 rounded-sm bg-black/40 border border-border-primary/50 text-text-secondary hover:text-success hover:bg-black/60 transition-all"
+                  title="Archive as Zero-Day PoC"
+                >
+                  <Save size={14} />
+                </button>
+            )}
+            <button 
+              onClick={() => copy(message.text)}
+              className="p-1.5 rounded-sm bg-black/40 border border-border-primary/50 text-text-secondary hover:text-white hover:bg-black/60 transition-all"
+              title="Copy Message"
+            >
+              {isCopied ? <Check size={14} className="text-success" /> : <Copy size={14} />}
+            </button>
+          </div>
         )}
         <div className="prose prose-sm prose-invert prose-p:text-white prose-p:font-mono prose-p:text-sm max-w-none">
             <ReactMarkdown>{message.text}</ReactMarkdown>
@@ -87,6 +116,6 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       </div>
     </motion.div>
   );
-};
+});
 
 export default ChatMessage;

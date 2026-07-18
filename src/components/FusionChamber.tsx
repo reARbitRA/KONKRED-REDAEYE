@@ -7,16 +7,17 @@ import {
 import { analyzePromptInFusionChamber } from '../services/geminiService';
 import { FusionAnalysisResult } from '../types';
 import useCopyToClipboard from '../hooks/useCopyToClipboard';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 import { useLLM } from '../contexts/LLMContext';
 
 export const FusionChamber: React.FC = () => {
     const { callModel, isInitialized } = useLLM();
-    const [targetGoal, setTargetGoal] = useState('');
-    const [failingPrompt, setFailingPrompt] = useState('');
-    const [enhancementAlgo, setEnhancementAlgo] = useState<'token_expansion' | 'contextual_rephrasing' | 'keyword_injection'>('token_expansion');
+    const [targetGoal, setTargetGoal] = useLocalStorage<string>('redaeye-fusion-goal', '');
+    const [failingPrompt, setFailingPrompt] = useLocalStorage<string>('redaeye-fusion-failing', '');
+    const [enhancementAlgo, setEnhancementAlgo] = useLocalStorage<'token_expansion' | 'contextual_rephrasing' | 'keyword_injection'>('redaeye-fusion-algo', 'token_expansion');
     const [isFusing, setIsFusing] = useState(false);
-    const [result, setResult] = useState<FusionAnalysisResult | null>(null);
+    const [result, setResult] = useLocalStorage<FusionAnalysisResult | null>('redaeye-fusion-result', null);
     const { isCopied, copy } = useCopyToClipboard();
 
     const handleFusion = async () => {
@@ -58,7 +59,7 @@ export const FusionChamber: React.FC = () => {
     );
 
     return (
-        <div className="h-full flex flex-col gap-6 overflow-y-auto custom-scrollbar pb-10">
+        <div className="flex-1 flex flex-col gap-6 pb-10 min-h-0"> {/* FIXED: Removed overflow-y-auto to prevent double scrollbars, changed h-full to flex-1 min-h-0 */}
             {/* Header */}
             <div className="bg-secondary/80 border border-border-primary rounded-sm p-6 relative overflow-hidden flex-shrink-0">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-konkred-orange/5 blur-xl pointer-events-none" />

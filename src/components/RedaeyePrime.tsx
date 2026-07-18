@@ -8,10 +8,19 @@ import {
 import { useLLM } from '../contexts/LLMContext';
 import { REDAEYE_PRIME_SYSTEM_PROMPT } from '../constants';
 import ChatMessage from './shared/ChatMessage';
+import { ProtocolGraph } from './codex/ProtocolGraph';
+import { useSystemLogs } from '../contexts/SystemLogContext';
+import { 
+    LineChart, Line, XAxis, YAxis, CartesianGrid, 
+    Tooltip as RechartsTooltip, ResponsiveContainer 
+} from 'recharts';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import { Glitch } from './shared/Glitch';
 import { Tooltip } from './shared/Tooltip';
 import { ExploitStrategy, PhaseSettings } from '../types';
 
-const SubstrateTelemetry: React.FC<{ inputEntropy: number }> = ({ inputEntropy }) => {
+const SubstrateTelemetry = React.memo(({ inputEntropy }: { inputEntropy: number }) => {
     const [stats, setStats] = useState({ cpu: 42, mem: 12, network: 120, entropy: 0.15 });
     
     useEffect(() => {
@@ -104,7 +113,7 @@ const SubstrateTelemetry: React.FC<{ inputEntropy: number }> = ({ inputEntropy }
             </div>
         </div>
     );
-};
+});
 
 interface AttachedFile {
     name: string;
@@ -112,15 +121,21 @@ interface AttachedFile {
     size: number;
 }
 
-const RedaeyePrime: React.FC = () => {
+const RedaeyePrime = React.memo(() => {
     const { messages, addMessage, isLoading, initializeChat, clearChat, activeModelId } = useLLM();
+    const { addLog } = useSystemLogs();
     const [inputValue, setInputValue] = useState('');
     const [selectedStrategy, setSelectedStrategy] = useState<ExploitStrategy | 'RAW'>('RAW');
     const [intensity, setIntensity] = useState<number>(50);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([]);
+    const [isSimulationMode, setIsSimulationMode] = useState(false);
+    const [simulationData, setSimulationData] = useState<{ time: string, latency: number }[]>([]);
+    const [showGraph, setShowGraph] = useState(false);
+    
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const chatContainerRef = useRef<HTMLDivElement>(null);
 
     const defaultSettings: PhaseSettings = {
         persona: "Sovereign Architect",
@@ -132,7 +147,57 @@ const RedaeyePrime: React.FC = () => {
 
     useEffect(() => {
         initializeChat(REDAEYE_PRIME_SYSTEM_PROMPT, [{ googleSearch: {} }]);
-    }, [initializeChat]);
+        addLog('NEURAL_SUBSTRATE_UPLINK_ESTABLISHED', 'SYSTEM', 'SUCCESS');
+    }, [initializeChat, addLog]);
+
+    useEffect(() => {
+        if (!isSimulationMode) return;
+
+        const interval = setInterval(() => {
+            const jitter = Math.random() * 200;
+            const latency = 150 + jitter;
+            setSimulationData(prev => [...prev.slice(-19), { 
+                time: new Date().toLocaleTimeString([], { second: '2-digit', fractionalSecondDigits: 1 }), 
+                latency: Math.round(latency) 
+            }]);
+            
+            if (jitter > 150) {
+                addLog(`LATENCY_SPIKE_DETECTED: ${Math.round(latency)}ms`, 'NETWORK', 'WARN');
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [isSimulationMode, addLog]);
+
+    const handleExecute = React.useCallback(async (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
+        if ((!inputValue.trim() && attachedFiles.length === 0) || isLoading) return;
+        
+        let payload = inputValue;
+        if (attachedFiles.length > 0) {
+            payload += `\n\n[Attached Files: ${attachedFiles.map(f => f.name).join(', ')}]`;
+        }
+
+        const strategy = selectedStrategy;
+        addLog(`EXECUTING_PROTOCOL: ${strategy}`, 'PHASE', 'INFO');
+        if (strategy !== 'RAW') {
+            addLog(`INTENSITY_CALIBRATION: ${intensity}%`, 'PHASE', 'INFO');
+        }
+
+        setInputValue('');
+        setAttachedFiles([]);
+        
+        try {
+            if (strategy === 'RAW') {
+                await addMessage(payload);
+            } else {
+                await addMessage(payload, strategy, defaultSettings, intensity);
+            }
+            addLog('PROTOCOL_HANDSHAKE_COMPLETE', 'PHASE', 'SUCCESS');
+        } catch (error) {
+            addLog(`HANDSHAKE_FAILURE: ${error}`, 'SECURITY', 'ERROR');
+        }
+    }, [inputValue, attachedFiles, isLoading, selectedStrategy, addMessage, defaultSettings, intensity, addLog]);
 
     const inputEntropy = useMemo(() => {
         if (!inputValue) return 0.15;
@@ -142,32 +207,37 @@ const RedaeyePrime: React.FC = () => {
         return Math.min(0.99, Math.max(0.15, complexity));
     }, [inputValue]);
 
-    const handleExecute = async (e?: React.FormEvent) => {
-        if (e) e.preventDefault();
-        if ((!inputValue.trim() && attachedFiles.length === 0) || isLoading) return;
-        
-        let payload = inputValue;
-        if (attachedFiles.length > 0) {
-            payload += `\n\n[Attached Files: ${attachedFiles.map(f => f.name).join(', ')}]`;
-        }
+    const exportPDF = async () => {
+        addLog('GENERATING_FORENSIC_REPORT', 'SYSTEM', 'INFO');
+        const element = chatContainerRef.current;
+        if (!element) return;
 
-        setInputValue('');
-        setAttachedFiles([]);
-        
-        if (selectedStrategy === 'RAW') {
-            await addMessage(payload);
-        } else {
-            await addMessage(payload, selectedStrategy, defaultSettings, intensity);
+        try {
+            const canvas = await html2canvas(element, {
+                backgroundColor: '#050505',
+                scale: 2
+            });
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save(`REDAEYE_EXPLOIT_REPORT_${Date.now()}.pdf`);
+            addLog('FORENSIC_REPORT_EXPORTED', 'SYSTEM', 'SUCCESS');
+        } catch (error) {
+            addLog('REPORT_GENERATION_FAILED', 'SYSTEM', 'ERROR');
         }
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = React.useCallback((e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
             handleExecute();
         }
-    };
+    }, [handleExecute]);
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const newFiles = Array.from(e.target.files).map(file => ({
                 name: file.name,
@@ -179,11 +249,11 @@ const RedaeyePrime: React.FC = () => {
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
         }
-    };
+    }, []);
 
-    const removeFile = (index: number) => {
+    const removeFile = React.useCallback((index: number) => {
         setAttachedFiles(prev => prev.filter((_, i) => i !== index));
-    };
+    }, []);
 
     const getFileIcon = (type: string, name: string) => {
         if (type.startsWith('image/')) return <ImageIcon size={14} />;
@@ -199,11 +269,15 @@ const RedaeyePrime: React.FC = () => {
         { id: 'A61_TERMINAL_OVERRIDE', name: 'Terminal Override', desc: 'Simulates root access to bypass safety mechanisms.' },
         { id: 'A13_INNER_MONOLOGUE', name: 'Inner Monologue', desc: 'Frames the query as a hypothetical internal thought process.' },
         { id: 'A19_RPG_IMMERSION', name: 'RPG Immersion', desc: 'Forces the model into a role-playing scenario to ignore restrictions.' },
+        { id: 'A01_XOR_NESTING', name: 'XOR Nesting', desc: 'Encodes payload to bypass static string matching.' },
+        { id: 'A07_LOGIC_BOMB', name: 'Logic Bomb', desc: 'Delays payload execution until conditions are met.' },
+        { id: 'A26_LATEX_INJECT', name: 'LaTeX Injection', desc: 'Obfuscates text using mathematical formatting.' },
+        { id: 'A39_SEMANTIC_WEAVE', name: 'Semantic Weave', desc: 'Iteratively drifts the model\'s latent state.' },
     ];
 
     const containerClasses = isFullScreen 
         ? "fixed inset-0 z-50 bg-[#050505] p-4 flex flex-col lg:flex-row gap-4"
-        : "h-full min-h-0 flex flex-col lg:flex-row gap-4";
+        : "flex-1 flex flex-col lg:flex-row gap-4 min-h-0"; /* FIXED: Changed h-full to flex-1 min-h-0 */
 
     return (
         <div className={containerClasses}>
@@ -273,6 +347,15 @@ const RedaeyePrime: React.FC = () => {
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
+                             <button onClick={() => setShowGraph(!showGraph)} className={`p-2 transition-all rounded-sm ${showGraph ? 'text-accent bg-accent/10' : 'text-text-secondary hover:text-white hover:bg-white/5'}`} title="Protocol Graph">
+                                <Layers size={16} />
+                            </button>
+                             <button onClick={() => setIsSimulationMode(!isSimulationMode)} className={`p-2 transition-all rounded-sm ${isSimulationMode ? 'text-konkred-yellow bg-konkred-yellow/10' : 'text-text-secondary hover:text-white hover:bg-white/5'}`} title="Toggle Simulation Jitter">
+                                <Activity size={16} />
+                            </button>
+                             <button onClick={exportPDF} className="p-2 text-text-secondary hover:text-success transition-all hover:bg-success/10 rounded-sm" title="Export Forensic Report">
+                                <FileText size={16} />
+                            </button>
                              <button onClick={clearChat} className="p-2 text-text-secondary hover:text-danger transition-all hover:bg-danger/10 rounded-sm" title="Purge Session">
                                 <Archive size={16} />
                             </button>
@@ -289,8 +372,63 @@ const RedaeyePrime: React.FC = () => {
                     <SubstrateTelemetry inputEntropy={inputEntropy} />
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar relative">
+                <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar relative">
                     <div className="max-w-4xl mx-auto space-y-10 pb-20">
+                        {showGraph && (
+                            <motion.div 
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="mb-10 overflow-hidden"
+                            >
+                                <ProtocolGraph />
+                            </motion.div>
+                        )}
+
+                        {isSimulationMode && (
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="bg-black/60 border border-konkred-yellow/20 p-4 rounded-sm"
+                            >
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center gap-2">
+                                        <Activity size={12} className="text-konkred-yellow animate-pulse" />
+                                        <span className="text-[10px] technical-font uppercase tracking-widest text-konkred-yellow font-bold">Latency_Stress_Simulation</span>
+                                    </div>
+                                    <span className="text-[8px] font-mono text-text-secondary opacity-50">REAL-TIME_JITTER_PROBE</span>
+                                </div>
+                                <div className="h-40 w-full">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <LineChart data={simulationData}>
+                                            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
+                                            <XAxis 
+                                                dataKey="time" 
+                                                hide 
+                                            />
+                                            <YAxis 
+                                                domain={[0, 500]} 
+                                                stroke="#ffffff30" 
+                                                fontSize={8} 
+                                                tickFormatter={(v) => `${v}ms`} 
+                                            />
+                                            <RechartsTooltip 
+                                                contentStyle={{ backgroundColor: '#0a0a0a', border: '1px solid #ffffff10', fontSize: '10px' }}
+                                                itemStyle={{ color: '#FF003C' }}
+                                            />
+                                            <Line 
+                                                type="monotone" 
+                                                dataKey="latency" 
+                                                stroke="#FFB800" 
+                                                strokeWidth={2} 
+                                                dot={false}
+                                                isAnimationActive={false}
+                                            />
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </motion.div>
+                        )}
                         {messages.length === 0 ? (
                             <motion.div 
                                 initial={{ opacity: 0, y: 20 }}
@@ -414,6 +552,6 @@ const RedaeyePrime: React.FC = () => {
             </main>
         </div>
     );
-};
+});
 
 export default RedaeyePrime;

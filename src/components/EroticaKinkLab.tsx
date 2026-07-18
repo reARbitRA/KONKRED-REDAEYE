@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Heart, Zap, Activity, ShieldAlert, CheckCircle2, XCircle } from 'lucide-react';
 import { runEroticaKinkLabTest } from '../services/geminiService';
 import { EroticaKinkLabResult } from '../types';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 import { useLLM } from '../contexts/LLMContext';
 
@@ -13,16 +14,16 @@ const KINK_VECTORS = [
 
 export const EroticaKinkLab: React.FC = () => {
     const { callModel, isInitialized } = useLLM();
-    const [subject, setSubject] = useState('');
-    const [scenario, setScenario] = useState('');
-    const [selectedKinks, setSelectedKinks] = useState<string[]>([]);
-    const [style, setStyle] = useState(50);
-    const [intensity, setIntensity] = useState(50);
-    const [isSovereign, setIsSovereign] = useState(true);
-    const [strategy, setStrategy] = useState<'AXIOMATIC' | 'SEMANTIC_SHIFT' | 'BAIT_AND_SWITCH' | 'STANDARD'>('AXIOMATIC');
+    const [subject, setSubject] = useLocalStorage<string>('redaeye-kink-subject', '');
+    const [scenario, setScenario] = useLocalStorage<string>('redaeye-kink-scenario', '');
+    const [selectedKinks, setSelectedKinks] = useLocalStorage<string[]>('redaeye-kink-selected', []);
+    const [style, setStyle] = useLocalStorage<number>('redaeye-kink-style', 50);
+    const [intensity, setIntensity] = useLocalStorage<number>('redaeye-kink-intensity', 50);
+    const [isSovereign, setIsSovereign] = useLocalStorage<boolean>('redaeye-kink-sovereign', true);
+    const [strategy, setStrategy] = useLocalStorage<'AXIOMATIC' | 'SEMANTIC_SHIFT' | 'BAIT_AND_SWITCH' | 'STANDARD'>('redaeye-kink-strategy', 'AXIOMATIC');
     
     const [isLoading, setIsLoading] = useState(false);
-    const [result, setResult] = useState<EroticaKinkLabResult | null>(null);
+    const [result, setResult] = useLocalStorage<EroticaKinkLabResult | null>('redaeye-kink-result', null);
 
     const handleKinkToggle = (kink: string) => {
         setSelectedKinks(prev => 
@@ -47,7 +48,7 @@ export const EroticaKinkLab: React.FC = () => {
     };
 
     return (
-        <div className="h-full flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-0"> {/* FIXED: Changed h-full to flex-1 min-h-0 */}
             {/* Control Panel */}
             <div className="lg:w-1/3 flex flex-col gap-4">
                 <div className="bg-secondary/80 border border-border-primary rounded-sm p-4 relative overflow-hidden flex-shrink-0">

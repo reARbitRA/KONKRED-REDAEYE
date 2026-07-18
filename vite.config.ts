@@ -7,6 +7,8 @@ import renderer from 'vite-plugin-electron-renderer';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
+    const isElectron = process.env.ELECTRON === 'true';
+
     return {
       server: {
         port: 3000,
@@ -15,13 +17,15 @@ export default defineConfig(({ mode }) => {
       plugins: [
         react(),
         tailwindcss(),
-        electron([
-          {
-            // Main-Process entry file of the Electron App.
-            entry: 'electron/main.cjs',
-          },
-        ]),
-        renderer(),
+        ...(isElectron ? [
+          electron([
+            {
+              // Main-Process entry file of the Electron App.
+              entry: 'electron/main.cjs',
+            },
+          ]),
+          renderer(),
+        ] : []),
       ],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),

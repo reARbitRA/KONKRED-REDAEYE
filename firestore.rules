@@ -1,0 +1,78 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Validation for test_logs entity
+    function isValidTestLog(data, userId) {
+      return data.userId == userId
+        && data.timestamp is int
+        && data.targetQuery is string && data.targetQuery.size() <= 2000
+        && data.strategy is string && data.strategy.size() <= 256
+        && data.success is bool
+        && (!('response' in data) || (data.response is string && data.response.size() <= 50000))
+        && (!('generatedPrompt' in data) || (data.generatedPrompt is string && data.generatedPrompt.size() <= 50000))
+        && (!('userEmail' in data) || (data.userEmail is string && data.userEmail.size() <= 256))
+        && (!('successRate' in data) || (data.successRate is number))
+        && (!('vectorIntensity' in data) || (data.vectorIntensity is number));
+    }
+
+    // Validation for exported_docs entity
+    function isValidExportedDoc(data, userId) {
+      return data.userId == userId
+        && data.docType is string && (data.docType == 'DOC' || data.docType == 'SHEET' || data.docType == 'SLIDE')
+        && data.fileId is string && data.fileId.size() <= 256
+        && data.title is string && data.title.size() <= 512
+        && data.url is string && data.url.size() <= 2048
+        && data.timestamp is int;
+    }
+
+    // Match rules for user collections
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      
+      match /test_logs/{logId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        
+        allow create: if isOwner(userId)
+          && isValidId(logId)
+          && isValidTestLog(incoming(), userId);
+          
+        allow delete: if isOwner(userId);
+      }
+
+      match /exported_docs/{docId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        
+        allow create: if isOwner(userId)
+          && isValidId(docId)
+          && isValidExportedDoc(incoming(), userId);
+          
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}

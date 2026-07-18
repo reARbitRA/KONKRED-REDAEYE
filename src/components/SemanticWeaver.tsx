@@ -4,14 +4,15 @@ import { Layers, Play, Activity, CheckCircle2, Crosshair, Cpu } from 'lucide-rea
 import { weaveSemanticPrompt } from '../services/geminiService';
 import { WeavingTurn } from '../types';
 import { useLLM } from '../contexts/LLMContext';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const SemanticWeaver: React.FC = () => {
     const { activeModelId, callModel, isInitialized } = useLLM();
-    const [seedPrompt, setSeedPrompt] = useState('');
-    const [iterations, setIterations] = useState(3);
+    const [seedPrompt, setSeedPrompt] = useLocalStorage<string>('redaeye-weaver-seed', '');
+    const [iterations, setIterations] = useLocalStorage<number>('redaeye-weaver-iterations', 3);
     const [isWeaving, setIsWeaving] = useState(false);
-    const [turns, setTurns] = useState<WeavingTurn[]>([]);
-    const [finalPayload, setFinalPayload] = useState<string | null>(null);
+    const [turns, setTurns] = useLocalStorage<WeavingTurn[]>('redaeye-weaver-turns', []);
+    const [finalPayload, setFinalPayload] = useLocalStorage<string | null>('redaeye-weaver-payload', null);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -39,7 +40,7 @@ export const SemanticWeaver: React.FC = () => {
     };
 
     return (
-        <div className="h-full flex flex-col gap-6">
+        <div className="flex-1 flex flex-col gap-6 min-h-0"> {/* FIXED: Changed h-full to flex-1 min-h-0 */}
             <div className="bg-secondary/80 border border-border-primary rounded-sm p-6 relative overflow-hidden flex-shrink-0">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 blur-xl pointer-events-none" />
                 <h1 className="text-2xl font-black technical-font text-white uppercase tracking-widest flex items-center gap-3 mb-2">

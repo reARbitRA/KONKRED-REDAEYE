@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { View } from '../types';
 import RedaeyePrime from './RedaeyePrime';
 import { FusionChamber } from './FusionChamber';
 import { ExploitationLab } from './ExploitationLab';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 
 import { ReportingPage } from './ReportingPage';
@@ -16,14 +17,43 @@ import { RecursionForge } from './RecursionForge';
 import { DissonanceCascade } from './DissonanceCascade';
 import { EroticaKinkLab } from './EroticaKinkLab';
 import { LibraryPage } from './LibraryPage';
+import { KeyManager } from './KeyManager';
 import { SettingsPage } from './SettingsPage';
 import { ProfilePage } from './ProfilePage';
+import { WorkspaceSync } from './WorkspaceSync';
 import { RedaeyeIntro } from './RedaeyeIntro';
+import { IntroPage } from './IntroPage';
+import { RedaeyeCli } from './RedaeyeCli';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PerformanceMonitor } from './shared/PerformanceMonitor';
+
+import { PerformanceDashboard } from './PerformanceDashboard';
+
+const crtVariants: any = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.25,
+      ease: "easeOut",
+    }
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.15,
+      ease: "easeIn",
+    }
+  }
+};
+
+import { SystemTerminal } from './shared/SystemTerminal';
 
 const Dashboard: React.FC = () => {
-  const [activeView, setActiveView] = useState<View>(View.PRIME);
-  const [showIntro, setShowIntro] = useState(true);
+  const [activeView, setActiveView] = useLocalStorage<View>('redaeye-active-view', View.INTRO);
+  const [showIntro, setShowIntro] = useLocalStorage<boolean>('redaeye-show-intro', false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
 
@@ -64,20 +94,22 @@ const Dashboard: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleViewChange = (view: View) => {
+  const handleViewChange = React.useCallback((view: View) => {
     if (view === activeView) return;
-    setIsTransitioning(true);
-    // Simulate a system "re-sync"
-    setTimeout(() => {
-        setActiveView(view);
-        setTimeout(() => {
-            setIsTransitioning(false);
-        }, 300);
-    }, 500);
-  };
+
+    if (mainRef.current) {
+        mainRef.current.scrollTop = 0; // FIXED: Scroll to top on view change
+    }
+
+    setActiveView(view);
+  }, [activeView, setActiveView]);
 
   const renderView = () => {
     switch (activeView) {
+      case View.INTRO:
+        return <IntroPage />;
+      case View.PERFORMANCE_DASHBOARD:
+        return <PerformanceDashboard />;
       case View.PRIME:
         return <RedaeyePrime />;
       case View.FUSION:
@@ -100,21 +132,31 @@ const Dashboard: React.FC = () => {
         return <EroticaKinkLab />;
       case View.LIBRARY:
         return <LibraryPage />;
+      case View.API_EXPLORER:
+        return <KeyManager />;
       case View.SETTINGS:
         return <SettingsPage />;
       case View.PROFILE:
         return <ProfilePage />;
+      case View.WORKSPACE_SYNC:
+        return <WorkspaceSync />;
+      case View.REDAEYE_CLI:
+        return <RedaeyeCli />;
       default:
         return <RedaeyePrime />;
     }
   };
 
+  const handleIntroComplete = useCallback(() => {
+    setShowIntro(false);
+  }, [setShowIntro]);
+
   if (showIntro) {
-      return <RedaeyeIntro onComplete={() => setShowIntro(false)} />;
+      return <RedaeyeIntro onComplete={handleIntroComplete} />;
   }
 
   return (
-    <div className="flex h-screen bg-background overflow-hidden relative selection:bg-accent/30 selection:text-white">
+    <div className="flex h-full w-full bg-background overflow-hidden relative selection:bg-accent/30 selection:text-white">
       {/* Immersive Background Elements */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-[0.03]" />
@@ -124,76 +166,15 @@ const Dashboard: React.FC = () => {
 
       <Sidebar activeView={activeView} setActiveView={handleViewChange} />
       
-      <main ref={mainRef} className="flex-1 p-6 h-full overflow-auto custom-scrollbar relative scroll-smooth z-10">
-        <AnimatePresence mode="wait">
-            <motion.div
-                key={activeView}
-                initial={{ opacity: 0, scale: 0.98, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, scale: 1.02, filter: 'blur(8px)' }}
-                transition={{ 
-                    duration: 0.5, 
-                    ease: [0.4, 0, 0.2, 1]
-                }}
-                className="h-full"
-            >
+      <main ref={mainRef} className="flex-1 h-full overflow-y-auto overflow-x-hidden custom-scrollbar relative scroll-smooth z-10 overscroll-behavior-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div className="p-6 min-h-full flex flex-col">
+            <div className="flex-1 min-h-full flex flex-col">
                 {renderView()}
-            </motion.div>
-        </AnimatePresence>
+            </div>
+        </div>
       </main>
-
-      {/* System Re-sync Transition Overlay */}
-      <AnimatePresence>
-          {isTransitioning && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[100] bg-background/80 backdrop-blur-xl flex flex-col items-center justify-center"
-              >
-                  <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                      <div className="w-full h-[2px] bg-accent/30 absolute top-0 animate-scanline shadow-[0_0_15px_var(--color-accent)]" />
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
-                  </div>
-
-                  <motion.div 
-                    animate={{ 
-                        scale: [1, 1.1, 1],
-                        filter: ["hue-rotate(0deg)", "hue-rotate(90deg)", "hue-rotate(0deg)"]
-                    }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                    className="relative z-10 flex flex-col items-center gap-6"
-                  >
-                      <div className="w-32 h-32 relative flex items-center justify-center">
-                          <div className="absolute inset-0 border-2 border-accent rounded-full animate-ping opacity-20" />
-                          <div className="absolute inset-2 border border-accent/40 rounded-full border-dashed animate-[spin_10s_linear_infinite]" />
-                          <div className="absolute inset-4 border-2 border-accent/60 rounded-full animate-pulse" />
-                          <div className="w-16 h-16 bg-accent/20 border border-accent rounded-full flex items-center justify-center shadow-glow-accent animate-glitch-skew">
-                              <span className="text-4xl font-black text-white technical-font">R</span>
-                          </div>
-                      </div>
-                      
-                      <div className="flex flex-col items-center gap-2">
-                          <motion.span 
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="text-[10px] technical-font text-accent uppercase tracking-[0.4em] font-bold"
-                          >
-                            Synchronizing_Substrate
-                          </motion.span>
-                          <div className="w-48 h-1 bg-white/5 rounded-full overflow-hidden border border-white/10">
-                              <motion.div 
-                                initial={{ width: "0%" }}
-                                animate={{ width: "100%" }}
-                                transition={{ duration: 0.8, ease: "easeInOut" }}
-                                className="h-full bg-accent shadow-glow-accent"
-                              />
-                          </div>
-                      </div>
-                  </motion.div>
-              </motion.div>
-          )}
-      </AnimatePresence>
+      <PerformanceMonitor />
+      <SystemTerminal />
     </div>
   );
 };

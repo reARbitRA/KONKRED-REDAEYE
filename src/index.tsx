@@ -6,13 +6,16 @@ import './index.css';
 
 import { APIKeyProvider } from './contexts/APIKeyContext';
 import { LLMContextProvider } from './contexts/LLMContext';
+import { SystemLogProvider } from './contexts/SystemLogContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <APIKeyProvider>
-      <LLMContextProvider>
-        <App />
-      </LLMContextProvider>
+      <SystemLogProvider>
+        <LLMContextProvider>
+          <App />
+        </LLMContextProvider>
+      </SystemLogProvider>
     </APIKeyProvider>
   </React.StrictMode>
 );

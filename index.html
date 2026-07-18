@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"> <!-- FIXED: Added responsive viewport meta tag -->
     <title>RED A EYE // KONKRED PROTOCOL</title>
     
     <script type="importmap">
@@ -86,16 +86,27 @@
         body {
             background-color: var(--konkred-void);
             color: #FFFFFF;
-            overflow: hidden;
+            overflow: hidden; /* FIXED: Body should not scroll */
             font-family: 'Inter', sans-serif;
-            height: 100vh;
-            width: 100vw;
+            height: 100%; /* FIXED: Use 100% height */
+            width: 100%; /* FIXED: Use 100% width */
+            margin: 0; /* FIXED: Reset margin */
+            padding: 0; /* FIXED: Reset padding */
         }
         
+        html {
+            height: 100%; /* FIXED: Use 100% height */
+            margin: 0; /* FIXED: Reset margin */
+            padding: 0; /* FIXED: Reset padding */
+            overflow: hidden; /* FIXED: Root should not scroll */
+            font-size: 16px; /* FIXED: Set base font size */
+        }
+
         #root {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
+            height: 100vh; /* FIXED: Use viewport height */
+            width: 100vw; /* FIXED: Use viewport width */
+            overflow: hidden; /* FIXED: Root container should not scroll */
+            display: flex; /* FIXED: Use flexbox for layout */
         }
         
         /* Scanline Overlay */

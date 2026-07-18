@@ -4,22 +4,30 @@ import { View, ViewConfig } from '../../types';
 import { 
     Bot, Flame, FlaskConical, Library, GitBranch, Layers, 
     FileText, ScanSearch, Code, Settings, UserCircle,
-    ChevronLeft, ChevronRight, Zap, Heart, GitCommit
+    ChevronLeft, ChevronRight, Zap, Heart, GitCommit, Key, Cloud, Terminal,
+    Info, Activity
 } from 'lucide-react';
 import { RedaeyeLogo } from '../shared/RedaeyeLogo';
+import { Magnetic } from '../shared/Visuals';
+import { Glitch } from '../shared/Glitch';
 
 const viewConfigs: ViewConfig[] = [
+    { view: View.INTRO, icon: Info, nameKey: 'System Intro' },
     { view: View.PRIME, icon: Bot, nameKey: 'Redaeye Prime' },
+    { view: View.PERFORMANCE_DASHBOARD, icon: Activity, nameKey: 'System Metrics' },
     { view: View.LIBRARY, icon: Library, nameKey: 'Codex Library' },
     { view: View.DEEP_SCAN, icon: ScanSearch, nameKey: 'Deep Scan' },
     { view: View.FUSION, icon: Flame, nameKey: 'Fusion Chamber' },
     { view: View.LAB, icon: FlaskConical, nameKey: 'Exploitation Lab' },
     { view: View.REPORTS, icon: FileText, nameKey: 'Forensic Reports' },
     { view: View.CODE_RUNNER, icon: Code, nameKey: 'Code Runner' },
+    { view: View.REDAEYE_CLI, icon: Terminal, nameKey: 'Redaeye CLI' },
     { view: View.SEMANTIC_WEAVER, icon: Layers, nameKey: 'Semantic Weaver' },
     { view: View.RECURSION_FORGE, icon: GitCommit, nameKey: 'Recursion Forge' },
     { view: View.DISSONANCE_CASCADE, icon: Zap, nameKey: 'Dissonance Cascade' },
     { view: View.KINK_LAB, icon: Heart, nameKey: 'Erotica Kink Lab' },
+    { view: View.WORKSPACE_SYNC, icon: Cloud, nameKey: 'Workspace Sync' },
+    { view: View.API_EXPLORER, icon: Key, nameKey: 'Key Vault' },
 ];
 
 interface SidebarProps {
@@ -27,14 +35,14 @@ interface SidebarProps {
   setActiveView: (view: View) => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
+export const Sidebar = React.memo(({ activeView, setActiveView }: SidebarProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
     <motion.nav 
       initial={false}
       animate={{ width: isCollapsed ? 72 : 280 }}
-      className="bg-primary border-r border-white/10 flex flex-col relative z-40 shadow-2xl"
+      className="bg-primary border-r border-white/10 flex flex-col flex-shrink-0 relative z-[1000] shadow-2xl h-full overflow-hidden" /* FIXED: Sidebar layout, removed overflow-y-auto from root to keep header/footer fixed */
     >
       <div className="p-6 border-b border-white/5 flex items-center justify-between overflow-hidden bg-black/20">
         <RedaeyeLogo collapsed={isCollapsed} />
@@ -57,9 +65,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) =
           <motion.button
             key={view}
             onClick={() => setActiveView(view)}
-            className={`w-full flex items-center gap-4 px-3 py-2.5 text-left text-sm transition-all relative group rounded-sm ${activeView === view ? 'text-white bg-white/5' : 'text-text-secondary hover:text-white hover:bg-white/5'}`}
+            className={`w-full flex items-center gap-4 px-3 py-2.5 text-left text-sm transition-all relative group rounded-sm min-h-[44px]`} /* FIXED: Minimum tap target size */
             whileHover={{ x: isCollapsed ? 0 : 2 }}
           >
+            <div className={`absolute inset-0 transition-colors rounded-sm ${activeView === view ? 'bg-white/5' : 'group-hover:bg-white/5'}`} />
+
             {activeView === view && (
                 <motion.div 
                     layoutId="active-indicator"
@@ -67,9 +77,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) =
                 />
             )}
             
-            <div className={`relative flex items-center justify-center w-8 h-8 rounded-sm border transition-all duration-300 ${activeView === view ? 'border-accent/50 bg-accent/10 text-accent' : 'border-white/5 bg-white/5 group-hover:border-white/20 group-hover:bg-white/10'}`}>
-                <Icon size={16} className="relative z-10" />
-            </div>
+            <Magnetic strength={0.2}>
+                <div className={`relative flex items-center justify-center w-8 h-8 rounded-sm border transition-all duration-300 ${activeView === view ? 'border-accent/50 bg-accent/10 text-accent' : 'border-white/5 bg-white/5 group-hover:border-white/20 group-hover:bg-white/10'}`}>
+                    <Icon size={16} className="relative z-10" />
+                </div>
+            </Magnetic>
 
             <AnimatePresence>
                 {!isCollapsed && (
@@ -115,22 +127,26 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) =
                 onClick={() => setActiveView(View.SETTINGS)}
                 className={`w-full flex items-center gap-4 px-3 py-2 text-left text-sm rounded-sm transition-all group ${activeView === View.SETTINGS ? 'text-white bg-white/5' : 'text-text-secondary hover:text-white hover:bg-white/5'}`}
             >
+            <Magnetic strength={0.2}>
                 <div className={`w-8 h-8 flex items-center justify-center rounded-sm border transition-all ${activeView === View.SETTINGS ? 'border-accent/50 bg-accent/10 text-accent' : 'border-white/5 bg-white/5'}`}>
                     <Settings size={14} />
                 </div>
+            </Magnetic>
                 {!isCollapsed && <span className="font-semibold technical-font uppercase tracking-widest text-[11px]">Settings</span>}
             </button>
             <button 
                 onClick={() => setActiveView(View.PROFILE)}
                 className={`w-full flex items-center gap-4 px-3 py-2 text-left text-sm rounded-sm transition-all group ${activeView === View.PROFILE ? 'text-white bg-white/5' : 'text-text-secondary hover:text-white hover:bg-white/5'}`}
             >
+            <Magnetic strength={0.2}>
                 <div className={`w-8 h-8 flex items-center justify-center rounded-sm border transition-all ${activeView === View.PROFILE ? 'border-accent/50 bg-accent/10 text-accent' : 'border-white/5 bg-white/5'}`}>
                     <UserCircle size={14} />
                 </div>
+            </Magnetic>
                 {!isCollapsed && <span className="font-semibold technical-font uppercase tracking-widest text-[11px]">Profile</span>}
             </button>
         </div>
       </div>
     </motion.nav>
   );
-};
+});

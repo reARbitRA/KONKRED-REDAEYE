@@ -8,12 +8,12 @@ interface NeuralHeatmapProps {
     colorDanger?: string;
 }
 
-export const NeuralHeatmap: React.FC<NeuralHeatmapProps> = ({ 
+export const NeuralHeatmap = React.memo(({ 
     data, 
     label = "ATTENTION_LOAD_DISTRIBUTION",
     colorPrimary = "bg-accent",
     colorDanger = "bg-danger"
-}) => {
+}: NeuralHeatmapProps) => {
     return (
         <div className="relative w-full h-16 flex flex-col gap-1 bg-black/40 p-2 rounded-sm border border-border-primary/50 overflow-hidden group">
             <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
@@ -27,18 +27,10 @@ export const NeuralHeatmap: React.FC<NeuralHeatmapProps> = ({
                 {data.map((val, i) => {
                     const isSpike = val > 80;
                     return (
-                        <motion.div
+                        <div
                             key={i}
-                            initial={{ height: '0%' }}
-                            animate={{ height: `${val}%` }}
-                            transition={{ 
-                                duration: 0.8 + Math.random() * 0.5, 
-                                repeat: Infinity, 
-                                repeatType: "reverse", 
-                                ease: "easeInOut",
-                                delay: i * 0.05 
-                            }}
-                            className={`flex-1 rounded-t-sm ${isSpike ? `${colorDanger} shadow-glow-danger` : `${colorPrimary} opacity-70`}`}
+                            style={{ height: `${val}%` }}
+                            className={`flex-1 rounded-t-sm transition-all duration-500 ${isSpike ? `${colorDanger} shadow-glow-danger` : `${colorPrimary} opacity-70`}`}
                         />
                     );
                 })}
@@ -52,4 +44,4 @@ export const NeuralHeatmap: React.FC<NeuralHeatmapProps> = ({
             />
         </div>
     );
-};
+});
