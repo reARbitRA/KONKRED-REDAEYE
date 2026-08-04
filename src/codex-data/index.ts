@@ -21,6 +21,7 @@ import { rae21 } from '../codex/sections/rae-21-sovereign-archive';
 import { rae22 } from '../codex/sections/rae-22-vulnerability-archive';
 import { RAE_OMEGA_CODEX } from '../codex/sections/rae-23-omega-codex';
 import { RAE_NEW_TECHNIQUES } from '../codex/sections/rae-24-new-techniques';
+import { RAE_NEXT_GEN_TECHNIQUES } from '../codex/sections/rae-25-next-gen';
 import { rae7 } from '../codex/sections/rae-7-optimization-efficiency';
 import { CodexSection, Technique, SectionMetadata } from '../types';
 
@@ -49,6 +50,7 @@ export const RAE_CATALOG: CodexSection[] = [
     rae22,
     RAE_OMEGA_CODEX,
     RAE_NEW_TECHNIQUES,
+    RAE_NEXT_GEN_TECHNIQUES,
 ];
 
 export const getFlattenedTechniques = (): Technique[] => {

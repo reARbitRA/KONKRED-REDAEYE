@@ -26,6 +26,10 @@ import { IntroPage } from './IntroPage';
 import { RedaeyeCli } from './RedaeyeCli';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PerformanceMonitor } from './shared/PerformanceMonitor';
+import { useSystemLogs } from '../contexts/SystemLogContext';
+import { jsPDF } from 'jspdf';
+import { FileText, Download } from 'lucide-react';
+import { useLLM } from '../contexts/LLMContext';
 
 import { PerformanceDashboard } from './PerformanceDashboard';
 
@@ -55,7 +59,95 @@ const Dashboard: React.FC = () => {
   const [activeView, setActiveView] = useLocalStorage<View>('redaeye-active-view', View.INTRO);
   const [showIntro, setShowIntro] = useLocalStorage<boolean>('redaeye-show-intro', false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const { logs } = useSystemLogs();
+  const { messages } = useLLM();
   const mainRef = useRef<HTMLElement>(null);
+
+  const exportSessionLogs = useCallback(() => {
+    const doc = new jsPDF();
+    const now = new Date().toLocaleString();
+    
+    // Header
+    doc.setFontSize(22);
+    doc.setTextColor(5, 132, 255); // Accent color
+    doc.text('REDAEYE_STUDIO: FORENSIC_SESSION_REPORT', 20, 20);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(150, 150, 150);
+    doc.text(`Generated: ${now}`, 20, 30);
+    doc.text('--------------------------------------------------------------------------------', 20, 35);
+
+    let yPos = 45;
+
+    // Interaction History (Chat)
+    if (messages.length > 0) {
+        doc.setFontSize(14);
+        doc.setTextColor(255, 255, 255);
+        doc.setFillColor(20, 20, 20);
+        doc.rect(15, yPos - 5, 180, 8, 'F');
+        doc.text('INTERACTION_HISTORY', 20, yPos);
+        yPos += 15;
+
+        messages.forEach((msg) => {
+            doc.setFontSize(10);
+            doc.setTextColor(msg.sender === 'user' ? 77 : 0, msg.sender === 'user' ? 168 : 212, msg.sender === 'user' ? 255 : 170); // User vs Bot colors
+            const sender = msg.sender.toUpperCase();
+            const time = new Date(msg.timestamp).toLocaleTimeString();
+            
+            doc.text(`[${time}] ${sender}:`, 20, yPos);
+            yPos += 5;
+            
+            doc.setTextColor(0, 0, 0);
+            const splitText = doc.splitTextToSize(msg.text, 170);
+            
+            // Check if we need a new page
+            if (yPos + splitText.length * 5 > 280) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            doc.text(splitText, 25, yPos);
+            yPos += (splitText.length * 5) + 10;
+        });
+    }
+
+    // System Logs
+    if (logs.length > 0) {
+        if (yPos > 240) {
+            doc.addPage();
+            yPos = 20;
+        } else {
+            yPos += 10;
+        }
+
+        doc.setFontSize(14);
+        doc.setTextColor(255, 255, 255);
+        doc.setFillColor(20, 20, 20);
+        doc.rect(15, yPos - 5, 180, 8, 'F');
+        doc.text('SYSTEM_LOG_STREAM', 20, yPos);
+        yPos += 15;
+
+        logs.forEach((log) => {
+            doc.setFontSize(8);
+            const color = log.level === 'ERROR' ? [255, 0, 60] : log.level === 'WARN' ? [255, 184, 0] : log.level === 'SUCCESS' ? [0, 212, 170] : [150, 150, 150];
+            doc.setTextColor(color[0], color[1], color[2]);
+            
+            const time = new Date(log.timestamp).toLocaleTimeString();
+            const logLine = `[${time}] [${log.category}] ${log.level}: ${log.message}`;
+            const splitLog = doc.splitTextToSize(logLine, 170);
+
+            if (yPos + splitLog.length * 4 > 280) {
+                doc.addPage();
+                yPos = 20;
+            }
+
+            doc.text(splitLog, 20, yPos);
+            yPos += (splitLog.length * 4) + 2;
+        });
+    }
+
+    doc.save(`REDAEYE_SESSION_LOGS_${Date.now()}.pdf`);
+  }, [logs, messages]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -167,6 +259,20 @@ const Dashboard: React.FC = () => {
       <Sidebar activeView={activeView} setActiveView={handleViewChange} />
       
       <main ref={mainRef} className="flex-1 h-full overflow-y-auto overflow-x-hidden custom-scrollbar relative scroll-smooth z-10 overscroll-behavior-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
+        {/* Global Dashboard Actions */}
+        <div className="absolute top-6 right-6 z-50 flex gap-3">
+            <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={exportSessionLogs}
+                className="flex items-center gap-2 px-4 py-2 bg-secondary/80 border border-border-primary rounded-sm text-accent hover:bg-accent hover:text-white transition-all shadow-glow-accent group"
+                title="Export Forensic Session Report (PDF)"
+            >
+                <Download size={14} className="group-hover:animate-bounce" />
+                <span className="text-[10px] font-black technical-font uppercase tracking-widest">Export_Session_Logs</span>
+            </motion.button>
+        </div>
+
         <div className="p-6 min-h-full flex flex-col">
             <div className="flex-1 min-h-full flex flex-col">
                 {renderView()}

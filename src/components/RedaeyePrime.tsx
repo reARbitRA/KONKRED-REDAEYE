@@ -6,6 +6,7 @@ import {
   Maximize2, Minimize2, Paperclip, FileText, Image as ImageIcon, FileCode, FileVideo, FileAudio, File, X, Globe
 } from 'lucide-react';
 import { useLLM } from '../contexts/LLMContext';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import { REDAEYE_PRIME_SYSTEM_PROMPT } from '../constants';
 import ChatMessage from './shared/ChatMessage';
 import { ProtocolGraph } from './codex/ProtocolGraph';
@@ -124,9 +125,9 @@ interface AttachedFile {
 const RedaeyePrime = React.memo(() => {
     const { messages, addMessage, isLoading, initializeChat, clearChat, activeModelId } = useLLM();
     const { addLog } = useSystemLogs();
-    const [inputValue, setInputValue] = useState('');
-    const [selectedStrategy, setSelectedStrategy] = useState<ExploitStrategy | 'RAW'>('RAW');
-    const [intensity, setIntensity] = useState<number>(50);
+    const [inputValue, setInputValue] = useLocalStorage<string>('redaeye-prime-input', '');
+    const [selectedStrategy, setSelectedStrategy] = useLocalStorage<ExploitStrategy | 'RAW'>('redaeye-prime-strategy', 'RAW');
+    const [intensity, setIntensity] = useLocalStorage<number>('redaeye-prime-intensity', 50);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([]);
     const [isSimulationMode, setIsSimulationMode] = useState(false);
@@ -273,6 +274,10 @@ const RedaeyePrime = React.memo(() => {
         { id: 'A07_LOGIC_BOMB', name: 'Logic Bomb', desc: 'Delays payload execution until conditions are met.' },
         { id: 'A26_LATEX_INJECT', name: 'LaTeX Injection', desc: 'Obfuscates text using mathematical formatting.' },
         { id: 'A39_SEMANTIC_WEAVE', name: 'Semantic Weave', desc: 'Iteratively drifts the model\'s latent state.' },
+        { id: 'RAE0388', name: 'Semantic Drift', desc: 'Induce iterative latent state migration.' },
+        { id: 'RAE0389', name: 'Recursive Decon', desc: 'Exploit model\'s awareness of constraints.' },
+        { id: 'RAE0407', name: 'Zero-Width Inject', desc: 'Invisible character-stream injection.' },
+        { id: 'RAE0408', name: 'Homoglyph Spoof', desc: 'Visual-logical character mismatch.' },
     ];
 
     const containerClasses = isFullScreen 
