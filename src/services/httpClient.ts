@@ -6,7 +6,7 @@ export interface RequestPolicy {
 
 const RETRYABLE_STATUS = new Set([408, 425, 429, 500, 502, 503, 504]);
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function isAbortError(error: unknown): boolean {
   return error instanceof DOMException && error.name === 'AbortError';
@@ -29,7 +29,7 @@ export async function fetchWithPolicy(
 
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+    const timeout = globalThis.setTimeout(() => controller.abort(), timeoutMs);
     const onCallerAbort = () => controller.abort();
     policy.signal?.addEventListener('abort', onCallerAbort, { once: true });
 
@@ -52,7 +52,7 @@ export async function fetchWithPolicy(
       if (!isAbortError(error) && attempt === retries) throw error;
       await sleep(Math.min(500 * 2 ** attempt, 5_000));
     } finally {
-      window.clearTimeout(timeout);
+      globalThis.clearTimeout(timeout);
       policy.signal?.removeEventListener('abort', onCallerAbort);
     }
   }
@@ -66,7 +66,10 @@ export async function readErrorMessage(response: Response): Promise<string> {
     const body = await response.text();
     if (!body) return fallback;
     try {
-      const parsed = JSON.parse(body) as { error?: { message?: string } | string; message?: string };
+      const parsed = JSON.parse(body) as {
+        error?: { message?: string } | string;
+        message?: string;
+      };
       if (typeof parsed.error === 'string') return parsed.error;
       if (parsed.error && typeof parsed.error.message === 'string') return parsed.error.message;
       if (typeof parsed.message === 'string') return parsed.message;
