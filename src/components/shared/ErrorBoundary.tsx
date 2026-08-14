@@ -36,14 +36,20 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
     return (
       <main className="flex h-full w-full items-center justify-center bg-background p-6 text-foreground">
-        <section className="w-full max-w-xl border border-danger/40 bg-secondary p-8 shadow-glow-accent" role="alert">
+        <section
+          className="w-full max-w-xl border border-danger/40 bg-secondary p-8 shadow-glow-accent"
+          role="alert"
+        >
           <p className="technical-font text-xs text-danger">RENDER_PIPELINE_FAILURE</p>
           <h1 className="mt-3 text-2xl font-black">Workspace unavailable</h1>
           <p className="mt-3 text-sm text-text-secondary">
-            This module stopped unexpectedly. Your session data was not sent with the diagnostic event.
+            This module stopped unexpectedly. Your session data was not sent with the diagnostic
+            event.
           </p>
           {this.state.errorId && (
-            <p className="mt-4 break-all font-mono text-xs text-text-secondary">Reference: {this.state.errorId}</p>
+            <p className="mt-4 break-all font-mono text-xs text-text-secondary">
+              Reference: {this.state.errorId}
+            </p>
           )}
           <button
             type="button"
