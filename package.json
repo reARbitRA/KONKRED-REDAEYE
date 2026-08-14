@@ -16,9 +16,16 @@
     "test:coverage": "vitest run --coverage",
     "preview": "vite preview",
     "electron:dev": "ELECTRON=true vite",
-    "electron:build": "ELECTRON=true vite build && electron-builder"
+    "electron:build": "ELECTRON=true vite build && electron-builder",
+    "mobile:prepare": "npm run build && npx cap copy",
+    "android:add": "npx cap add android",
+    "android:sync": "npm run build && npx cap sync android",
+    "android:build": "npm run android:sync && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/cli": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
     "@google/genai": "^1.17.0",
     "@tailwindcss/vite": "^4.2.0",
     "@types/d3": "^7.4.3",
