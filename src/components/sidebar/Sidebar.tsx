@@ -48,7 +48,7 @@ export const Sidebar = React.memo(({ activeView, setActiveView }: SidebarProps) 
 
   return (
     <motion.nav
-      aria-label="Primary workspace navigation" 
+      aria-label="Primary workspace navigation"
       initial={false}
       animate={{ width: isCollapsed ? 72 : 280 }}
       className="bg-primary border-r border-white/10 flex flex-col flex-shrink-0 relative z-[1000] shadow-2xl h-full overflow-hidden" /* FIXED: Sidebar layout, removed overflow-y-auto from root to keep header/footer fixed */
