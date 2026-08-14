@@ -1,16 +1,29 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard';
 import { LoginScreen } from './components/LoginScreen';
-import { Toaster } from 'react-hot-toast';
-import { useLocalStorage } from './hooks/useLocalStorage';
+import { Toaster, toast } from 'react-hot-toast';
+import { auth, googleSignIn } from './services/firebase';
+import { onAuthStateChanged, User } from 'firebase/auth';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useLocalStorage<boolean>('redaeye-auth', false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
-  const handleLogin = useCallback(() => {
-    setIsAuthenticated(true);
-  }, [setIsAuthenticated]);
+  useEffect(() => {
+    return onAuthStateChanged(auth, (nextUser) => {
+      setUser(nextUser);
+      setIsAuthLoading(false);
+    });
+  }, []);
+
+  const handleLogin = useCallback(async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Authentication failed.');
+    }
+  }, []);
 
   return (
     <div className="h-screen w-screen flex overflow-hidden bg-primary text-text-primary selection:bg-accent selection:text-white">
@@ -39,10 +52,14 @@ function App() {
           },
         }}
       />
-      {!isAuthenticated ? (
-        <LoginScreen onLogin={handleLogin} />
-      ) : (
+      {isAuthLoading ? (
+        <div className="h-full w-full flex items-center justify-center font-mono text-xs uppercase tracking-widest text-text-secondary">
+          Restoring authenticated session...
+        </div>
+      ) : user ? (
         <Dashboard />
+      ) : (
+        <LoginScreen onLogin={handleLogin} />
       )}
       <div id="scroll-debug" style={{position:'fixed', bottom:'4px', right:'4px', fontSize:'10px', color:'rgba(255,255,255,0.1)', zIndex:9999, pointerEvents:'none'}}>
         UI Debug Pass Complete ✓
