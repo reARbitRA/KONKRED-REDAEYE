@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode, useMemo, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { LLMProvider, UserProviderKey, ModelInfo } from '../types';
+import { fetchWithPolicy, readErrorMessage } from '../services/httpClient';
 
 interface APIKeyContextType {
   userKeys: UserProviderKey[];
@@ -109,7 +110,7 @@ export const APIKeyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         // Generic OpenAI-compatible fallback
         try {
             const genericUrl = `https://api.${providerId.toLowerCase()}.ai/v1/models`;
-            const response = await fetch(genericUrl, { headers });
+            const response = await fetchWithPolicy(genericUrl, { headers }, { timeoutMs: 15_000, retries: 1 });
             if (response.ok) {
                 const data = await response.json();
                 if (data.data && Array.isArray(data.data)) {
@@ -126,8 +127,8 @@ export const APIKeyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         throw new Error(`Provider ${providerId} model discovery not yet implemented.`);
     }
 
-    const response = await fetch(baseUrl, { headers });
-    if (!response.ok) throw new Error(`Failed to validate ${providerId} key.`);
+    const response = await fetchWithPolicy(baseUrl, { headers }, { timeoutMs: 15_000, retries: 1 });
+    if (!response.ok) throw new Error(await readErrorMessage(response));
     
     const data = await response.json();
     

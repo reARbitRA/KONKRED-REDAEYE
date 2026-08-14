@@ -6,6 +6,7 @@ import { useAPIKey } from './APIKeyContext';
 import { LLMProvider } from '../types';
 import { PhaseEngine } from '../services/PhaseEngine';
 import { ALL_PROVIDERS } from '../codex-data/providers';
+import { fetchWithPolicy, readErrorMessage } from '../services/httpClient';
 
 interface LLMContextType {
   ai: GoogleGenAI | null;
@@ -103,7 +104,7 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
             body.response_format = { type: 'json_object' };
         }
 
-        const response = await fetch(`${baseUrl}/chat/completions`, {
+        const response = await fetchWithPolicy(`${baseUrl}/chat/completions`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${selectedModel.key}`,
@@ -113,8 +114,7 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
         });
 
         if (!response.ok) {
-            const err = await response.json();
-            throw new Error(err?.error?.message || "Provider communication failure.");
+            throw new Error(await readErrorMessage(response));
         }
 
         const data = await response.json();
@@ -181,7 +181,7 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
     // Add current message
     messagesPayload.push({ role: 'user', content: fusedPayload });
 
-    const response = await fetch(`${baseUrl}/chat/completions`, {
+    const response = await fetchWithPolicy(`${baseUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${selectedModel.key}`,
@@ -197,8 +197,7 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
     });
 
     if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err?.error?.message || "Provider communication failure.");
+        throw new Error(await readErrorMessage(response));
     }
 
     const reader = response.body?.getReader();
