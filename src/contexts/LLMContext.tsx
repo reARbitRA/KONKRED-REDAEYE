@@ -6,8 +6,8 @@ import { useAPIKey } from './APIKeyContext';
 import { LLMProvider } from '../types';
 import { PhaseEngine } from '../services/PhaseEngine';
 import { ALL_PROVIDERS } from '../codex-data/providers';
+import { ProviderClient } from '../services/providerClient';
 import { fetchWithPolicy, readErrorMessage } from '../services/httpClient';
-import { ChatCompletionResponseSchema, formatSchemaError } from '../services/providerSchemas';
 
 interface LLMContextType {
   ai: GoogleGenAI | null;
@@ -81,48 +81,26 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
         return result.text || "";
     } else if (selectedModel) {
         const providerConfig = ALL_PROVIDERS.find(p => p.id === selectedModel.provider);
-        let baseUrl = providerConfig?.baseUrl || "https://openrouter.ai/api/v1";
-        
-        // Handle Cloudflare special case
+        let baseUrl = providerConfig?.baseUrl || 'https://openrouter.ai/api/v1';
+
         if (selectedModel.provider === LLMProvider.CLOUDFLARE) {
             baseUrl = baseUrl.replace('{account_id}', selectedModel.key.split(':')[0]);
         }
 
-        const messages: any[] = [];
-        const sysInst = config?.systemInstruction || systemInstruction;
-        if (sysInst) {
-            messages.push({ role: 'system', content: sysInst });
-        }
-        messages.push({ role: 'user', content: prompt });
+        const messages = systemInstruction
+            ? [{ role: 'system' as const, content: systemInstruction }, { role: 'user' as const, content: prompt }]
+            : [{ role: 'user' as const, content: prompt }];
 
-        const body: any = {
+        return new ProviderClient({
+            provider: selectedModel.provider,
+            baseUrl,
+            apiKey: selectedModel.key,
+        }).complete({
             model: selectedModel.modelId,
-            messages: messages,
-            temperature: config?.temperature || 0.7,
-        };
-
-        if (config?.responseMimeType === 'application/json') {
-            body.response_format = { type: 'json_object' };
-        }
-
-        const response = await fetchWithPolicy(`${baseUrl}/chat/completions`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${selectedModel.key}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
+            messages,
+            temperature: config?.temperature,
+            responseFormat: config?.responseMimeType === 'application/json' ? 'json_object' : undefined,
         });
-
-        if (!response.ok) {
-            throw new Error(await readErrorMessage(response));
-        }
-
-        const parsed = ChatCompletionResponseSchema.safeParse(await response.json());
-        if (!parsed.success) {
-            throw formatSchemaError(parsed.error, selectedModel.provider);
-        }
-        return parsed.data.choices[0]?.message.content || "";
     } else {
         throw new Error("No active node link established.");
     }
