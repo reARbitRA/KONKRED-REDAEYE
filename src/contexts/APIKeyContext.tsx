@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, ReactNode, useMemo, useEffe
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { LLMProvider, UserProviderKey, ModelInfo } from '../types';
 import { fetchWithPolicy, readErrorMessage } from '../services/httpClient';
+import { ModelsResponseSchema, formatSchemaError } from '../services/providerSchemas';
 
 interface APIKeyContextType {
   userKeys: UserProviderKey[];
@@ -112,16 +113,17 @@ export const APIKeyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
             const genericUrl = `https://api.${providerId.toLowerCase()}.ai/v1/models`;
             const response = await fetchWithPolicy(genericUrl, { headers }, { timeoutMs: 15_000, retries: 1 });
             if (response.ok) {
-                const data = await response.json();
-                if (data.data && Array.isArray(data.data)) {
-                    return data.data.map((m: any) => ({
+                const parsed = ModelsResponseSchema.safeParse(await response.json());
+                if (parsed.success) {
+                    return parsed.data.data.map(m => ({
                         id: m.id,
                         name: m.id.split('/').pop() || m.id,
                         provider: providerId,
                         tier: 'Standard',
-                        modalities: ['Text']
+                        modalities: ['Text'] as ('Text')[]
                     }));
                 }
+                throw formatSchemaError(parsed.error, providerId);
             }
         } catch (e) {}
         throw new Error(`Provider ${providerId} model discovery not yet implemented.`);
@@ -130,20 +132,18 @@ export const APIKeyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     const response = await fetchWithPolicy(baseUrl, { headers }, { timeoutMs: 15_000, retries: 1 });
     if (!response.ok) throw new Error(await readErrorMessage(response));
     
-    const data = await response.json();
-    
-    // Map OpenAI-compatible models list
-    if (data.data && Array.isArray(data.data)) {
-        return data.data.map((m: any) => ({
-            id: m.id,
-            name: m.id.split('/').pop() || m.id,
-            provider: providerId,
-            tier: 'Standard',
-            modalities: ['Text']
-        }));
+    const parsed = ModelsResponseSchema.safeParse(await response.json());
+    if (!parsed.success) {
+      throw formatSchemaError(parsed.error, providerId);
     }
 
-    return [];
+    return parsed.data.data.map(m => ({
+        id: m.id,
+        name: m.id.split('/').pop() || m.id,
+        provider: providerId,
+        tier: 'Standard',
+        modalities: ['Text'] as ('Text')[]
+    }));
   };
 
   const addUserKey = (providerId: LLMProvider, key: string) => {

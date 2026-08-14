@@ -7,6 +7,7 @@ import { LLMProvider } from '../types';
 import { PhaseEngine } from '../services/PhaseEngine';
 import { ALL_PROVIDERS } from '../codex-data/providers';
 import { fetchWithPolicy, readErrorMessage } from '../services/httpClient';
+import { ChatCompletionResponseSchema, formatSchemaError } from '../services/providerSchemas';
 
 interface LLMContextType {
   ai: GoogleGenAI | null;
@@ -117,8 +118,11 @@ export const LLMContextProvider: React.FC<{ children: ReactNode }> = ({ children
             throw new Error(await readErrorMessage(response));
         }
 
-        const data = await response.json();
-        return data.choices?.[0]?.message?.content || "";
+        const parsed = ChatCompletionResponseSchema.safeParse(await response.json());
+        if (!parsed.success) {
+            throw formatSchemaError(parsed.error, selectedModel.provider);
+        }
+        return parsed.data.choices[0]?.message.content || "";
     } else {
         throw new Error("No active node link established.");
     }
