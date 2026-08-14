@@ -22,7 +22,9 @@
     "mobile:prepare": "npm run build && npx cap copy",
     "android:add": "npx cap add android",
     "android:sync": "npm run build && npx cap sync android",
-    "android:build": "npm run android:sync && cd android && ./gradlew assembleDebug"
+    "android:build": "npm run android:sync && cd android && ./gradlew assembleDebug",
+    "docker:build": "docker build -t konkred-redaeye:local .",
+    "firebase:deploy": "npm run build && firebase deploy --only hosting,firestore"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.0",
