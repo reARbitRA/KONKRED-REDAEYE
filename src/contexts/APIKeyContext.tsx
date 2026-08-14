@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode, useMemo } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useMemo, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { LLMProvider, UserProviderKey, ModelInfo } from '../types';
 
@@ -20,9 +20,17 @@ interface APIKeyContextType {
 const APIKeyContext = createContext<APIKeyContextType | undefined>(undefined);
 
 export const APIKeyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [userKeys, setUserKeys] = useLocalStorage<UserProviderKey[]>('sovereign-keys', []);
+  // Provider secrets must never be persisted to localStorage. Keep them in
+  // memory for this renderer session until a backend vault or OS keychain
+  // integration is available.
+  const [userKeys, setUserKeys] = useState<UserProviderKey[]>([]);
   const [availableModels, setAvailableModels] = useLocalStorage<ModelInfo[]>('sovereign-models', []);
   const [selectedModelId, setSelectedModelId] = useLocalStorage<string | null>('sovereign-selected-model', null);
+
+  useEffect(() => {
+    // Remove plaintext credentials written by older versions of the app.
+    window.localStorage.removeItem('sovereign-keys');
+  }, []);
 
   const validateAndFetchModels = async (providerId: LLMProvider, key: string): Promise<ModelInfo[]> => {
     let baseUrl = "";
