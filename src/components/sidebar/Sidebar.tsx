@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { View, ViewConfig } from '../../types';
 import { 
@@ -38,8 +38,17 @@ interface SidebarProps {
 export const Sidebar = React.memo(({ activeView, setActiveView }: SidebarProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const syncWithViewport = () => setIsCollapsed(mediaQuery.matches);
+    syncWithViewport();
+    mediaQuery.addEventListener('change', syncWithViewport);
+    return () => mediaQuery.removeEventListener('change', syncWithViewport);
+  }, []);
+
   return (
-    <motion.nav 
+    <motion.nav
+      aria-label="Primary workspace navigation" 
       initial={false}
       animate={{ width: isCollapsed ? 72 : 280 }}
       className="bg-primary border-r border-white/10 flex flex-col flex-shrink-0 relative z-[1000] shadow-2xl h-full overflow-hidden" /* FIXED: Sidebar layout, removed overflow-y-auto from root to keep header/footer fixed */
@@ -49,6 +58,8 @@ export const Sidebar = React.memo(({ activeView, setActiveView }: SidebarProps) 
       </div>
 
       <button 
+        type="button"
+        aria-label={isCollapsed ? 'Expand navigation' : 'Collapse navigation'}
         onClick={() => setIsCollapsed(!isCollapsed)}
         className="absolute -right-3 top-24 w-6 h-6 bg-tertiary border border-white/10 rounded-full flex items-center justify-center text-text-secondary hover:text-white hover:border-accent transition-all z-50 shadow-lg"
       >
