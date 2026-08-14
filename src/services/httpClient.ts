@@ -47,7 +47,7 @@ export async function fetchWithPolicy(
     } catch (error) {
       if (policy.signal?.aborted) throw error;
       if (isAbortError(error) && attempt === retries) {
-        throw new Error(`Request timed out after ${timeoutMs}ms.`);
+        throw new Error(`Request timed out after ${timeoutMs}ms.`, { cause: error });
       }
       if (!isAbortError(error) && attempt === retries) throw error;
       await sleep(Math.min(500 * 2 ** attempt, 5_000));
