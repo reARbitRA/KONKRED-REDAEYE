@@ -7,15 +7,18 @@ import './index.css';
 import { APIKeyProvider } from './contexts/APIKeyContext';
 import { LLMContextProvider } from './contexts/LLMContext';
 import { SystemLogProvider } from './contexts/SystemLogContext';
+import { ErrorBoundary } from './components/shared/ErrorBoundary';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <APIKeyProvider>
-      <SystemLogProvider>
-        <LLMContextProvider>
-          <App />
-        </LLMContextProvider>
-      </SystemLogProvider>
-    </APIKeyProvider>
+    <ErrorBoundary>
+      <APIKeyProvider>
+        <SystemLogProvider>
+          <LLMContextProvider>
+            <App />
+          </LLMContextProvider>
+        </SystemLogProvider>
+      </APIKeyProvider>
+    </ErrorBoundary>
   </React.StrictMode>
 );
