@@ -1,37 +1,37 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { lazy, Suspense, useState, useRef, useEffect, useCallback } from 'react';
 import { View } from '../types';
-import RedaeyePrime from './RedaeyePrime';
-import { FusionChamber } from './FusionChamber';
-import { ExploitationLab } from './ExploitationLab';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-
-
-import { ReportingPage } from './ReportingPage';
-import { DeepScan } from './DeepScan';
-
-import { CodeRunner } from './CodeRunner';
-
 import { Sidebar } from './sidebar/Sidebar';
-import { SemanticWeaver } from './SemanticWeaver';
-import { RecursionForge } from './RecursionForge';
-import { DissonanceCascade } from './DissonanceCascade';
-import { EroticaKinkLab } from './EroticaKinkLab';
-import { LibraryPage } from './LibraryPage';
-import { KeyManager } from './KeyManager';
-import { SettingsPage } from './SettingsPage';
-import { ProfilePage } from './ProfilePage';
-import { WorkspaceSync } from './WorkspaceSync';
-import { RedaeyeIntro } from './RedaeyeIntro';
-import { IntroPage } from './IntroPage';
-import { RedaeyeCli } from './RedaeyeCli';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PerformanceMonitor } from './shared/PerformanceMonitor';
 import { useSystemLogs } from '../contexts/SystemLogContext';
 import { jsPDF } from 'jspdf';
-import { FileText, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { useLLM } from '../contexts/LLMContext';
 
-import { PerformanceDashboard } from './PerformanceDashboard';
+const RedaeyePrime = lazy(() => import('./RedaeyePrime'));
+const lazyNamed = <T extends React.ComponentType<any>>(loader: () => Promise<Record<string, T>>, name: string) =>
+  lazy(async () => ({ default: (await loader())[name] }));
+
+const FusionChamber = lazyNamed(() => import('./FusionChamber'), 'FusionChamber');
+const ExploitationLab = lazyNamed(() => import('./ExploitationLab'), 'ExploitationLab');
+const ReportingPage = lazyNamed(() => import('./ReportingPage'), 'ReportingPage');
+const DeepScan = lazyNamed(() => import('./DeepScan'), 'DeepScan');
+const CodeRunner = lazyNamed(() => import('./CodeRunner'), 'CodeRunner');
+const SemanticWeaver = lazyNamed(() => import('./SemanticWeaver'), 'SemanticWeaver');
+const RecursionForge = lazyNamed(() => import('./RecursionForge'), 'RecursionForge');
+const DissonanceCascade = lazyNamed(() => import('./DissonanceCascade'), 'DissonanceCascade');
+const EroticaKinkLab = lazyNamed(() => import('./EroticaKinkLab'), 'EroticaKinkLab');
+const LibraryPage = lazyNamed(() => import('./LibraryPage'), 'LibraryPage');
+const KeyManager = lazyNamed(() => import('./KeyManager'), 'KeyManager');
+const SettingsPage = lazyNamed(() => import('./SettingsPage'), 'SettingsPage');
+const ProfilePage = lazyNamed(() => import('./ProfilePage'), 'ProfilePage');
+const WorkspaceSync = lazyNamed(() => import('./WorkspaceSync'), 'WorkspaceSync');
+const RedaeyeIntro = lazyNamed(() => import('./RedaeyeIntro'), 'RedaeyeIntro');
+const IntroPage = lazyNamed(() => import('./IntroPage'), 'IntroPage');
+const RedaeyeCli = lazyNamed(() => import('./RedaeyeCli'), 'RedaeyeCli');
+const PerformanceDashboard = lazyNamed(() => import('./PerformanceDashboard'), 'PerformanceDashboard');
+const SystemTerminal = lazyNamed(() => import('./shared/SystemTerminal'), 'SystemTerminal');
 
 const crtVariants: any = {
   initial: {
@@ -52,8 +52,6 @@ const crtVariants: any = {
     }
   }
 };
-
-import { SystemTerminal } from './shared/SystemTerminal';
 
 const Dashboard: React.FC = () => {
   const [activeView, setActiveView] = useLocalStorage<View>('redaeye-active-view', View.INTRO);
@@ -196,7 +194,13 @@ const Dashboard: React.FC = () => {
     setActiveView(view);
   }, [activeView, setActiveView]);
 
-  const renderView = () => {
+  const renderView = () => (
+    <Suspense fallback={
+      <div className="flex min-h-[40vh] flex-1 items-center justify-center font-mono text-xs uppercase tracking-widest text-text-secondary" role="status" aria-live="polite">
+        Loading workspace module...
+      </div>
+    }>
+      {(() => {
     switch (activeView) {
       case View.INTRO:
         return <IntroPage />;
@@ -237,14 +241,20 @@ const Dashboard: React.FC = () => {
       default:
         return <RedaeyePrime />;
     }
-  };
+      })()}
+    </Suspense>
+  );
 
   const handleIntroComplete = useCallback(() => {
     setShowIntro(false);
   }, [setShowIntro]);
 
   if (showIntro) {
-      return <RedaeyeIntro onComplete={handleIntroComplete} />;
+      return (
+        <Suspense fallback={<div className="h-full w-full bg-background" role="status" aria-label="Loading introduction" />}>
+          <RedaeyeIntro onComplete={handleIntroComplete} />
+        </Suspense>
+      );
   }
 
   return (

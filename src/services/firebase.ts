@@ -7,10 +7,10 @@ import {
   User 
 } from 'firebase/auth';
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, getDocFromServer, getFirestore as getFS } from 'firebase/firestore';
-import firebaseConfig from '../../firebase-applet-config.json';
+import { runtimeConfig } from './runtimeConfig';
 
 // Initialize Firebase App
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const app = getApps().length === 0 ? initializeApp(runtimeConfig.firebase) : getApps()[0];
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);

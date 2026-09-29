@@ -10,6 +10,16 @@ export default defineConfig(({ mode }) => {
     const isElectron = process.env.ELECTRON === 'true';
 
     return {
+      transformIndexHtml: mode === 'production' ? {
+        tags: [{
+          tag: 'meta',
+          injectTo: 'head-prepend',
+          attrs: {
+            'http-equiv': 'Content-Security-Policy',
+            content: "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; frame-src 'self';",
+          },
+        }],
+      } : undefined,
       server: {
         port: 3000,
         host: '0.0.0.0',

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import DOMPurify from 'dompurify';
 import { motion } from 'framer-motion';
 
 /* ENHANCED: Magnetic component for micro-interactions */
@@ -44,10 +45,15 @@ export const SVGChart: React.FC<ChartProps> = ({ svg, className = "" }) => {
 
     useEffect(() => {
         if (containerRef.current) {
-            // We use dangerouslySetInnerHTML because the SVG is generated as a string
-            // and contains <animate> tags which React doesn't always handle perfectly 
-            // when rendered as JSX in some environments.
-            containerRef.current.innerHTML = svg;
+            // Chart strings can contain user/model-derived labels. Sanitize before
+            // inserting them into the DOM; SVG is an active content format.
+            const safeSvg = DOMPurify.sanitize(svg, {
+                USE_PROFILES: { svg: true },
+                ADD_TAGS: ['animate'],
+                FORBID_TAGS: ['script', 'foreignObject'],
+                FORBID_ATTR: ['style', 'onload', 'onclick', 'onerror'],
+            });
+            containerRef.current.innerHTML = safeSvg;
         }
     }, [svg]);
 
