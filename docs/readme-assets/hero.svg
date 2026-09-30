@@ -1,0 +1,68 @@
+<svg width="1600" height="620" viewBox="0 0 1600 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#050505"/>
+      <stop offset="1" stop-color="#0d1117"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(330 170) rotate(16) scale(400 220)">
+      <stop stop-color="#f5279c" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#f5279c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1320 500) rotate(16) scale(420 260)">
+      <stop stop-color="#f97516" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#f97516" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="white" stroke-opacity="0.06"/>
+    </pattern>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="620" fill="url(#bg)"/>
+  <rect width="1600" height="620" fill="url(#grid)"/>
+  <ellipse cx="330" cy="170" rx="400" ry="220" fill="url(#glow1)"/>
+  <ellipse cx="1320" cy="500" rx="420" ry="260" fill="url(#glow2)"/>
+  <rect x="68" y="58" width="1464" height="504" rx="28" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+  <rect x="92" y="92" width="700" height="430" rx="20" fill="#0b0f17" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="96" y="96" width="692" height="52" rx="16" fill="rgba(255,255,255,0.03)"/>
+  <circle cx="126" cy="122" r="6" fill="#f85149"/>
+  <circle cx="148" cy="122" r="6" fill="#f97516"/>
+  <circle cx="170" cy="122" r="6" fill="#2ea043"/>
+  <text x="118" y="208" fill="#8b949e" font-family="'JetBrains Mono', monospace" font-size="18" letter-spacing="3">SOVEREIGN ADVERSARIAL RESEARCH PLATFORM</text>
+  <text x="118" y="274" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="900">KONKRED</text>
+  <text x="118" y="346" fill="#f5279c" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="900">REDAEYE</text>
+  <text x="118" y="398" fill="#b9c3e6" font-family="Inter, Arial, sans-serif" font-size="24">Mission-control workspace + validated corpus + provider stack + hardened shell.</text>
+  <g>
+    <rect x="118" y="436" width="188" height="42" rx="21" fill="rgba(245,39,156,0.12)" stroke="rgba(245,39,156,0.32)"/>
+    <text x="145" y="463" fill="#f5279c" font-family="'JetBrains Mono', monospace" font-size="17" font-weight="700">React / TypeScript</text>
+    <rect x="320" y="436" width="122" height="42" rx="21" fill="rgba(249,117,22,0.12)" stroke="rgba(249,117,22,0.32)"/>
+    <text x="348" y="463" fill="#f97516" font-family="'JetBrains Mono', monospace" font-size="17" font-weight="700">Electron</text>
+    <rect x="456" y="436" width="118" height="42" rx="21" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.18)"/>
+    <text x="489" y="463" fill="#e6edf3" font-family="'JetBrains Mono', monospace" font-size="17" font-weight="700">Firebase</text>
+    <rect x="588" y="436" width="145" height="42" rx="21" fill="rgba(46,160,67,0.12)" stroke="rgba(46,160,67,0.28)"/>
+    <text x="621" y="463" fill="#2ea043" font-family="'JetBrains Mono', monospace" font-size="17" font-weight="700">REDAEYE Core</text>
+  </g>
+  <g>
+    <rect x="855" y="102" width="606" height="420" rx="24" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+    <text x="886" y="144" fill="#8b949e" font-family="'JetBrains Mono', monospace" font-size="18" letter-spacing="3">LIVE SYSTEM MAP</text>
+    <rect x="886" y="174" width="250" height="82" rx="18" fill="#111111" stroke="rgba(255,255,255,0.12)"/>
+    <text x="910" y="210" fill="#ffffff" font-family="Inter, Arial" font-size="26" font-weight="800">Application Layer</text>
+    <text x="910" y="238" fill="#b9c3e6" font-family="Inter, Arial" font-size="18">Auth · UI · Provider Keys · Reporting</text>
+    <rect x="1180" y="174" width="250" height="82" rx="18" fill="#111111" stroke="rgba(255,255,255,0.12)"/>
+    <text x="1204" y="210" fill="#ffffff" font-family="Inter, Arial" font-size="26" font-weight="800">Corpus Layer</text>
+    <text x="1204" y="238" fill="#b9c3e6" font-family="Inter, Arial" font-size="18">Entries · Tools · Navigator · Logs</text>
+    <rect x="886" y="286" width="544" height="88" rx="18" fill="#0d1117" stroke="rgba(245,39,156,0.28)"/>
+    <text x="913" y="324" fill="#ffffff" font-family="Inter, Arial" font-size="28" font-weight="800">Legacy Preservation Patch</text>
+    <text x="913" y="354" fill="#f5279c" font-family="'JetBrains Mono', monospace" font-size="18">raw archive + per-ID JSON + entry-embedded Base64 preservation blocks</text>
+    <rect x="886" y="406" width="170" height="76" rx="16" fill="#111111" stroke="rgba(255,255,255,0.10)"/>
+    <text x="918" y="439" fill="#ffffff" font-family="Inter, Arial" font-size="24" font-weight="800">240 / 367</text>
+    <text x="918" y="465" fill="#8b949e" font-family="Inter, Arial" font-size="18">enhanced / validated</text>
+    <rect x="1082" y="406" width="150" height="76" rx="16" fill="#111111" stroke="rgba(255,255,255,0.10)"/>
+    <text x="1112" y="439" fill="#ffffff" font-family="Inter, Arial" font-size="24" font-weight="800">116</text>
+    <text x="1112" y="465" fill="#8b949e" font-family="Inter, Arial" font-size="18">full-depth</text>
+    <rect x="1250" y="406" width="180" height="76" rx="16" fill="#111111" stroke="rgba(255,255,255,0.10)"/>
+    <text x="1280" y="439" fill="#ffffff" font-family="Inter, Arial" font-size="24" font-weight="800">17 / 17</text>
+    <text x="1280" y="465" fill="#8b949e" font-family="Inter, Arial" font-size="18">QA campaign pass</text>
+  </g>
+</svg>
