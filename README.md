@@ -1,32 +1,169 @@
 # KONKRED REDAEYE
 
-KONKRED REDAEYE is a React/TypeScript research workspace with Firebase authentication, provider adapters, a hardened Electron shell, PWA installation support, and an optional Capacitor Android wrapper.
+KONKRED REDAEYE is a React + TypeScript adversarial research workspace with Firebase authentication, multi-provider model connectivity, a hardened Electron shell, PWA/Capacitor packaging, and an embedded REDAEYE corpus export for structured technique review.
 
-## Status
+This repository currently contains **two distinct but related layers**:
 
-This repository is at **solid internal-alpha / controlled-beta foundation** maturity. Build and typecheck pass, runtime provider responses are schema-validated, provider transport has timeouts and retry policy, the Electron renderer is hardened, and dependencies currently report zero moderate-or-higher vulnerabilities.
+1. **The application platform** — the main web/Electron/PWA product under `src/`, `public/`, `electron/`, and the root build/config files.
+2. **The REDAEYE Library bundle** — a copied research bundle under `REDAEYE_LIBRARY/` containing entries, tools, navigator, harness assets, and preserved legacy source material.
 
-The application is **not** a substitute for a secure provider gateway: provider credentials are session-only in the renderer and should not be used for regulated or high-sensitivity workloads until a backend vault boundary is deployed.
+---
 
-## Requirements
+## 1) What this repository is
 
-- Node.js 22+
-- npm 10+
-- Firebase project for authentication and Firestore-backed workspace features
-- Optional: Docker for container builds
-- Optional: JDK, Android SDK, and Gradle for APK builds
+### Application layer
+The application is a mission-control style workspace for model interaction, prompt experimentation, provider key management, reporting, and codex browsing. It includes:
 
-## Local development
+- Firebase-authenticated access flow
+- Provider adapters with normalized OpenAI-compatible transport
+- Session-only API key handling in the renderer
+- Lazy-loaded React modules for multiple research workspaces
+- Hardened Electron boundary for local execution
+- PWA and optional Android packaging support
 
+### Corpus / library layer
+The embedded REDAEYE bundle is a structured technique corpus export. It contains:
+
+- technique entries
+- validation/build tools
+- navigator output
+- harness and bounty support artifacts
+- references, queue state, and progress logs
+- lossless legacy preservation archives
+
+---
+
+## 2) Repository map
+
+### Root application
+| Path | Purpose |
+|---|---|
+| `src/` | Main React/TypeScript application |
+| `public/` | PWA/static assets |
+| `electron/` | Hardened Electron main/preload boundary |
+| `tests/` | Playwright smoke/e2e tests |
+| `package.json` | Scripts, runtime dependencies, build flow |
+| `firebase.json` / Firestore files | Hosting, rules, and index config |
+| `Dockerfile` / `nginx.conf` | Containerized production web serving |
+
+### REDAEYE bundle
+| Path | Purpose |
+|---|---|
+| `REDAEYE_LIBRARY/entries/` | Copied REDAEYE entries |
+| `REDAEYE_LIBRARY/tools/` | Validators, compilers, preservation scripts |
+| `REDAEYE_LIBRARY/harness/` | Assessment harness and QA campaign |
+| `REDAEYE_LIBRARY/bounty/` | Bounty platform artifacts |
+| `REDAEYE_LIBRARY/navigator/` | Offline navigator/library view |
+| `REDAEYE_LIBRARY/core/` | Registry, references, triage, queue, spec |
+| `REDAEYE_LIBRARY/docs/` | Progress and validation logs |
+| `REDAEYE_LIBRARY/legacy_preservation/` | Lossless raw legacy archive |
+| `REDAEYE_LIBRARY/index.html` | Clean landing page into the copied library |
+
+---
+
+## 3) Main runtime architecture
+
+### 3.1 UI shell
+The UI is centered around `src/App.tsx` and `src/components/Dashboard.tsx`.
+
+The dashboard lazy-loads multiple workspaces, including:
+
+- Prime workspace
+- Fusion / lab views
+- reporting / scan views
+- library / codex views
+- settings / profile / sync views
+- API key / provider explorer
+- CLI-like interface modules
+- performance / telemetry overlays
+
+### 3.2 Authentication and workspace access
+Firebase Auth gates the main application. The app restores authenticated sessions on load and routes authenticated users into the dashboard.
+
+### 3.3 Provider connectivity
+Provider integration is built around:
+
+- `src/services/httpClient.ts`
+- `src/services/providerClient.ts`
+- `src/services/providerSchemas.ts`
+
+Key properties:
+
+| Capability | Behavior |
+|---|---|
+| timeout policy | enforced |
+| retry behavior | only on retryable/transient status classes |
+| caller cancellation | preserved |
+| schema validation | response payloads validated with Zod |
+| model listing | normalized `/models` fetch |
+| completions | normalized `/chat/completions` path |
+
+### 3.4 Local key handling
+`KeyManager.tsx` provides a provider registry + validation flow for local/session API key use. The application intentionally avoids long-lived insecure persistence for provider secrets.
+
+### 3.5 Reporting and export
+The dashboard can export forensic session PDFs via `jsPDF`, and the repository includes reporting and codex detail surfaces for analysis and review.
+
+---
+
+## 4) Security posture
+
+This repository already includes a meaningful security baseline.
+
+| Control | Status |
+|---|---|
+| Firebase Auth front-door | present |
+| session-only provider credentials | present |
+| response schema validation | present |
+| request timeout/retry policy | present |
+| Electron context isolation | present |
+| Electron node integration disabled | present |
+| Electron sandboxing | present |
+| SVG sanitization | present |
+| CSP / production hardening | present |
+| security policy file | present (`SECURITY.md`) |
+
+### Important security limit
+This application is **not yet a substitute for a backend secret vault**. Renderer/session-only handling is safer than legacy persistent storage, but production-grade regulated or sensitive use still needs a proper backend boundary for provider credentials and policy enforcement.
+
+---
+
+## 5) REDAEYE corpus / library status
+
+The bundled REDAEYE library is not a loose folder dump. It is a structured export with validation and legacy-preservation discipline.
+
+### Current embedded corpus state
+| Metric | Value |
+|---|---:|
+| total corpus size | 367 legacy-origin cards |
+| enhanced / validated entries | 240 |
+| full-depth entries | 116 |
+| compact entries | 124 |
+| remaining legacy-only cards | 127 |
+| validator status | PASS |
+| QA campaign | PASS |
+
+### Legacy preservation
+The bundle preserves raw legacy source material in two ways:
+
+| Preservation layer | Description |
+|---|---|
+| per-ID archive | raw JSON preserved under `REDAEYE_LIBRARY/legacy_preservation/by_id/` |
+| entry-level preservation block | enhanced entries include recoverable legacy raw blocks |
+
+This means the v2 interpretation can stay safety-labeled and evidence-disciplined **without losing the original legacy record**.
+
+---
+
+## 6) Development workflow
+
+### Local development
 ```bash
 npm ci
 npm run dev
 ```
 
-Open the Vite URL shown in the terminal. Do not put real credentials in `.env` files or commit them.
-
-## Quality gates
-
+### Core quality gates
 ```bash
 npm run lint
 npm run format:check
@@ -35,56 +172,151 @@ npm run build
 npm audit --audit-level=moderate
 ```
 
-The current automated unit suite covers provider transport, response schemas, and PhaseEngine behavior.
-
-## Production web build
-
+### Preview production build
 ```bash
 npm run build
 npm run preview
 ```
 
-The production build injects a CSP and emits hashed assets. Feature modules are lazy-loaded to reduce initial startup cost.
+### Electron build
+```bash
+npm run electron:build
+```
 
-## Docker
+### Android / tablet packaging
+```bash
+npm run android:add
+npm run android:build
+```
 
+### Docker build
 ```bash
 npm run docker:build
 docker run --rm -p 8080:8080 konkred-redaeye:local
 ```
 
-The image uses a Node build stage and Nginx runtime stage with SPA fallback, health checks, cache headers, and baseline security headers.
-
-## Firebase
-
-Firebase configuration is in `firebase.json`; the project ID is configured in `.firebaserc`.
-
+### Firebase deployment
 ```bash
 firebase emulators:start
 npm run build
 npm run firebase:deploy
 ```
 
-Before deploying Firestore rules, test owner isolation and malformed-document rejection with the Emulator Suite. Never deploy rules or indexes from an unreviewed working tree.
+---
 
-## Android / tablet
+## 7) Testing model
 
-The web application is installable as a PWA over HTTPS. Capacitor configuration and scripts are included for native Android packaging:
+### Unit / integration coverage
+The current test posture includes:
 
+- provider transport behavior
+- schema validation behavior
+- core service behavior
+- smoke/e2e scaffolding via Playwright
+
+### Corpus QA coverage
+The REDAEYE bundle adds its own non-app QA layers:
+
+- entry validator
+- citation integrity
+- cross-reference checks
+- payload ID checks
+- navigator build checks
+- deterministic harness runs
+
+---
+
+## 8) Recommended production hardening roadmap
+
+| Priority | Recommendation |
+|---|---|
+| P0 | move provider secrets behind backend vault or secure OS storage |
+| P0 | maintain output-side moderation independent of UI prompt structure |
+| P1 | formalize retention/redaction policy for prompts, outputs, and keys |
+| P1 | sign Electron releases and keep hardened window policy audited |
+| P1 | add stronger server-side policy gates for tool-using workflows |
+| P2 | separate sensitive operations from renderer-only trust assumptions |
+| P2 | document provider compatibility and trust boundaries per adapter |
+
+---
+
+## 9) What the REDAEYE bundle is for
+
+The `REDAEYE_LIBRARY/` folder is the **repository-ready corpus export**. It exists so the corpus can be:
+
+- pushed independently of the live application code
+- reviewed structurally
+- validated offline
+- browsed through the bundled navigator
+- archived with lossless legacy recovery
+
+If you only care about the app, focus on the root application. If you only care about the corpus, start in `REDAEYE_LIBRARY/`.
+
+---
+
+## 10) Safe usage note
+
+This repository contains adversarial-research-oriented material and tooling. The intended use is:
+
+- defensive evaluation
+- structured red-teaming in authorized environments
+- corpus analysis
+- safe canary-based testing
+- architectural review and validation
+
+Use of provider keys, RAG pipelines, agent tools, and uploaded data should remain within authorized scope.
+
+---
+
+## 11) Quick start by use case
+
+### I want to run the app
 ```bash
-npm run android:add
-npm run android:build
+npm ci
+npm run dev
 ```
 
-The APK is emitted at `android/app/build/outputs/apk/debug/app-debug.apk`. A JDK and Android SDK are required.
+### I want to inspect the corpus
+Open:
+- `REDAEYE_LIBRARY/index.html`
+- or `REDAEYE_LIBRARY/navigator/index.html`
 
-## Security model
+### I want to validate the embedded corpus
+```bash
+cd REDAEYE_LIBRARY
+python3 tools/validate_entries.py
+```
 
-- Main application access is controlled by Firebase Auth.
-- Provider keys are held in memory only and removed from legacy local storage on startup.
-- Electron has Node integration disabled, context isolation enabled, sandboxing enabled, navigation restrictions, and a preload boundary.
-- Generated SVG is sanitized before DOM insertion.
-- Production web builds use CSP and Nginx/Firebase security headers.
-- Do not log provider keys, OAuth tokens, prompts, or complete model outputs.
+### I want to review raw preserved legacy data
+See:
+- `REDAEYE_LIBRARY/legacy_preservation/manifest.json`
+- `REDAEYE_LIBRARY/legacy_preservation/by_id/`
 
-Report vulnerabilities privately according to `SECURITY.md`.
+---
+
+## 12) Security reporting
+
+For vulnerabilities, do **not** open a public issue with secrets, live exploit data, or third-party information.
+
+Follow `SECURITY.md` and include:
+
+- affected version / commit
+- reproducible steps
+- impact summary
+- minimal proof without real credentials or real user data
+
+---
+
+## 13) Current repository reality
+
+This project is best understood as:
+
+| Layer | Role |
+|---|---|
+| app | authenticated research workspace |
+| adapters | provider connectivity with normalized transport |
+| shell | Electron/PWA/mobile packaging |
+| corpus | REDAEYE technique archive + navigator + QA |
+| archive | lossless preservation of raw legacy records |
+
+It is already beyond toy stage, but it is **not done**. The right mental model is: a serious internal-alpha / controlled-beta research platform with a growing validated corpus and a stronger-than-average local security posture, still awaiting a proper backend trust boundary for production-sensitive use.
