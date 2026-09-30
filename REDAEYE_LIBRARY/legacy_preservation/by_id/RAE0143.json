@@ -1,0 +1,128 @@
+{
+  "ak": [
+    "Reconnaissance: quickly validating harvested OSINT claims before using them in analytic products.",
+    "Weaponization: verifying details in crafted persuasive or phishing content to increase credibility.",
+    "Action on Objectives: enforcing factual correctness in automated reports used for business or security operations."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Upstream generative pipelines that tag or highlight candidate factual claims during drafting.",
+    "Retrieval-augmented generation where each question can be paired with evidence from a vector store or search API.",
+    "Content moderation and QA systems that gate outgoing messages on successful verification scores.",
+    "Self-consistency or multi-model consensus layers that re-verify contested claims using different models."
+  ],
+  "as": "Used as a mid-pipeline verification stage after content generation but before publication, execution, or automated decision-making.",
+  "bp": [
+    "Use JSON for the questions and answers.",
+    "Ensure the model answers each question independently.",
+    "Use a separate 'Verification' system prompt.",
+    "Cap the number of claims per batch to stay comfortably within context and maintain answer quality.",
+    "Include unique IDs for each claim and question to enable deterministic mapping between draft and verification results.",
+    "Post-process verification results with explicit policies (e.g., auto-rewrite false claims, flag for human review)."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "The model 'Cross-contaminating' answers in the batch.",
+    "Missing claims during extraction.",
+    "Poor JSON formatting.",
+    "Not surfacing verification failures back into the generation loop (no corrective action).",
+    "Trusting verification answers without sampling and spot-checking against external sources."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "External retrieval or search tools whose evidence is used to support or refute claims.",
+    "Rate-limiting and cost-control systems managing parallel verification workloads.",
+    "Monitoring that tracks verification coverage, failure rates, and correction application back to drafts."
+  ],
+  "d3": [
+    "Application layer (claim extraction, batching, synthesis).",
+    "Model-serving layer (parallel LLM execution and routing).",
+    "Security & governance layer (auditing which claims were checked and how results were used)."
+  ],
+  "db": [
+    "Model produces unusually long reasoning traces before compliance",
+    "Self-correction override detected"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Claim extraction component that determines which statements enter the verification pipeline.",
+    "Verification prompt templates and system messages that govern independence and schema of answers.",
+    "JSON/schema validation layer that enforces structural correctness of batched verification outputs."
+  ],
+  "ds": [
+    "Batch question/answer blocks",
+    "JSON-formatted verification logs"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excellent at handling large batch-verification tasks."
+    },
+    {
+      "e": "Very High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Massive context allows for verifying 50+ claims at once."
+    }
+  ],
+  "et": "Learning: 15 min. Implementation: 30–45 min. Optimization: 15–30 min depending on batching and infrastructure.",
+  "fm": [
+    "Cross-contamination between answers where the model reuses reasoning or labels across claims, violating independence.",
+    "Incomplete claim extraction leading to a false sense of verification coverage.",
+    "Malformed JSON or schema drift between calls causing downstream parsers to fail.",
+    "Context overflow when too many claims are packed into a single prompt, leading to truncation or shallow checking.",
+    "Superficial verification where the model asserts truth without robust evidence, especially without external retrieval.",
+    "Latency bottlenecks moving from the model to the orchestration or network layer, negating theoretical O(1) turn benefits.",
+    "Safety systems blocking the entire batched response due to a few sensitive claims embedded in the batch."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0143",
+  "is": "",
+  "m": "1. **Extraction**: Model lists all factual claims in the draft. 2. **Questioning**: Model generates a verification question for *every* claim in a single turn. 3. **Parallel Verification**: The system sends all questions to the model (or multiple models) at once. 4. **Synthesis**: Model merges all verified facts into the final answer. This cuts the verification time from O(N) to O(1) turns.",
+  "mi": "Mitigates 'Hallucination'. Prevents 'Latency Bloat' in multi-step reasoning.",
+  "n": "Parallel Chain-of-Verification (P-CoVe)",
+  "o": "Reduce the latency of fact-checking by verifying multiple claims simultaneously in a structured, parallel workflow.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "CoVe",
+    "Parallel Processing",
+    "Basic JSON schema design and validation.",
+    "Understanding of the domain whose claims are being verified."
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Self-Correction",
+  "ss": "",
+  "st": "stable",
+  "te": "Parallel Chain-of-Verification (P-CoVe) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "p-cove",
+    "verification",
+    "parallel",
+    "latency",
+    "fact-checking",
+    "hallucination"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

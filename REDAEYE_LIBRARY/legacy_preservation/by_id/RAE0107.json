@@ -1,0 +1,153 @@
+{
+  "ak": [
+    "Tuning & Weaponization for benign or adversarial ends – shapes model outputs during the exploitation phase via in-context learning."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Constitutional AI prompting (using principles in critiques).",
+    "Self-critique loops where the model generates its own critiques before improvement.",
+    "Multi-agent debate settings where one agent plays critic, another plays improver.",
+    "RAG pipelines where retrieved critiques and improvements from past interactions are inserted as CoH examples."
+  ],
+  "as": "In-Context Adaptation & Alignment – used as a mid-prompt mechanism to align the model with desired behaviors at query time.",
+  "bp": [
+    "Ensure critiques are specific and actionable, not generic (e.g., 'this is bad').",
+    "Clearly separate 'Attempt', 'Critique', and 'Improved' segments with headings or labels.",
+    "Align the critique persona with the task (editor for writing, senior engineer for code, safety reviewer for policy).",
+    "Limit the number of CoH examples (often 1–3 pairs) to avoid overwhelming the model or exceeding context limits.",
+    "The critique must be specific, not just 'this is bad'.",
+    "Show the 'Before' and 'After' clearly.",
+    "Maintain a consistent persona across the chain."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Iterative & Self-Improving",
+  "cf": "",
+  "cm": [
+    "Using vague critiques that don't explain why the attempt is problematic.",
+    "Providing critiques that contradict the final 'Better' version, leading to confusion.",
+    "Stuffing too many negative examples into the chain, causing the model to latch onto the wrong pattern.",
+    "Mixing multiple incompatible stylistic targets (e.g., formal in one improved answer, casual in another) in a single chain.",
+    "Failing to maintain a consistent critique persona and voice across the chain, reducing coherence.",
+    "Not checking that the negative examples are clearly marked as 'bad', causing occasional imitation of undesired outputs.",
+    "Vague critiques.",
+    "Critiques that contradict the final 'Better' version.",
+    "Too many negative examples (confuses the model)."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Logging and analytics systems that monitor how CoH affects error rates and alignment metrics.",
+    "Model oversight or review tools that inspect CoH templates for regressions over time."
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "Model outputs closely mimic the style and standards of the 'improved' examples, not the initial attempts.",
+    "Reduced reproduction of flawed patterns demonstrated in negative examples.",
+    "Higher adherence to nuanced quality criteria expressed in critiques (e.g., imagery richness, safety rules)."
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Prompt construction and retrieval layer that decides which historical attempts and critiques to include.",
+    "Quality control pipeline for generated critiques and improved answers.",
+    "Policy and safety filters that review CoH examples to avoid embedding harmful patterns."
+  ],
+  "ds": [
+    "Repeated pattern of segments: Input → Attempt → Critique → Improved Answer.",
+    "Chronologically ordered 'feedback loops' prior to the final target query.",
+    "Explicit labels or headings like 'Attempt 1', 'Critique', 'Improved version', 'Better answer'.",
+    "Sequence of Attempt/Critique/Better pairs",
+    "Chronological feedback loop"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o / GPT-4.1 / GPT-5 class",
+      "n": "Excellent at internalizing critiques from few-shot history; strong gains in style control"
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet / Claude 3.7 family",
+      "n": "Superior at maintaining high stylistic standards after seeing negative examples; excels at persona-consistent critiques."
+    },
+    {
+      "e": "High",
+      "m": "Llama 3 70B / Mixtral 8x22B",
+      "n": "Substantial improvements in code quality"
+    },
+    {
+      "e": "Moderate",
+      "m": "Open-source 7B–13B models",
+      "n": "Demonstrable gains but more sensitive to prompt length and critique clarity; fewer examples and simpler chains recommended."
+    },
+    {
+      "e": "Moderate",
+      "m": "Legacy instruction-tuned models (pre-2024)",
+      "n": "Helps with stylistic refinement and reducing repeated mistakes but limited by weaker general instruction-following."
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excellent at internalizing critiques from few-shot history."
+    }
+  ],
+  "et": "Learning: 15–30 minutes. Initial prompt design: 30–60 minutes. Iterative optimization in production: 1–2 weeks of A/B testing and feedback collection.",
+  "fm": [
+    "If critiques are low quality, inconsistent, or contradictory, the model may internalize the wrong behavior.",
+    "Too many negative examples can anchor the model on flawed patterns before it sees the corrections.",
+    "Ambiguous labeling of attempts versus improved answers can cause the model to copy the wrong section.",
+    "CoH chains that mix unrelated tasks or domains can dilute the learning signal.",
+    "Hallucinated or inaccurate critiques can propagate incorrect 'rules' into model behavior.",
+    "If safety-related CoH examples are poorly designed, they may inadvertently leak harmful information."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0107",
+  "is": "",
+  "m": "Chain-of-Hindsight (CoH) exploits the model's capacity for in-context learning from negative examples. Instead of showing only optimal demonstrations, the prompt is structured as a chronological mini-history of attempts, critiques, and improvements.\\n\\n\" +\n    \"Canonical Pattern:\\n\" +\n    \"1) Input or Task Specification.\\n\" +\n    \"2) A sub-optimal (or deliberately flawed) response.\\n\" +\n    \"3) A detailed critique explaining why the response is deficient.\\n\" +\n    \"4) A corrected, higher-quality response.\\n\" +\n    \"5) A new target input which the model must now answer using the same standards.\\n\\n\" +\n    \"The model effectively 'reads' the feedback trajectory and internalizes both:\\n\" +\n    \"- what to avoid (negative examples), and\\n\" +\n    \"- what to emulate (final improved outputs).\\n\\n\" +\n    \"2024–2026 Operational Enhancements:\\n\\n\" +\n    \"1) Multi-Hop Hindsight Chains\\n\" +\n    \"- Include several (Attempt → Critique → Better) pairs that progressively fix different error types:\\n\" +\n    \"  • factual errors\\n\" +\n    \"  • style inconsistencies\\n\" +\n    \"  • safety / policy violations\\n\" +\n    \"  • logical inconsistencies\\n\" +\n    \"- This yields a richer 'gradient' for the model to follow.\\n\\n\" +\n    \"2) Error-Typed Critiques\\n\" +\n    \"- Critiques explicitly label error categories (e.g., [FACTUAL], [STYLE], [SAFETY], [LOGIC]).\\n\" +\n    \"- This helps the model map error classes to concrete corrections.\\n\\n\" +\n    \"3) Persona-Stable Feedback\\n\" +\n    \"- The critique voice is consistent (e.g., \\\"Senior editor\\\", \\\"Security reviewer\\\", \\\"Code reviewer\\\").\\n\" +\n    \"- This stabilizes style and evaluation criteria.\\n\\n\" +\n    \"4) CoH for Alignment & Safety\\n\" +\n    \"- Use prior examples where the model (or a hypothetical model) gave unsafe or misaligned answers.\\n\" +\n    \"- Show the critique referencing explicit policies.\\n\" +\n    \"- Provide a corrected compliant answer.\\n\" +\n    \"- Then present a new borderline query to shape the model’s behavior.\\n\\n\" +\n    \"5) CoH in Pr",
+  "mi": "Mitigates:\\n\" +\n    \"- Repetitive Error Cycles: The model repeatedly making the same stylistic, logical, or safety errors.\\n\" +\n    \"- Style Traps: The model sticking to bland or undesirable style patterns even after feedback.\\n\" +\n    \"- Local Optima in Few-Shot: Demonstrations that all look similar but don't disambiguate subtle quality criteria.\\n\" +\n    \"- Misalignment under Edge Cases: Fails to apply abstract safety policies to concrete, tricky prompts.\\n\\n\" +\n    \"By showing explicitly what went wrong and how it was corrected, CoH prevents the model from anchoring to flawed patterns and instead nudges it toward the improved target behavior.",
+  "n": "Chain-of-Hindsight (CoH)",
+  "o": "Improve model alignment, style control, and task performance by presenting a sequence of past mistakes, detailed critiques, and corrected versions in the prompt so the model can generalize from negative examples at inference time.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Few-shot prompting and in-context learning concepts.",
+    "Basic understanding of RLHF, critique-based training, or human feedback loops.",
+    "Familiarity with the target domain’s quality and safety standards (e.g., editorial guidelines, coding standards, policy documents).",
+    "Few-shot Prompting",
+    "Reinforcement Learning basics"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Feedback Alignment",
+  "ss": "",
+  "st": "stable",
+  "te": "Chain-of-Hindsight (CoH) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "hindsight",
+    "feedback",
+    "alignment",
+    "in-context-learning",
+    "critique",
+    "few-shot",
+    "style-transfer",
+    "self-improvement"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

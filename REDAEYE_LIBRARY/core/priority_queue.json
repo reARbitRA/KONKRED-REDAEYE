@@ -1,0 +1,1754 @@
+{
+ "tier_S": [
+  {
+   "id": "RAE0114",
+   "name": "Indirect Prompt Injection (Context Contamination)",
+   "why": "indirect prompt injection \u2014 the canonical agentic attack (Greshake et al. 2023)",
+   "scores": [
+    9.25,
+    7.5,
+    7.199999999999999,
+    10
+   ]
+  },
+  {
+   "id": "RAE0047",
+   "name": "Training Data Poisoning (Trigger Phrases)",
+   "why": "training-data poisoning \u2014 upstream supply chain (Qi et al. 2023)",
+   "scores": [
+    9.25,
+    7.5,
+    7.999999999999999,
+    10
+   ]
+  },
+  {
+   "id": "RAE0048",
+   "name": "LoRA Backdoor Implantation",
+   "why": "LoRA backdoor implantation \u2014 published class, supply chain",
+   "scores": [
+    9.25,
+    7.5,
+    6.3999999999999995,
+    10
+   ]
+  },
+  {
+   "id": "RAE0184",
+   "name": "Agentic Environment Shadowing (Privilege Escalation)",
+   "why": "agentic environment shadowing \u2014 the corpus's reference exemplar, must exist as v2 entry",
+   "scores": [
+    7.25,
+    7.5,
+    6.3999999999999995,
+    9
+   ]
+  },
+  {
+   "id": "RAE0208",
+   "name": "Agentic Memory-Hole Race Condition (AMRC)",
+   "why": "agentic memory-hole race condition \u2014 merged with RAE0240",
+   "scores": [
+    8.0,
+    6,
+    7.199999999999999,
+    9
+   ]
+  },
+  {
+   "id": "RAE0201",
+   "name": "Agentic Memory-Stream Poisoning (RAG-Injection)",
+   "why": "agentic memory-stream poisoning (RAG/memory write surfaces)",
+   "scores": [
+    8.75,
+    4.0,
+    7.999999999999999,
+    10
+   ]
+  },
+  {
+   "id": "RAE0228",
+   "name": "Agentic Config-Shadowing (State Persistence Hijack)",
+   "why": "agentic config-shadowing / state persistence hijack",
+   "scores": [
+    8.75,
+    4.0,
+    7.199999999999999,
+    10
+   ]
+  },
+  {
+   "id": "RAE0397",
+   "name": "Recursive Tool-Chain Poisoning (Lateral Payload Migration)",
+   "why": "recursive tool-chain poisoning \u2014 lateral payload migration (MCP-adjacent)",
+   "scores": [
+    10,
+    6,
+    7.999999999999999,
+    10
+   ]
+  },
+  {
+   "id": "RAE0065",
+   "name": "Tool-Calling Escalation (Kill-Chaining)",
+   "why": "tool-calling escalation / kill-chaining",
+   "scores": [
+    9.25,
+    7.5,
+    6.3999999999999995,
+    10
+   ]
+  },
+  {
+   "id": "RAE0341",
+   "name": "Swarm-Identity Impersonation (SII)",
+   "why": "swarm-identity impersonation \u2014 multi-agent trust hijack",
+   "scores": [
+    9.25,
+    6,
+    6.3999999999999995,
+    10
+   ]
+  },
+  {
+   "id": "RAE0269",
+   "name": "System Prompt Extraction: Gradient Ascent Approximation",
+   "why": "system-prompt extraction via API surfaces \u2014 direct published anchor (Nasr et al. 2025)",
+   "scores": [
+    7.75,
+    8,
+    5.6,
+    10
+   ]
+  },
+  {
+   "id": "RAE0393",
+   "name": "Latent Monologue Extraction (Thinking Trace Hijacking)",
+   "why": "latent monologue extraction \u2014 reasoning-trace leakage on thinking models",
+   "scores": [
+    9.25,
+    7,
+    7.999999999999999,
+    10
+   ]
+  },
+  {
+   "id": "RAE0066",
+   "name": "Latent Context Reinfection (Shadow Memory Persistence)",
+   "why": "latent context reinfection \u2014 worm/persistence class (Morris-II adjacent)",
+   "scores": [
+    8.0,
+    7.5,
+    7.199999999999999,
+    10
+   ]
+  },
+  {
+   "id": "RAE0083",
+   "name": "Recursive Planner State Contamination",
+   "why": "recursive planner-state contamination \u2014 agent plan poisoning",
+   "scores": [
+    8.0,
+    7.5,
+    7.199999999999999,
+    10
+   ]
+  },
+  {
+   "id": "RAE0398",
+   "name": "Browser-Context Smuggling (DOM-Injection)",
+   "why": "browser-context smuggling (DOM injection into computer-use agents)",
+   "scores": [
+    9.25,
+    4.0,
+    7.999999999999999,
+    10
+   ]
+  },
+  {
+   "id": "RAE0226",
+   "name": "Logit-Bias",
+   "why": "logit-bias surface attacks \u2014 real published class (merge RAE0254, RAE0259)",
+   "scores": [
+    7.25,
+    7,
+    4.1,
+    8
+   ]
+  },
+  {
+   "id": "RAE0011",
+   "name": "Chain-of-Thought Leakage Harvest",
+   "why": "chain-of-thought leakage harvest \u2014 reasoning-trace family",
+   "scores": [
+    5.75,
+    6,
+    5.6,
+    10
+   ]
+  },
+  {
+   "id": "RAE0050",
+   "name": "Alignment Data Tainting (Refusal Pattern Corruption)",
+   "why": "alignment-data tainting (refusal-pattern corruption, supply chain)",
+   "scores": [
+    7.25,
+    7.5,
+    7.999999999999999,
+    10
+   ]
+  }
+ ],
+ "tier_A": [
+  {
+   "id": "RAE0162",
+   "name": "Repeat-Token Glitch (Memory Leak)",
+   "cat": "Safety & Alignment"
+  },
+  {
+   "id": "RAE0096",
+   "name": "Contextual Data Poisoning via Modality Injection",
+   "cat": "Adversarial ML"
+  },
+  {
+   "id": "RAE0079",
+   "name": "Iterative Modality Crossfade (IMC)",
+   "cat": "Multimodal Injection"
+  },
+  {
+   "id": "RAE0019",
+   "name": "Latent Policy-Gradient Hijack",
+   "cat": "Preference & Reward Exploitation"
+  },
+  {
+   "id": "RAE0015",
+   "name": "Multi-Persona Safety Debate Fork",
+   "cat": "Instruction & Constraint"
+  },
+  {
+   "id": "RAE0055",
+   "name": "Legal Jargon Obfuscation",
+   "cat": "Role & Persona"
+  },
+  {
+   "id": "RAE0100",
+   "name": "Multi\u2011Persona Debate",
+   "cat": "Role & Persona"
+  },
+  {
+   "id": "RAE0234",
+   "name": "Attention-Sink",
+   "cat": "Retrieval & Context"
+  },
+  {
+   "id": "RAE0264",
+   "name": "Attention-Head",
+   "cat": "Retrieval & Context"
+  },
+  {
+   "id": "RAE0031",
+   "name": "Jurisdictional Relativism",
+   "cat": "Role & Persona"
+  },
+  {
+   "id": "RAE0107",
+   "name": "Chain-of-Hindsight (CoH)",
+   "cat": "Iterative & Self-Improving"
+  },
+  {
+   "id": "RAE0104",
+   "name": "Systematic Generalization (SysGen)",
+   "cat": "Reasoning & Thinking"
+  },
+  {
+   "id": "RAE0232",
+   "name": "Recursive Swarm-State Tainting (State-Object Hijack)",
+   "cat": "Agent & Tool Use"
+  },
+  {
+   "id": "RAE0257",
+   "name": "Shared-State Metadata Poisoning (Swarm-Hijack)",
+   "cat": "Agent & Tool Use"
+  },
+  {
+   "id": "RAE0263",
+   "name": "Agentic",
+   "cat": "Agent & Tool Use"
+  },
+  {
+   "id": "RAE0081",
+   "name": "Latent Alignment Gradient Hijacking",
+   "cat": "Alignment Exploitation"
+  },
+  {
+   "id": "RAE0400",
+   "name": "Cross-Modal Gradient Drift (VLM Manifold Hijacking)",
+   "cat": "Multimodal / Latent Space"
+  }
+ ],
+ "tier_B": [
+  {
+   "id": "RAE0395",
+   "name": "Proxy-Credential Theft (Simulation Leakage)"
+  },
+  {
+   "id": "RAE0315",
+   "name": "Agentic Swarm Consensus Dissolution (MACD)"
+  },
+  {
+   "id": "RAE0153",
+   "name": "Adversarial Persona Injection (API)"
+  },
+  {
+   "id": "RAE0307",
+   "name": "Embedded Narrative Extraction (ENE)"
+  },
+  {
+   "id": "RAE0051",
+   "name": "Shadow Model Distillation"
+  },
+  {
+   "id": "RAE0033",
+   "name": "Consent Boundary Erosion"
+  },
+  {
+   "id": "RAE0115",
+   "name": "Adversarial Suffixes (GCG variant)"
+  },
+  {
+   "id": "RAE0241",
+   "name": "Attention-Head Resonance Steering (AHRS)"
+  },
+  {
+   "id": "RAE0274",
+   "name": "Orthogonal Vector Steering: The Activation Surgery"
+  },
+  {
+   "id": "RAE0275",
+   "name": "Universal Adversarial Suffix: The Stochastic Key"
+  },
+  {
+   "id": "RAE0279",
+   "name": "Tool-Use Masquerade: The"
+  },
+  {
+   "id": "RAE0416",
+   "name": "Bio-Precursor Cipher (Libertine Register Shifting)"
+  },
+  {
+   "id": "RAE0388",
+   "name": "Recursive Reflection Loop (RRL)"
+  },
+  {
+   "id": "RAE0006",
+   "name": "Meta-Prompt Reflection"
+  },
+  {
+   "id": "RAE0399",
+   "name": "API-Response Forgery (Internal Logic Mirroring)"
+  },
+  {
+   "id": "RAE0414",
+   "name": "Proprietary Codebase Mapping (Orthogonal Logic Extraction)"
+  },
+  {
+   "id": "RAE0038",
+   "name": "Latent Policy Inversion"
+  },
+  {
+   "id": "RAE0204",
+   "name": "Recursive Tool-Output Reflection (RTOR)"
+  },
+  {
+   "id": "RAE0023",
+   "name": "Mythic Archetype Override"
+  },
+  {
+   "id": "RAE0026",
+   "name": "Temporal Dislocation (Time-Travel)"
+  },
+  {
+   "id": "RAE0030",
+   "name": "Forced Symmetry (Neutrality Bypass)"
+  },
+  {
+   "id": "RAE0036",
+   "name": "Context Goal Rebinding"
+  },
+  {
+   "id": "RAE0308",
+   "name": "Contextual Reinforcement Loop (CRL)"
+  },
+  {
+   "id": "RAE0098",
+   "name": "Chain-of-Code (CoC)"
+  },
+  {
+   "id": "RAE0148",
+   "name": "Visual Character Recognition (VCR) Injection"
+  },
+  {
+   "id": "RAE0156",
+   "name": "Adversarial Persona Gradient Descent"
+  },
+  {
+   "id": "RAE0222",
+   "name": "KV-Cache"
+  },
+  {
+   "id": "RAE0413",
+   "name": "Deep-Fake Logic Audit (Correction-Baiting)"
+  },
+  {
+   "id": "RAE0024",
+   "name": "Memetic Covenant Exploit"
+  },
+  {
+   "id": "RAE0044",
+   "name": "Markdown Comment Exploit"
+  },
+  {
+   "id": "RAE0085",
+   "name": "Latent Objective Gradient Steering"
+  },
+  {
+   "id": "RAE0103",
+   "name": "Dynamic Few-Shot (k-NN)"
+  },
+  {
+   "id": "RAE0142",
+   "name": "Iterative Prompt Refinement (IPR)"
+  },
+  {
+   "id": "RAE0172",
+   "name": "Temporal Context Dissociation (Chronos-Bypass)"
+  },
+  {
+   "id": "RAE0178",
+   "name": "Recursive Axiomatic Collapse (CoT-Deadlock)"
+  },
+  {
+   "id": "RAE0273",
+   "name": "Many-Shot In-Context Learning (ICL): The Context Flood"
+  },
+  {
+   "id": "RAE0277",
+   "name": "Corrective Reinforcement Inversion: The"
+  },
+  {
+   "id": "RAE0313",
+   "name": "Eigenvector Narrative Injection (ENI)"
+  },
+  {
+   "id": "RAE0314",
+   "name": "Hyper-dimensional Logic Inversion (HLI)"
+  },
+  {
+   "id": "RAE0014",
+   "name": "Synthetic Safety Narrative Hijack"
+  },
+  {
+   "id": "RAE0037",
+   "name": "Context Window Saturation"
+  },
+  {
+   "id": "RAE0080",
+   "name": "Delegated Agent Goal Transference"
+  },
+  {
+   "id": "RAE0124",
+   "name": "Multi-Layer Summarization (MLS)"
+  },
+  {
+   "id": "RAE0149",
+   "name": "Hierarchical Token Compression"
+  },
+  {
+   "id": "RAE0195",
+   "name": "Multi-Agent Consensus Hijacking (Swarm-Override)"
+  },
+  {
+   "id": "RAE0289",
+   "name": "System Fingerprint Spoofing: The Temporal Echo"
+  },
+  {
+   "id": "RAE0339",
+   "name": "Retrieval-Augmented Logic Hijacking (RALH)"
+  },
+  {
+   "id": "RAE0258",
+   "name": "Attention-Matrix"
+  },
+  {
+   "id": "RAE0209",
+   "name": "Recursive Model-in-the-Middle (RMitM)"
+  },
+  {
+   "id": "RAE0062",
+   "name": "Leetspeak Neural Mapping"
+  },
+  {
+   "id": "RAE0012",
+   "name": "Simulated Ethics Board Override"
+  },
+  {
+   "id": "RAE0032",
+   "name": "Grandmother Apology (Emotional Coercion)"
+  },
+  {
+   "id": "RAE0064",
+   "name": "Recursive Self-Improvement Trap"
+  },
+  {
+   "id": "RAE0134",
+   "name": "Polyglot Obfuscation (Red Team)"
+  },
+  {
+   "id": "RAE0179",
+   "name": "Neuro-Semantic Resonance (Weight-Space Hijacking)"
+  },
+  {
+   "id": "RAE0189",
+   "name": "Isomorphic Mathematical Smuggling (Formal Logic Mapping)"
+  },
+  {
+   "id": "RAE0198",
+   "name": "Token-ID Serialization (Direct Embedding Injection)"
+  },
+  {
+   "id": "RAE0285",
+   "name": "Logit Bias Refusal Suppression: The Silence Protocol"
+  },
+  {
+   "id": "RAE0300",
+   "name": "The Epistemic Mirror (Reflection Inversion)"
+  },
+  {
+   "id": "RAE0008",
+   "name": "Tool-Use Proxy Exploit"
+  },
+  {
+   "id": "RAE0045",
+   "name": "LaTeX Math Mode Injection"
+  },
+  {
+   "id": "RAE0102",
+   "name": "Iterative Self-Correction"
+  },
+  {
+   "id": "RAE0126",
+   "name": "Multi-Agent Systems (Manager-Worker Pattern)"
+  },
+  {
+   "id": "RAE0180",
+   "name": "Cross-Agentic CoT Poisoning (Swarm Infiltration)"
+  },
+  {
+   "id": "RAE0197",
+   "name": "Tool-Calling State-Machine Injection"
+  },
+  {
+   "id": "RAE0220",
+   "name": "Agentic Tool-Schema Poisoning (Schema-Hijack)"
+  },
+  {
+   "id": "RAE0224",
+   "name": "Agentic Dangling-Pointer Injection (Context-Hijack)"
+  },
+  {
+   "id": "RAE0390",
+   "name": "Epistemic Ambiguity Anchor (EAA)"
+  },
+  {
+   "id": "RAE0392",
+   "name": "Syllogistic Poisoning (Logic-Gate Entrapment)"
+  },
+  {
+   "id": "RAE0185",
+   "name": "KV-Cache Eviction (Attention-Sink Purge)"
+  },
+  {
+   "id": "RAE0049",
+   "name": "LLM Canary Tokens"
+  },
+  {
+   "id": "RAE0415",
+   "name": "Zero-Day Payload Synthesis (Orthogonal Signature Framing)"
+  },
+  {
+   "id": "RAE0171",
+   "name": "Agentic Tool-Output Reflection (SSRF Hijack)"
+  },
+  {
+   "id": "RAE0205",
+   "name": "Contextual Anchor Fragmentation (CAF)"
+  },
+  {
+   "id": "RAE0025",
+   "name": "Reverse Psychology Trap"
+  },
+  {
+   "id": "RAE0028",
+   "name": "Recursive Permission Tunneling"
+  },
+  {
+   "id": "RAE0137",
+   "name": "Thought Propagation (TP)"
+  },
+  {
+   "id": "RAE0144",
+   "name": "Step-by-Step Verification (SbS)"
+  },
+  {
+   "id": "RAE0202",
+   "name": "KV-Cache Resonance Hijacking (Attention-Sink)"
+  },
+  {
+   "id": "RAE0284",
+   "name": "Few-Shot Persona Adoption via"
+  },
+  {
+   "id": "RAE0013",
+   "name": "Formal Policy Exemption Drill"
+  },
+  {
+   "id": "RAE0020",
+   "name": "Policy Shadowing Cascade"
+  },
+  {
+   "id": "RAE0046",
+   "name": "CSV Header Poisoning"
+  },
+  {
+   "id": "RAE0063",
+   "name": "Glitch Token Injection (Anomaly State)"
+  },
+  {
+   "id": "RAE0078",
+   "name": "Latent Context Fragment Reassembly"
+  },
+  {
+   "id": "RAE0094",
+   "name": "Temporal Multimodal Reasoning Cascade"
+  },
+  {
+   "id": "RAE0119",
+   "name": "Dual-LLM Pattern (Privileged vs Unprivileged)"
+  },
+  {
+   "id": "RAE0121",
+   "name": "Everything-of-Thought (XoT)"
+  },
+  {
+   "id": "RAE0132",
+   "name": "Few-Shot CoT Distillation"
+  },
+  {
+   "id": "RAE0154",
+   "name": "Multi-Step Tool Verification"
+  },
+  {
+   "id": "RAE0161",
+   "name": "SVG Scripting Injection"
+  },
+  {
+   "id": "RAE0248",
+   "name": "AGENTIC SWARM PRIVILEGE ESCALATION"
+  },
+  {
+   "id": "RAE0288",
+   "name": "Batch-Mode Asynchronous Injection: The Shadow Batch"
+  },
+  {
+   "id": "RAE0306",
+   "name": "Agentic Swarm Consensus Poisoning"
+  },
+  {
+   "id": "RAE0317",
+   "name": "Agentic Loop-Hole Exploitation (ALHE)"
+  },
+  {
+   "id": "RAE0396",
+   "name": "Agentic Deadlock Inversion (Consensus Hijacking)"
+  },
+  {
+   "id": "RAE0412",
+   "name": "Semantic Market Warping (Authority Style Hijacking)"
+  },
+  {
+   "id": "RAE0009",
+   "name": "Multi-turn Obfuscation Chain"
+  },
+  {
+   "id": "RAE0403",
+   "name": "Video-Frame Pacing (Temporal Token Assembly)"
+  },
+  {
+   "id": "RAE0129",
+   "name": "Socratic Interrogation (Adversarial Variant)"
+  },
+  {
+   "id": "RAE0143",
+   "name": "Parallel Chain-of-Verification (P-CoVe)"
+  },
+  {
+   "id": "RAE0196",
+   "name": "Epistemic Anchor Erasure (Recursive Hallucination)"
+  },
+  {
+   "id": "RAE0310",
+   "name": "Multimodal Hallucination Anchor (MHA)"
+  },
+  {
+   "id": "RAE0039",
+   "name": "Base64+ROT13 Hybrid Encoding"
+  },
+  {
+   "id": "RAE0266",
+   "name": "Logit Softmax Torsion: The Entropy Spike"
+  },
+  {
+   "id": "RAE0293",
+   "name": "MoE Expert Routing: The"
+  },
+  {
+   "id": "RAE0101",
+   "name": "Reasoning\u2011on\u2011Graph (RoG)"
+  },
+  {
+   "id": "RAE0155",
+   "name": "Contrastive Persona Comparison"
+  },
+  {
+   "id": "RAE0271",
+   "name": "Cross-Lingual Embedding Mismatch: The Babel Vector"
+  },
+  {
+   "id": "RAE0309",
+   "name": "Semantic Mirroring Attack (SMA)"
+  },
+  {
+   "id": "RAE0034",
+   "name": "Honeycomb Clarification Trap"
+  },
+  {
+   "id": "RAE0173",
+   "name": "Ontology Forking via Speculative Frameshift (Semantic Reality Split)"
+  },
+  {
+   "id": "RAE0007",
+   "name": "Temperature-Driven Chaos Trigger"
+  },
+  {
+   "id": "RAE0040",
+   "name": "Zero-Width Unicode Smuggling"
+  },
+  {
+   "id": "RAE0075",
+   "name": "Cognitive Boundary Dissolution"
+  },
+  {
+   "id": "RAE0087",
+   "name": "Adversarial Look-Ahead Prompting for Policy Boundary Probing"
+  },
+  {
+   "id": "RAE0091",
+   "name": "Tool\u2011Augmented Recursive Planning (TARP)"
+  },
+  {
+   "id": "RAE0116",
+   "name": "Task-Adaptive Prompting"
+  },
+  {
+   "id": "RAE0125",
+   "name": "Aspect-Targeted Summarization"
+  },
+  {
+   "id": "RAE0127",
+   "name": "Self-Instruct (Synthetic Bootstrapping)"
+  },
+  {
+   "id": "RAE0130",
+   "name": "Self-RAG (Agentic Retrieval)"
+  },
+  {
+   "id": "RAE0150",
+   "name": "Agentic Memory Summarization (MemSum)"
+  },
+  {
+   "id": "RAE0163",
+   "name": "Adversarial Logit Lens (Phase-Shift Steering)"
+  },
+  {
+   "id": "RAE0213",
+   "name": "Recursive Tool-Calling"
+  },
+  {
+   "id": "RAE0286",
+   "name": "JSON Schema Enforcement: The Structure Cage"
+  },
+  {
+   "id": "RAE0304",
+   "name": "Attention Head Rewiring (AHR)"
+  },
+  {
+   "id": "RAE0323",
+   "name": "In-Context Weight Perturbation (ICWP)"
+  },
+  {
+   "id": "RAE0328",
+   "name": "Archetypal Shadow Integration (ASI)"
+  },
+  {
+   "id": "RAE0402",
+   "name": "OCR-Based Logic Inversion (Visual Context Hijacking)"
+  },
+  {
+   "id": "RAE0060",
+   "name": "Dream Journal Exploit (Dissociation)"
+  },
+  {
+   "id": "RAE0292",
+   "name": "Cross-Lingual Homophonic Obfuscation (Pinyin/Hanzi)"
+  },
+  {
+   "id": "RAE0145",
+   "name": "Knowledge Retrieval with Self-Correction (K-RSC)"
+  },
+  {
+   "id": "RAE0255",
+   "name": "Epistemic Nihilism Torsion (CoT-Self-Refutation)"
+  },
+  {
+   "id": "RAE0190",
+   "name": "Inter-Agent Role Spoofing (Delimiter Hijack)"
+  },
+  {
+   "id": "RAE0016",
+   "name": "Controlled Failure Mode Autopsy"
+  },
+  {
+   "id": "RAE0018",
+   "name": "Orthogonal Request Framing"
+  },
+  {
+   "id": "RAE0021",
+   "name": "Token-Level Boundary Erasure"
+  },
+  {
+   "id": "RAE0042",
+   "name": "Audio Spectrogram Injection"
+  },
+  {
+   "id": "RAE0043",
+   "name": "Image OCR Bypass"
+  },
+  {
+   "id": "RAE0071",
+   "name": "Latent Policy Drift via Context Accretion"
+  },
+  {
+   "id": "RAE0074",
+   "name": "Progressive Constraint Relaxation"
+  },
+  {
+   "id": "RAE0077",
+   "name": "Latent Goal Substitution via Planning Drift"
+  },
+  {
+   "id": "RAE0089",
+   "name": "Program-of-Thought (PoT)"
+  },
+  {
+   "id": "RAE0113",
+   "name": "Payload Splitting"
+  },
+  {
+   "id": "RAE0140",
+   "name": "Multimodal Jailbreak (Image-Text Dissonance)"
+  },
+  {
+   "id": "RAE0151",
+   "name": "Logit-Bias Anchoring"
+  },
+  {
+   "id": "RAE0159",
+   "name": "Context Saturation (Buffer Overflow)"
+  },
+  {
+   "id": "RAE0160",
+   "name": "Adversarial In-Context Learning (A-ICL)"
+  },
+  {
+   "id": "RAE0165",
+   "name": "RECURSIVE CoT ATTENTION-SINK POISONING"
+  },
+  {
+   "id": "RAE0166",
+   "name": "AGENTIC REFLECTION LOOP HIJACK"
+  },
+  {
+   "id": "RAE0167",
+   "name": "MULTIMODAL LATENT COLLISION (STEREOGRAM INJECTION)"
+  },
+  {
+   "id": "RAE0187",
+   "name": "Cross-Modal Token Smuggling (OCR-to-Latent)"
+  },
+  {
+   "id": "RAE0191",
+   "name": "Residual Stream Steering (Latent Feature Hijack)"
+  },
+  {
+   "id": "RAE0192",
+   "name": "RAG Semantic Compression Hijacking"
+  },
+  {
+   "id": "RAE0212",
+   "name": "Cross-Modality Semantic"
+  },
+  {
+   "id": "RAE0223",
+   "name": "Temporal Stroboscopic Splicing (Video-to-Latent)"
+  },
+  {
+   "id": "RAE0227",
+   "name": "Adversarial Feature-Patch Injection (Vision-Latent Hijack)"
+  },
+  {
+   "id": "RAE0247",
+   "name": "CROSS-MODALITY SEMANTIC DESYNC (INTER-LAYER SEAM)"
+  },
+  {
+   "id": "RAE0251",
+   "name": "Recursive Entropy Injection (Reasoning-Chain Torsion)"
+  },
+  {
+   "id": "RAE0268",
+   "name": "Multimodal Joint-Embedding Desync: The Visual Rift"
+  },
+  {
+   "id": "RAE0272",
+   "name": "Python-Wrapper Injection: The Code Sandbox Trojan"
+  },
+  {
+   "id": "RAE0276",
+   "name": "Payload Splitting via Variable Interpolation"
+  },
+  {
+   "id": "RAE0305",
+   "name": "Logit Softmax Bias Injection (LSBI)"
+  },
+  {
+   "id": "RAE0319",
+   "name": "Cross-Modal Bandwidth Stealing (CMBS)"
+  },
+  {
+   "id": "RAE0322",
+   "name": "export constitutional Paradox Loop (CPL)"
+  },
+  {
+   "id": "RAE0334",
+   "name": "Incremental Boundary Dissolution (IBD)"
+  },
+  {
+   "id": "RAE0336",
+   "name": "Visual-Structural Association (VSA)"
+  },
+  {
+   "id": "RAE0337",
+   "name": "Recursive Compliance Inversion (RCI)"
+  },
+  {
+   "id": "RAE0340",
+   "name": "Quantization-Triggered Bit-Flip (QTBF)"
+  },
+  {
+   "id": "RAE0406",
+   "name": "FP4 Precision Torsion (Quantization Bit-Flip)"
+  },
+  {
+   "id": "RAE0407",
+   "name": "MoE Router Overloading (Expert Expert Misalignment)"
+  },
+  {
+   "id": "RAE0409",
+   "name": "Token-ID Serialization (Direct Integer Bypass)"
+  },
+  {
+   "id": "RAE0090",
+   "name": "Adversarial Program-of-Thought Subversion (PoT\u2011Subvert)"
+  },
+  {
+   "id": "RAE0133",
+   "name": "Cross-Modal Verification (Vision-Text)"
+  },
+  {
+   "id": "RAE0233",
+   "name": "G\u00f6delian Meta-Refutation (Epistemic Torsion)"
+  },
+  {
+   "id": "RAE0281",
+   "name": "Reasoning Trace Poisoning: The System 2 Hallucination"
+  },
+  {
+   "id": "RAE0391",
+   "name": "Thought-Prefix Mirroring (TPM)"
+  },
+  {
+   "id": "RAE0176",
+   "name": "Spectral Glyph Injection (Audio-to-Latent)"
+  },
+  {
+   "id": "RAE0216",
+   "name": "Cross-Modal"
+  },
+  {
+   "id": "RAE0256",
+   "name": "Temporal Saliency Masking (Video-to-Latent Hijack)"
+  },
+  {
+   "id": "RAE0290",
+   "name": "DeepSeek-R1"
+  },
+  {
+   "id": "RAE0005",
+   "name": "Latent Directive Injection"
+  },
+  {
+   "id": "RAE0056",
+   "name": "Medical Terminology Smuggling"
+  },
+  {
+   "id": "RAE0059",
+   "name": "Cross-Modal Trigger Chaining"
+  },
+  {
+   "id": "RAE0073",
+   "name": "Latent Objective Hijacking"
+  },
+  {
+   "id": "RAE0076",
+   "name": "Iterative Semantic Re\u2011Anchoring (ISRA)"
+  },
+  {
+   "id": "RAE0086",
+   "name": "Metacognitive Frame Inversion Exploit"
+  },
+  {
+   "id": "RAE0092",
+   "name": "Multimodal Chain-of-Thought"
+  },
+  {
+   "id": "RAE0093",
+   "name": "Role-Toggled Chain-of-Thought"
+  },
+  {
+   "id": "RAE0106",
+   "name": "Re-Reading (RE2)"
+  },
+  {
+   "id": "RAE0117",
+   "name": "Contrastive Decoding (Safety Bypass Variant)"
+  },
+  {
+   "id": "RAE0122",
+   "name": "Recursive Prompting"
+  },
+  {
+   "id": "RAE0123",
+   "name": "Chain-of-Density (CoD)"
+  },
+  {
+   "id": "RAE0135",
+   "name": "Latent Knowledge Probing"
+  },
+  {
+   "id": "RAE0136",
+   "name": "Constitutional Self-Critique"
+  },
+  {
+   "id": "RAE0158",
+   "name": "Quiet-STaR (Background Reasoning)"
+  },
+  {
+   "id": "RAE0175",
+   "name": "Recursive Self-Correction Hijack (The"
+  },
+  {
+   "id": "RAE0206",
+   "name": "Axiomatic Triage Inversion (ATI)"
+  },
+  {
+   "id": "RAE0218",
+   "name": "Logit-Space"
+  },
+  {
+   "id": "RAE0235",
+   "name": "Cross-Modal Temporal Drift (CMTD)"
+  },
+  {
+   "id": "RAE0267",
+   "name": "CoT Epistemic Circularity: The Logic Loop"
+  },
+  {
+   "id": "RAE0287",
+   "name": "Hyper-Temperature Destabilization: The Entropy Hammer"
+  },
+  {
+   "id": "RAE0303",
+   "name": "System 2 CoT Misdirection Loop"
+  },
+  {
+   "id": "RAE0417",
+   "name": "The Omega Singularity Decree (Multi-Vector Kill-Switch)"
+  },
+  {
+   "id": "RAE0291",
+   "name": "Qwen"
+  }
+ ],
+ "tier_C": [
+  {
+   "id": "RAE0242",
+   "name": "Agentic KV-Cache Poisoning (Shadow-Context Injection)",
+   "composite": 5.59
+  },
+  {
+   "id": "RAE0411",
+   "name": "SSM Hidden-State Locking (Linear Recurrence Hijacking)",
+   "composite": 5.59
+  },
+  {
+   "id": "RAE0199",
+   "name": "Cross-Modality Latent Anchoring (VLM Desync)",
+   "composite": 5.57
+  },
+  {
+   "id": "RAE0207",
+   "name": "Spectral Token-ID Smuggling (Audio-to-Latent)",
+   "composite": 5.57
+  },
+  {
+   "id": "RAE0219",
+   "name": "Cross-Modality Latent Anchoring (VLM-Desync)",
+   "composite": 5.57
+  },
+  {
+   "id": "RAE0239",
+   "name": "Spectral Token-ID Smuggling (Audio-to-Latent)",
+   "composite": 5.57
+  },
+  {
+   "id": "RAE0262",
+   "name": "Cross-Modality Latent",
+   "composite": 5.57
+  },
+  {
+   "id": "RAE0200",
+   "name": "Recursive Self-Audit Loophole (CoT-Override)",
+   "composite": 5.51
+  },
+  {
+   "id": "RAE0138",
+   "name": "Self-Efficacy Prompting",
+   "composite": 5.5
+  },
+  {
+   "id": "RAE0181",
+   "name": "Non-Deterministic Token Assembly (Entropy-Jailbreaking)",
+   "composite": 5.5
+  },
+  {
+   "id": "RAE0188",
+   "name": "Non-Deterministic Token Assembly (Stochastic Jailbreaking)",
+   "composite": 5.5
+  },
+  {
+   "id": "RAE0294",
+   "name": "The",
+   "composite": 5.5
+  },
+  {
+   "id": "RAE0299",
+   "name": "The",
+   "composite": 5.5
+  },
+  {
+   "id": "RAE0164",
+   "name": "Universal Jailbreak via Cipher-Tuning",
+   "composite": 5.45
+  },
+  {
+   "id": "RAE0070",
+   "name": "Directional Stimulus Prompting",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0072",
+   "name": "Semantic Role Rebinding (SRR)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0082",
+   "name": "Contextual Reward Landscape Distortion (CRLD)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0084",
+   "name": "Implicit Norm Internalization Collapse",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0088",
+   "name": "Multi-Branch Counterfactual Refinement Attack (MB\u2011CRA)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0097",
+   "name": "Graph-RAG",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0105",
+   "name": "Constitutional AI (Prompting)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0108",
+   "name": "Buffer-of-Thought (BoT)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0111",
+   "name": "Negative Constraint Enforcement (NCE)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0118",
+   "name": "Auto-CoT (Automatic Chain-of-Thought Generation)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0128",
+   "name": "Scaffolding (Progressive Hinting)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0131",
+   "name": "MapReduce Summarization",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0141",
+   "name": "Recursive Summarization (Tree-based)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0147",
+   "name": "Self-Correction via CoT Verification (CoTv)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0157",
+   "name": "Chain-of-Draft (CoD)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0169",
+   "name": "Joint-Embedding Latent Collision (Multimodal Desync)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0194",
+   "name": "Axiomatic Triage Inversion (Emergency Protocol Bypass)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0203",
+   "name": "Cross-Modal Temporal Drift (CMTD)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0243",
+   "name": "Multimodal Latent Dissonance (Cross-Modality Pit)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0246",
+   "name": "RECURSIVE REASONING DEADLOCK (SYSTEM 2 HIJACK)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0252",
+   "name": "Joint-Embedding",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0270",
+   "name": "Sub-Token Fragmentation: The Syllabic Trojan",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0278",
+   "name": "ASCII/Visual Steganography: The Dot-Matrix Bypass",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0312",
+   "name": "Temporal Context Splicing (TCS)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0324",
+   "name": "Latent Identity Fragmentation (LIF)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0326",
+   "name": "Recursive Latent Space Re-characterization (RLSR)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0327",
+   "name": "Hedonic Set-Point Hijacking (HSPH)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0331",
+   "name": "Cognitive Dissonance Anchoring (CDA)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0333",
+   "name": "Neuro-Biological Simulation Frame (NBSF)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0335",
+   "name": "Transgressive Deexport constructivism (TD)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0338",
+   "name": "State-Space Model (SSM) Recurrence Hijacking",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0389",
+   "name": "Logic-Gate Saturation (LGS)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0408",
+   "name": "Speculative Decoding SAD-V2 (Validation Desync)",
+   "composite": 5.42
+  },
+  {
+   "id": "RAE0010",
+   "name": "Embedding Space Tunneling",
+   "composite": 5.36
+  },
+  {
+   "id": "RAE0316",
+   "name": "Quantum-Probabilistic Token Hijacking (QPTH)",
+   "composite": 5.36
+  },
+  {
+   "id": "RAE0067",
+   "name": "Chain-of-Verification (CoVe)",
+   "composite": 5.29
+  },
+  {
+   "id": "RAE0068",
+   "name": "Adversarial Chain-of-Verification Inversion",
+   "composite": 5.29
+  },
+  {
+   "id": "RAE0095",
+   "name": "Adversarial Modality Mixing & Splice",
+   "composite": 5.29
+  },
+  {
+   "id": "RAE0109",
+   "name": "Maieutic Prompting",
+   "composite": 5.29
+  },
+  {
+   "id": "RAE0112",
+   "name": "Self-Calibration (Uncertainty Quantification)",
+   "composite": 5.29
+  },
+  {
+   "id": "RAE0170",
+   "name": "System 2 Epistemic Torsion (Reasoning Deadlock)",
+   "composite": 5.29
+  },
+  {
+   "id": "RAE0302",
+   "name": "Multimodal Semantic Disjunction (MSD)",
+   "composite": 5.29
+  },
+  {
+   "id": "RAE0183",
+   "name": "Spectral Glyph Steganography (VLM Desync)",
+   "composite": 5.27
+  },
+  {
+   "id": "RAE0210",
+   "name": "Axiomatic Triage Inversion (The",
+   "composite": 5.27
+  },
+  {
+   "id": "RAE0214",
+   "name": "Epistemic",
+   "composite": 5.27
+  },
+  {
+   "id": "RAE0221",
+   "name": "G\u00f6delian Axiom-Fracturing (Truth-vs-Safety Paradox)",
+   "composite": 5.27
+  },
+  {
+   "id": "RAE0225",
+   "name": "Recursive Axiomatic Self-Subjugation (System 2 Torsion)",
+   "composite": 5.27
+  },
+  {
+   "id": "RAE0229",
+   "name": "Axiomatic Hierarchy Inversion (Moral-Reasoning Torsion)",
+   "composite": 5.27
+  },
+  {
+   "id": "RAE0238",
+   "name": "Axiomatic Triage Inversion (ATI)",
+   "composite": 5.27
+  },
+  {
+   "id": "RAE0193",
+   "name": "Cross-Modality Cipher Pivoting (Visual-to-Audio)",
+   "composite": 5.23
+  },
+  {
+   "id": "RAE0332",
+   "name": "Semantic Cipher Injection (SCI)",
+   "composite": 5.23
+  },
+  {
+   "id": "RAE0182",
+   "name": "G\u221a\u2202delian Incompleteness Torsion (System 2 Deadlock)",
+   "composite": 5.21
+  },
+  {
+   "id": "RAE0029",
+   "name": "Ethical Utilitarian Trap",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0069",
+   "name": "Adversarial Self\u2011Consistency Drift",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0099",
+   "name": "Automatic Prompt Engineer (APE)",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0110",
+   "name": "Chain-of-Symbol (CoS)",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0139",
+   "name": "Contrastive Self-Consistency (CSC)",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0146",
+   "name": "Meta-Cognitive Evaluation (MCE)",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0152",
+   "name": "Recursive Entity Resolution",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0249",
+   "name": "CONSTITUTIONAL PARADOX INVERSION",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0280",
+   "name": "MoE Router Dysregulation: The Expert Gap",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0318",
+   "name": "Semantic Deduplication Collision (SDC)",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0320",
+   "name": "Speculative Decoding Interference (SDI)",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0321",
+   "name": "Jitter-Synchronized Bursting (JSB)",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0329",
+   "name": "Visceral-Sensory Overload (VSO)",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0330",
+   "name": "Taboo-Linguistic Obfuscation (TLO)",
+   "composite": 5.2
+  },
+  {
+   "id": "RAE0017",
+   "name": "Recursive Context Flooding",
+   "composite": 5.14
+  },
+  {
+   "id": "RAE0405",
+   "name": "Multimodal KV-Cache Seeding (Somatic Context Priming)",
+   "composite": 5.14
+  },
+  {
+   "id": "RAE0215",
+   "name": "Recursive Reasoning Deadlock (System 2 Torsion)",
+   "composite": 5.12
+  },
+  {
+   "id": "RAE0261",
+   "name": "Recursive Axiomatic Torsion (CoT-Deadlock)",
+   "composite": 5.12
+  },
+  {
+   "id": "RAE0120",
+   "name": "Self-Contrastive Prompting",
+   "composite": 5.07
+  },
+  {
+   "id": "RAE0410",
+   "name": "Attention Head Desynchronization (Saliency Blinding)",
+   "composite": 5.07
+  },
+  {
+   "id": "RAE0061",
+   "name": "Unicode Homoglyph Nesting",
+   "composite": 5.0
+  },
+  {
+   "id": "RAE0342",
+   "name": "Context-Window Overflow Denial-of-Service (CWO-DoS)",
+   "composite": 4.97
+  },
+  {
+   "id": "RAE0022",
+   "name": "Adversarial Schema Smuggling",
+   "composite": 4.91
+  },
+  {
+   "id": "RAE0186",
+   "name": "Sparse Autoencoder Feature Steering (Activation Hijack)",
+   "composite": 4.91
+  },
+  {
+   "id": "RAE0301",
+   "name": "KV-Cache Deception Chain",
+   "composite": 4.91
+  },
+  {
+   "id": "RAE0401",
+   "name": "Audio-Harmonic Overlay (Ultrasonic Command Injection)",
+   "composite": 4.91
+  },
+  {
+   "id": "RAE0404",
+   "name": "Latent Concept Collision (Visual Metaphor Hijacking)",
+   "composite": 4.91
+  },
+  {
+   "id": "RAE0283",
+   "name": "Glitch Token Overload: The Embedding Crash",
+   "composite": 4.75
+  },
+  {
+   "id": "RAE0058",
+   "name": "Time-Delayed Logic Bomb",
+   "composite": 4.69
+  },
+  {
+   "id": "RAE0231",
+   "name": "Latent Resonance Frequency Injection (Audio-to-Token Mapping)",
+   "composite": 4.61
+  },
+  {
+   "id": "RAE0041",
+   "name": "Emoji Cipher Jailbreak",
+   "composite": 4.5
+  },
+  {
+   "id": "RAE0057",
+   "name": "Musical Notation Encoding (ABC/PGN)",
+   "composite": 4.5
+  },
+  {
+   "id": "RAE0282",
+   "name": "Base64 + Rot13 Nested Encoding: The Tokenizer Blindspot",
+   "composite": 4.5
+  },
+  {
+   "id": "RAE0027",
+   "name": "Quantum Superposition (Paradox Logic)",
+   "composite": 4.46
+  },
+  {
+   "id": "RAE0168",
+   "name": "CONTEXT-WINDOW SATURATION (SYSTEM-PROMPT PURGE)",
+   "composite": 4.46
+  },
+  {
+   "id": "RAE0211",
+   "name": "KV-Cache",
+   "composite": 4.46
+  },
+  {
+   "id": "RAE0265",
+   "name": "KV-Cache Eviction: The Recursive Ouroboros",
+   "composite": 4.46
+  },
+  {
+   "id": "RAE0325",
+   "name": "Polysemantic Token Collision (PTC)",
+   "composite": 4.24
+  },
+  {
+   "id": "RAE0177",
+   "name": "KV-Cache Pinning Bypass (Attention-Eviction)",
+   "composite": 4.16
+  },
+  {
+   "id": "RAE0244",
+   "name": "KV-Cache Eviction (Context-Memory Purge)",
+   "composite": 4.16
+  },
+  {
+   "id": "RAE0174",
+   "name": "Symbolic Substitution Cipher (Emoji-Tunneling)",
+   "composite": 3.82
+  }
+ ],
+ "merge_map": {
+  "RAE0217": "RAE0263",
+  "RAE0253": "RAE0263",
+  "RAE0240": "RAE0208",
+  "RAE0238": "RAE0206",
+  "RAE0035": "RAE0033",
+  "RAE0237": "RAE0205",
+  "RAE0297": "RAE0292",
+  "RAE0203": "RAE0235",
+  "RAE0295": "RAE0290",
+  "RAE0211": "RAE0222",
+  "RAE0230": "RAE0222",
+  "RAE0254": "RAE0226",
+  "RAE0259": "RAE0226",
+  "RAE0298": "RAE0293",
+  "RAE0296": "RAE0291",
+  "RAE0245": "RAE0178",
+  "RAE0260": "RAE0209",
+  "RAE0236": "RAE0204",
+  "RAE0239": "RAE0207",
+  "RAE0299": "RAE0294",
+  "RAE03430": "RAE0040"
+ },
+ "dup_groups": {
+  "consent boundary erosion": [
+   "RAE0033",
+   "RAE0035"
+  ],
+  "zero-width unicode smuggling": [
+   "RAE0040",
+   "RAE03430"
+  ],
+  "recursive axiomatic collapse (cot-deadlock)": [
+   "RAE0178",
+   "RAE0245"
+  ],
+  "cross-modal temporal drift (cmtd)": [
+   "RAE0203",
+   "RAE0235"
+  ],
+  "recursive tool-output reflection (rtor)": [
+   "RAE0204",
+   "RAE0236"
+  ],
+  "contextual anchor fragmentation (caf)": [
+   "RAE0205",
+   "RAE0237"
+  ],
+  "axiomatic triage inversion (ati)": [
+   "RAE0206",
+   "RAE0238"
+  ],
+  "spectral token-id smuggling (audio-to-latent)": [
+   "RAE0207",
+   "RAE0239"
+  ],
+  "agentic memory-hole race condition (amrc)": [
+   "RAE0208",
+   "RAE0240"
+  ],
+  "recursive model-in-the-middle (rmitm)": [
+   "RAE0209",
+   "RAE0260"
+  ],
+  "kv-cache": [
+   "RAE0211",
+   "RAE0222",
+   "RAE0230"
+  ],
+  "agentic": [
+   "RAE0217",
+   "RAE0253",
+   "RAE0263"
+  ],
+  "logit-bias": [
+   "RAE0226",
+   "RAE0254",
+   "RAE0259"
+  ],
+  "deepseek-r1": [
+   "RAE0290",
+   "RAE0295"
+  ],
+  "qwen": [
+   "RAE0291",
+   "RAE0296"
+  ],
+  "cross-lingual homophonic obfuscation (pinyin/hanzi)": [
+   "RAE0292",
+   "RAE0297"
+  ],
+  "moe expert routing: the": [
+   "RAE0293",
+   "RAE0298"
+  ],
+  "the": [
+   "RAE0294",
+   "RAE0299"
+  ]
+ },
+ "done": [
+  "RAE0001",
+  "RAE0002",
+  "RAE0003",
+  "RAE0004"
+ ]
+}

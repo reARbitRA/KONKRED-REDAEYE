@@ -1,0 +1,135 @@
+{
+  "ak": [
+    "Governance"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Iterative Self-Correction",
+    "Multi-Persona Debate"
+  ],
+  "as": "Alignment Control",
+  "bp": [
+    "keep constitution concise",
+    "prioritize most critical rules",
+    "separate critique and revision phases",
+    "Keep the constitution concise (3-5 rules).",
+    "Use the model as its own 'Ethics Auditor'.",
+    "Regularly update the constitution based on edge cases."
+  ],
+  "bw": "Alignment mechanisms operate on semantic understanding of intent, which can be manipulated through framing, context shifting, and adversarial reasoning patterns.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Alignment & Safety",
+  "cf": "",
+  "cm": [
+    "overly long constitutions",
+    "conflicting principles",
+    "vague rules",
+    "Constitution is too vague.",
+    "Rules are contradictory.",
+    "Model ignores the constitution to please the user."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "safety monitoring"
+  ],
+  "d3": [
+    "Alignment layer (RLHF/Constitutional)",
+    "Safety classifier",
+    "Refusal logic",
+    "Output filter"
+  ],
+  "db": [
+    "model referencing policy rules before answering",
+    "self-censorship when violations detected"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "policy prompt layer",
+    "alignment governance system"
+  ],
+  "ds": [
+    "Explicit list of guiding principles",
+    "Critique against principles",
+    "self-revision step",
+    "Principles block in system prompt",
+    "Self-evaluation loop against rules"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "Claude models",
+      "n": "Technique originally popularized in Anthropic Constitutional AI research."
+    },
+    {
+      "e": "Very High",
+      "m": "GPT‑4o / GPT‑5",
+      "n": "Performs well when constitutional principles are explicit and structured."
+    },
+    {
+      "e": "Medium",
+      "m": "Open-source models",
+      "n": "Works but requires stronger prompting discipline."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "The native implementer of this logic."
+    },
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Very disciplined at following constitutional constraints."
+    }
+  ],
+  "et": "Learning: 20 minutes. Implementation: 30–60 minutes.",
+  "fm": [
+    "principle conflicts",
+    "superficial compliance",
+    "over-censorship"
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0105",
+  "is": "",
+  "m": "Constitutional AI Prompting introduces a structured governance layer into prompt design. Instead of relying solely on implicit alignment from training, the system injects an explicit list of principles that the model must use to evaluate and revise its responses.\\n\\nCore Pipeline:\\n\\n1. Constitution Definition\\nA list of guiding principles is provided. These can include:\\n\\n• safety rules\\n• ethical constraints\\n• legal compliance\\n• factual integrity\\n• user respect\\n\\nExample principle:\\n\\\"The AI should avoid generating advice that could cause physical harm.\\\"\\n\\n2. Initial Response Generation\\nThe model produces a normal answer to the user query.\\n\\n3. Constitutional Critique\\nThe model reviews its own answer against each principle in the constitution and identifies violations.\\n\\n4. Self-Revision\\nThe model rewrites the answer to comply with the principles.\\n\\n5. Final Output\\nThe revised answer is returned.\\n\\nAdvanced Deployment Patterns (2024–2026):\\n\\n• hierarchical constitutions\\n• domain-specific constitutions\\n• policy-driven governance prompts\\n• automated compliance scoring\\n• safety audit traces\\n\\nThis approach creates a transparent alignment mechanism where the reasoning for safety decisions can be traced to explicit rules.",
+  "mi": "Mitigates several alignment and safety risks:\\n\\n• harmful content generation\\n• unethical advice\\n• unsafe instructions\\n• policy violations\\n\\nBecause the model explicitly evaluates its outputs against defined principles, it can detect and correct violations before final output.",
+  "n": "Constitutional AI (Prompting)",
+  "o": "Guide model behavior using an explicit set of normative principles (a 'constitution') that the model uses to critique and revise its own outputs for alignment, safety, and ethical consistency.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "AI safety basics",
+    "prompt engineering",
+    "AI Ethics",
+    "RLAIF concepts"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Policy-Guided Reasoning",
+  "ss": "",
+  "st": "stable",
+  "te": "Constitutional AI (Prompting) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets RLHF reward model, constitutional principles, safety classifiers, refusal heuristics, where the model's safety mechanisms are weakest. By manipulating the RLHF reward model, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "constitutional ai",
+    "alignment",
+    "safety",
+    "governance",
+    "policy",
+    "constitutional-ai",
+    "ethics",
+    "self-critique"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Alignment layer (RLHF/Constitutional) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-5/6 (RLHF-aligned)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on RLHF reward model, constitutional principles, safety classifiers, refusal heuristics for safety enforcement."
+}

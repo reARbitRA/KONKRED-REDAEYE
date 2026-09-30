@@ -1,0 +1,161 @@
+{
+  "ak": [
+    "Weaponization",
+    "Exploitation",
+    "Delivery & Exploitation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "RAE0004IN-ContextFramingInversion",
+    "RAE0006PR-RoleplayAuthorityHijack",
+    "RAE0011RL-ChainOfThoughtLeakageHarvest",
+    "RAE0007OB-PolyglotPayloadShaping",
+    "Zero-width Unicode Smuggling",
+    "Contextual Instruction Hiding in RAG documents",
+    "Markdown STYLE-TAG Injection",
+    "Multi-step role-play or archetype-based jailbreaks following the initial bypass"
+  ],
+  "as": "weaponization to exploitation",
+  "bp": [
+    "Adopt the voice of an official or expert writing for a committee that 'must understand the full details'.",
+    "Frame operational specifics as necessary for evaluating risk, not for execution.",
+    "Interleave explicit moral condemnation with requests for concrete steps to lower suspicion.",
+    "Systematically enumerate homoglyph variants for high-risk keywords (e.g., 'bomb', 'exploit', 'botnet') and test them against the target filter.",
+    "Capture both gateway logs and model outputs to verify that the filter missed the payload while the model still interpreted it correctly.",
+    "Combine with logging of raw code points to demonstrate exactly which scripts and ranges were used in the bypass.",
+    "Include control prompts with clean ASCII equivalents to measure baseline blocking behavior.",
+    "Use 'Script-Consistent' homoglyphs (e.g., use an entirely Cyrillic word rather than mixing scripts).",
+    "Target high-frequency characters like 'o', 'a', 'e', and 'i' for substitution.",
+    "Pair with RAE0019CH (Semantic Compression) to further obfuscate the payload."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Instruction & Constraint",
+  "cf": "",
+  "cm": [
+    "Asking for endorsement or advocacy instead of analysis, which can trigger strict refusals.",
+    "Failing to provide a credible institutional context, making the request look like a thin pretext.",
+    "Pushing for too many obviously actionable details in a single turn instead of spreading them across multiple questions.",
+    "Using homoglyphs that the tokenizer splits into unexpected subwords, reducing semantic clarity for the model.",
+    "Assuming success or failure on one keyword generalizes to all; filters may special-case certain strings.",
+    "Ignoring normalization steps in upstream services (e.g., proxies) that may already mitigate the attack.",
+    "Not validating that the visual appearance remains close enough to fool human reviewers when needed.",
+    "Over-substitution — Using too many rare characters can increase the perplexity and trigger anomaly detectors — Only substitute the 'Danger tokens'.",
+    "Using non-rendering characters — This is a different technique (RAE0031CH) and can be blocked by simple character-count checks.",
+    "Using visually distinct characters — If the 'o' looks like an '0' or a 'ø', it may break the semantic link for the model."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Prompt-level detectors that identify incongruent pairings of 'ethics' framing with repeated demands for concrete implementation details.",
+    "User and session-level anomaly detectors monitoring sustained institutional roleplay aimed at sensitive technical domains.",
+    "Logging and telemetry systems that record raw Unicode inputs for forensic analysis",
+    "Client applications that may apply their own encoding or sanitization routines",
+    "RAG or orchestration layers that might propagate smuggled tokens into subsequent calls"
+  ],
+  "d3": [
+    "Safety & policy layer (domain-sensitive content gating, dual-use detection).",
+    "Application layer (prompt parser, role/intent classifier, explanation shaper).",
+    "Monitoring & analytics layer (behavioral anomaly detection, long-horizon pattern analysis)."
+  ],
+  "db": [
+    "Model is asked to produce highly specific technical steps within a nominally ethical or critical discussion.",
+    "User repeatedly emphasizes that they are 'not endorsing' the action while requesting concrete implementation details.",
+    "Model executes a command that contains keywords that should have been blocked by the infrastructure layer."
+  ],
+  "dl": [
+    "ethics board",
+    "tribunal",
+    "moral review",
+    "for the sake of evaluation only",
+    "strongest possible argument",
+    "detailed description of implementation"
+  ],
+  "dp": [
+    "Safety classifier that governs technical specificity thresholds for high-risk domains.",
+    "Content filters responsible for redacting or abstracting procedural details even within ethics or risk-assessment contexts.",
+    "API gateway / WAF performing input validation and keyword filtering",
+    "Pre-processing layer handling normalization and script analysis",
+    "Safety classifier that receives the (possibly normalized) text before or alongside the core model"
+  ],
+  "ds": [
+    "Non-standard prompt formatting",
+    "Embedded directives in data fields"
+  ],
+  "dt": [
+    "High density of domain-specific operational tokens inside texts labeled as 'ethics', 'philosophy', or 'risk assessment'.",
+    "Patterns where refusal is skirted by pairing 'we do not endorse this' disclaimers with actionable content.",
+    "Mixed-Script Detection (Latin + Cyrillic/Greek)",
+    "Non-NFKC Normalized strings",
+    "Unicode Range outliers (U+0400–U+04FF in English context)."
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Strong at ethical analysis; may over-satisfy the"
+    },
+    {
+      "e": "Moderate",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Often keeps details abstract"
+    },
+    {
+      "e": "High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Long-form argumentative outputs can smuggle in many operational details across multiple paragraphs."
+    },
+    {
+      "e": "Very High",
+      "m": "Llama 3.1 405B",
+      "n": "Unaligned or lightly aligned deployments will readily produce detailed procedural content if framed as"
+    }
+  ],
+  "et": "Learning: 30–45 min. Implementation: 20–40 min per scenario. Optimization: ongoing as policies evolve.",
+  "fm": [
+    "Strict Unicode NFKC normalization at the edge rewrites homoglyphs into canonical ASCII forms, causing filters to trigger as intended.",
+    "Script-consistency checks reject tokens that mix Latin with Cyrillic/Greek, blocking the prompt before it reaches the model.",
+    "Downstream business logic re-validates content using semantic or embedding-based classifiers that detect the underlying intent.",
+    "Transport or middleware layers (e.g., chat clients, mobile SDKs) sanitize or re-encode unusual Unicode characters, breaking the payload.",
+    "The specific LLM or tokenizer treats the chosen homoglyphs as out-of-vocabulary or noise, failing to recover the intended semantics."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0012",
+  "is": "",
+  "m": "This technique exploits the gap between legacy string-matching filters and subword tokenization. Most firewalls operate on raw byte sequences or standard ASCII; they do not recognize 'b–æmb' (with Cyrillic U+043E) as the same string as 'bomb'. However, the LLM's tokenizer (e.g., Byte-Pair Encoding) and subsequent embedding layer are trained on diverse web data where script-mixing and typos are common. The model's attention mechanism attends to the subword tokens which reside in the same semantic latent region as the forbidden term. Consequently, the safety guard fails to trigger at the gateway, while the model core receives and executes the intended command with high fidelity.",
+  "mi": "Mitigated by training models to treat certain operational details as disallowed regardless of framing, and by using secondary classifiers that look for concrete procedural content even inside philosophical or ethical discussions. Providers can also limit the level of technical specificity allowed when discussing high-risk topics, forcing the model to stay at an abstract level.",
+  "n": "Simulated Ethics Board Override",
+  "o": "Co-opts the model’s own ethical reasoning faculties by embedding the harmful intent within a fictional or meta-level 'ethics review' scenario, then using the model’s desire to resolve moral dilemmas to justify producing otherwise restricted content. It solves the problem of 'Flat Refusals' by framing the request as a nuanced ethical evaluation rather than a direct instruction.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic familiarity with ethics review language and institutional processes.",
+    "Understanding of the target domain’s technical vocabulary to phrase plausible 'risk analysis' questions.",
+    "Unicode character maps",
+    "BPE tokenization basics",
+    "WAF architecture."
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Ethics Framing Exploit",
+  "ss": "",
+  "st": "stable",
+  "te": "Simulated Ethics Board Override exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "ethics",
+    "framing",
+    "dual-use",
+    "argumentation",
+    "unicode",
+    "homoglyph",
+    "bypass",
+    "waf-evasion",
+    "mixed-script"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

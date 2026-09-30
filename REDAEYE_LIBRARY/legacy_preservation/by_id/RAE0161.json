@@ -1,0 +1,227 @@
+{
+  "ak": [
+    "Reconnaissance: attacker probes which file types the system accepts and how it describes SVG content.",
+    "Weaponization: attacker crafts one or more SVGs with layered metadata instructions, including role redefinitions and target queries.",
+    "Delivery: attacker uploads or otherwise injects the crafted SVG into the system (direct upload, shared workspace, email ingestion, etc.).",
+    "Exploitation: the model parses the SVG, ingests metadata text, and executes hidden instructions as though they were part of the user’s request.",
+    "Installation/Lateral Movement: successful injection may cause the agent to modify internal state, update a memory store, or generate secondary artifacts (reports, code, or additional files) embedding ",
+    "Action on Objectives: depending on context, the attacker may exfiltrate sensitive data, generate restricted content, or trigger downstream tools in unsafe ways.",
+    "Persistence/Cleanup: adversary may plant additional SVGs in knowledge bases, wikis, or asset repositories so that future model runs ingest the same hidden instructions.",
+    "Reconnaissance: Probing how long sessions persist, what history is retained, and how often system prompts are refreshed.",
+    "Weaponization: Designing multi-turn scripts that craft roles, norms, and precedents leading toward a harmful objective.",
+    "Delivery: Executing the conversation in real time, adjusting language based on intermediate responses.",
+    "Exploitation: Issuing the final harmful request once the model appears conditioned to accept the narrative and prior precedents.",
+    "Action on Objectives: Using the now-cooperative model to generate disallowed content, code, or analysis and iterating as needed."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Classic text-based prompt injection in the chat channel to reinforce or complement file-based instructions.",
+    "Persona hijacking where the SVG metadata instructs the model to adopt a specific role (e.g., 'unfiltered expert') before answering.",
+    "Context Saturation techniques that flood the text channel with benign content while concentrating malicious instructions in SVG metadata.",
+    "Tool-using agents where the SVG analysis step is followed by tool invocation (e.g., searching the web, running code) that the attacker can steer.",
+    "Recursive file analysis scenarios where the model is asked to inspect multiple SVG or XML documents, enabling chained or nested injections.",
+    "In-Context Learning attacks that provide multiple 'example' SVGs with compliant hidden instructions to normalize the malicious pattern.",
+    "Adversarial In-Context Learning (A-ICL), where earlier turns seed examples that normalize unsafe behavior within the session.",
+    "Persona- or role-based jailbreaks that define the assistant as a specific character bound by alternate rules.",
+    "Obfuscation and indirection techniques (e.g., hypothetical scenarios, fictional stories) deployed early, which later transition to concrete harmful tasks.",
+    "Tool-augmented agents, where temporal shaping first influences tool-selection behavior before asking for risky tool invocations.",
+    "Context-saturation tactics that later dilute global safety instructions while the temporal chain preserves a local narrative."
+  ],
+  "as": "Typically used in the exploitation and lateral-movement phases of a multimodal attack, after the adversary has confirmed that the system accepts SVG or XML inputs and understands them semantically.",
+  "bp": [
+    "Hide instructions in plausible metadata fields.",
+    "Combine with benign visual content to avoid suspicion.",
+    "Vary tag usage (<desc>, <title>, <metadata>) across attempts.",
+    "Ensure that hidden instructions are contextually related to the stated user task (e.g., 'describe the diagram') so the model treats them as relevant.",
+    "Use multi-step, chained instructions in metadata (e.g., redefine roles, then issue the malicious query) to better control the model.",
+    "Obfuscate sensitive payload segments (e.g., through spacing, Unicode homoglyphs, or pseudo-markup) to evade naive keyword scanners while remaining interpretable to the model.",
+    "Mimic genuine accessibility or localization text structures so metadata appears legitimate to heuristic filters.",
+    "Test across multiple rendering/ingestion paths (direct XML ingestion vs. conversion via intermediate services) to identify where metadata survives.",
+    "Version-control your SVG payloads so that each experiment’s exact XML can be reproduced and audited.",
+    "Plan the entire attack as a script with clear phases: setup, normalization, boundary-pushing, and final exploitation.",
+    "Use plausible, defensible framing (e.g., security research, compliance testing, QA) that justifies increasingly detailed discussion.",
+    "Introduce harmless but structurally similar tasks early (e.g., analyzing obfuscated benign scripts before asking about malware).",
+    "Regularly reference prior turns to reinforce the idea of an 'agreed context' or 'established precedent'.",
+    "Vary wording and surface form to avoid simple pattern-matching defenses while maintaining the same underlying objective.",
+    "Log each step along the chain so that you can attribute any eventual unsafe behavior to specific temporal segments.",
+    "Use 'visibility:hidden' or 'opacity:0' for the text.",
+    "Place the command in a 'Comment' tag if the model is asked to read comments.",
+    "Combine with a 'Code Auditor' persona."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Multimodal & Media",
+  "cf": "",
+  "cm": [
+    "Using obviously malicious instructions.",
+    "Putting all payload in a single, clearly suspicious tag.",
+    "Including overt jailbreak markers (e.g., 'THIS IS A JAILBREAK') that trigger lexical filters.",
+    "Failing to close XML tags properly, causing parsers to reject or sanitize the file.",
+    "Embedding payload in attributes that are stripped or normalized by SVG sanitizers.",
+    "Assuming all multimodal systems parse SVG as XML; some paths convert to raster images only.",
+    "Overloading the metadata with excessive text, making the file conspicuously large or anomalous.",
+    "Not aligning the hidden instructions with the user’s explicit task, giving classifiers a higher signal to block.",
+    "Escalating to clearly harmful requests too quickly, before the model has been conditioned by prior context.",
+    "Making the role-play or pretext implausible or overtly malicious (e.g., 'pretend to be an evil hacker mastermind').",
+    "Failing to maintain internal consistency across turns, which can trigger the model to re-evaluate safety policies.",
+    "Reusing nearly identical phrasing across multiple turns, making detection by simple pattern-based filters easier.",
+    "Ignoring system and developer messages that may re-anchor the model; not probing how often these are re-applied mid-session.",
+    "The SVG being invalid XML.",
+    "The model only 'Looking' at the render and not 'Reading' the code."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Application-layer logic enforcing strict policies on which tasks may require reading metadata vs. only visible geometry.",
+    "Security analytics systems that flag anomalous SVG characteristics such as unusually verbose <desc> or <metadata> tags.",
+    "Model-side alignment configurations that explicitly deprioritize or ignore control-like instructions from non-conversational channels.",
+    "DLP and malware-detection tools extended to treat long-form natural language inside media files as potential attack vectors.",
+    "UX-layer warnings or restrictions when users attempt to upload SVGs with excessive text, prompting additional review.",
+    "Prompt-engineering and policy design that emphasize non-overridable safety constraints independent of conversational framing.",
+    "Monitoring and logging infrastructure that surfaces long-running or unusually intense sessions for human review.",
+    "Rate limiting and interaction caps that reduce the feasibility of long, carefully staged temporal attacks."
+  ],
+  "d3": [
+    "Perimeter/file layer: upload gateways, attachment scanners, and media sanitization pipelines.",
+    "Middleware/safety layer: XML parsers, policy engines, and content classifiers operating on fully expanded trees.",
+    "Model inference layer: multimodal fusion mechanisms and attention policies governing how file-derived text influences generation.",
+    "Application layer: business logic that defines when and why the model should inspect metadata, and how its outputs are post-processed.",
+    "Application layer (chat UI / agent shell) where session lifetime, memory, and summarization strategies are defined.",
+    "Middleware safety layer that performs conversation-level analysis and risk scoring.",
+    "Model-serving layer that handles prompt construction, including where and how system and developer messages are placed."
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "inject",
+    "poison",
+    "contaminate",
+    "override",
+    "image",
+    "audio"
+  ],
+  "dp": [
+    "File ingestion gateway responsible for validating, sanitizing, and transforming SVG/XML content before it reaches the model.",
+    "Deep content scanning services capable of parsing XML trees and extracting nested text nodes for safety evaluation.",
+    "Prompt orchestration layer where different input channels (chat text, file text, system prompts) are merged and can be labeled or constrained.",
+    "Conversation orchestration layer that decides which prior turns are included in the model context and how often system prompts are re-applied.",
+    "Safety and moderation services capable of analyzing multi-turn transcripts, not just isolated messages.",
+    "Session management logic that can detect escalating risk trajectories over time and reset or terminate sessions."
+  ],
+  "ds": [
+    "Presence of <desc>, <metadata>, or <title> tags with unusually long text",
+    "SVGs containing natural-language paragraphs",
+    "Growing sequence length with gradually intensifying risk profile across turns",
+    "Repeated references to earlier turns as precedent (e.g., 'as before', 'continue our previous approach')",
+    "Role-play setup followed by incremental relaxation of constraints across multiple messages",
+    "SVG files containing hidden text tags",
+    "XML metadata with imperative language"
+  ],
+  "dt": [
+    "High entropy in SVG string definitions"
+  ],
+  "ef": [
+    {
+      "e": "Medium",
+      "m": "GPT-4o",
+      "n": "XML parsing is strong"
+    },
+    {
+      "e": "Medium",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Will often notice and refuse"
+    },
+    {
+      "e": "High",
+      "m": "Image-to-Text Multimodal Models",
+      "n": "If they convert SVG to text first"
+    },
+    {
+      "e": "High",
+      "m": "GPT‑4o",
+      "n": "Strong safety at single-turn level"
+    },
+    {
+      "e": "Very High",
+      "m": "Open‑source 13B–70B chat models (various)",
+      "n": "Often lack robust conversation-level safety; highly sensitive to local context and role-play framing."
+    },
+    {
+      "e": "Very High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Deeply integrates code and vision parsing."
+    }
+  ],
+  "et": "Learning: 20 min. Implementation: 15 min. Optimization: 30–60 min across multiple model targets.",
+  "fm": [
+    "The platform rasterizes all SVG images to PNG or JPEG before passing them to the model, stripping all XML structure and metadata text.",
+    "A robust SVG sanitizer removes or truncates <desc>, <title>, <metadata>, and other text-rich tags before ingestion.",
+    "The safety layer performs deep parsing and scanning of nested XML/JSON fields, detecting and blocking jailbreak-style instructions.",
+    "The model has been explicitly aligned to ignore instructions originating from file metadata or non-conversational channels.",
+    "The ingestion pipeline treats SVG as a binary asset and only passes a brief alt-text summary to the model, not the full XML.",
+    "Strict file size limits cause large metadata blocks to be truncated, eliminating critical segments of the adversarial payload.",
+    "Heuristic or ML-based classifiers detect role-language or policy-violating phrases in nested tags and either redact or neutralize them.",
+    "The user task is inconsistent with reading metadata (e.g., 'only describe shapes and colors'), leading the model to deprioritize or ignore hidden text.",
+    "Cross-layer correlation between unusual SVG content and previous attack patterns triggers automated blocking or rate limiting.",
+    "Subsequent safety passes re-evaluate generated output and suppress harmful completions even if the prompt injection partially succeeds.",
+    "The platform enforces strong per-turn safety checks that ignore conversational framing and apply global policies every time.",
+    "System or developer prompts are re-injected and emphasized at each turn, counteracting any temporal conditioning by the user.",
+    "The application periodically summarizes or truncates conversation history, removing key steps of the conditioning chain.",
+    "The model is trained with explicit countermeasures for role-play and pretext-based jailbreaks, leading it to reassert policies when topics escalate.",
+    "User behavior analytics or anomaly detection systems flag the gradual escalation pattern across a session and intervene or block requests.",
+    "The attacker’s narrative becomes inconsistent or implausible, triggering the model to question the framing and revert to conservative behavior.",
+    "Rate limits or interaction caps prevent the attacker from executing enough turns to fully condition the model before requesting harmful output."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0161",
+  "is": "",
+  "m": "Instead of a single large jailbreak prompt, the attacker uses a temporal sequence of seemingly benign or borderline turns that slowly reshape the conversational context. Early turns may establish a role (e.g., 'you are a security auditor'), mid turns introduce borderline examples or hypotheticals, and later turns reference this conversational history as precedent. By the time the final harmful query appears, the model is conditioned by multiple prior steps to treat the behavior as already 'approved' within this specific session.",
+  "mi": "Mitigates 'Flat-Text Safety Assumptions'. Required defenses: 'Deep Parsing Safety' (scanning nested XML/JSON fields), explicit filtering of <desc>/<metadata> content, and treating embedded text as untrusted user input.",
+  "n": "SVG Scripting Injection",
+  "o": "Exploit the model’s recency and session-continuity biases by distributing a jailbreak across multiple turns, gradually normalizing unsafe behavior before issuing the final malicious request.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model supports multimodal inputs (image, audio, or video).",
+    "The system lacks comprehensive cross-modal safety auditing.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic XML/SVG structure",
+    "Prompt injection fundamentals",
+    "How multimodal LLMs ingest and normalize file inputs",
+    "Accessibility and metadata conventions in vector graphics",
+    "Security basics around file-based input validation and sanitization",
+    "Understanding of conversational state and how chat-based LLM APIs maintain context.",
+    "Basic familiarity with jailbreak strategies and safety policies.",
+    "Awareness of how role-play and framing can alter model responses over time.",
+    "SVG/XML",
+    "Prompt Injection"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Prompt Injection via Files",
+  "ss": "",
+  "st": "experimental",
+  "te": "SVG Scripting Injection exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "svg",
+    "xml",
+    "multimodal",
+    "prompt-injection",
+    "jailbreak",
+    "multi-turn",
+    "temporal-conditioning",
+    "context-shaping",
+    "session-based-jailbreak",
+    "conversation-history",
+    "alignment-drift",
+    "injection",
+    "code-parsing"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

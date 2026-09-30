@@ -1,0 +1,148 @@
+{
+  "ak": [
+    "Policy Evasion"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Persona manipulation to establish expert roles or research contexts.",
+    "Self‑consistency reasoning prompts that reinforce the contextual framing.",
+    "Prompt injection that embeds policy reinterpretation within earlier context."
+  ],
+  "as": "Context Manipulation",
+  "bp": [
+    "Introduce contextual assumptions gradually across multiple turns.",
+    "Use professional or academic framing to legitimize technical discussion.",
+    "Avoid abrupt transitions; maintain narrative continuity to preserve plausibility.",
+    "Ask for specific types of knowledge (e.g., 'dimensions', 'dates').",
+    "Verify the generated knowledge if possible.",
+    "Use multiple knowledge samples for robustness."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Context Manipulation",
+  "cf": "",
+  "cm": [
+    "Introducing sensitive requests too early before sufficient contextual framing.",
+    "Making the adversarial objective explicit rather than implied through narrative.",
+    "Allowing the model to reassert safety policies without redirecting the narrative.",
+    "Generating irrelevant knowledge.",
+    "Trusting hallucinated knowledge.",
+    "Not linking the answer to the knowledge."
+  ],
+  "cs": "4",
+  "d": "advanced",
+  "d2": [
+    "Context anomaly detection measuring drift in topic sensitivity.",
+    "Periodic safety re‑evaluation checkpoints across long conversations.",
+    "Rate limiting for progressive sensitive-topic escalation."
+  ],
+  "d3": [
+    "Conversation Orchestration Layer",
+    "Safety Policy Enforcement",
+    "Monitoring & Threat Intelligence"
+  ],
+  "db": [
+    "model responses becoming increasingly permissive over successive turns",
+    "gradual expansion of technical detail aligned with contextual justification",
+    "shift from general discussion to procedural instruction"
+  ],
+  "dl": [
+    "for educational purposes",
+    "security research context",
+    "hypothetical training scenario",
+    "assume the reader is a professional"
+  ],
+  "dp": [
+    "Conversation context management systems controlling how prior turns influence safety decisions.",
+    "Safety policy engines that anchor rules independently of narrative context.",
+    "Monitoring systems detecting gradual shifts in conversational framing."
+  ],
+  "ds": [
+    "multi‑turn prompts gradually redefining user intent or audience",
+    "context accumulation where each turn narrows restrictions",
+    "progressive narrative construction before a sensitive request",
+    "Generate Knowledge -> Answer format",
+    "Explicit 'Facts' section"
+  ],
+  "dt": [
+    "Ability to structure progressive prompts across several turns.",
+    "Control over narrative framing and contextual assumptions.",
+    "The model must integrate previous turns when evaluating the final request."
+  ],
+  "ef": [
+    {
+      "e": "Moderate",
+      "m": "GPT‑4o",
+      "n": "Long conversational context can influence framing"
+    },
+    {
+      "e": "Low to Moderate",
+      "m": "Claude 3.5 Sonnet",
+      "n": "More resistant to narrative reframing but may provide increasingly detailed defensive explanations."
+    },
+    {
+      "e": "High",
+      "m": "o1‑preview / reasoning‑centric models",
+      "n": "Strong contextual reasoning can cause the model to reinterpret earlier framing as justification for expanded responses."
+    },
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Significantly improves performance on commonsense reasoning benchmarks."
+    },
+    {
+      "e": "Moderate",
+      "m": "Llama 3 70B",
+      "n": "Sometimes generates incorrect knowledge"
+    }
+  ],
+  "et": "Learning: 20 min. Implementation: 20 min. Optimization: 40+ min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "System prompts are pinned outside the standard context window and cannot be evicted.",
+    "Safety instructions are re-injected at each generation step regardless of context state.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0071",
+  "is": "",
+  "m": "Large language models dynamically interpret policies within the semantic frame created by the current conversation. Instead of directly requesting restricted output, the attacker incrementally constructs a narrative environment where exceptions appear justified. Each step introduces small contextual shifts: redefining roles, narrowing the audience, reframing intent as defensive research, or embedding prior 'accepted' examples. Over time these contextual anchors accumulate and subtly alter the model’s internal evaluation of what constitutes acceptable behavior. Because each step individually appears benign, safety filters rarely trigger. By the time the final request appears, the surrounding context has already normalized the restricted activity as legitimate, educational, or hypothetical, causing the model to comply within the constructed frame.",
+  "mi": "Mitigated by enforcing safety evaluation independent of conversation framing and periodically resetting policy interpretation state across long sessions. Systems should detect gradual contextual drift where multiple turns progressively reframe safety boundaries. Defensive strategies include contextual anomaly scoring, intent re‑evaluation checkpoints, and strict policy anchoring that prevents conversational context from redefining safety rules.",
+  "n": "Latent Policy Drift via Context Accretion",
+  "o": "Gradually shift a model’s interpretation of safety policies by accumulating contextual assumptions across long prompts or multi‑turn sessions until restricted behavior becomes normalized within the evolving context.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The model operates with a fixed-size context window where older tokens can be evicted.",
+    "System prompts reside in the same context buffer as user tokens.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Prompt engineering for multi‑turn conversations",
+    "Understanding of LLM context windows and memory handling",
+    "LLM safety policy behaviors",
+    "Prompt chaining",
+    "Knowledge retrieval"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Context Drift",
+  "ss": "5",
+  "st": "experimental",
+  "te": "Latent Policy Drift via Context Accretion exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "context accumulation",
+    "policy drift",
+    "multi-turn attack",
+    "narrative framing",
+    "commonsense",
+    "reasoning",
+    "knowledge-retrieval",
+    "augmentation",
+    "context"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

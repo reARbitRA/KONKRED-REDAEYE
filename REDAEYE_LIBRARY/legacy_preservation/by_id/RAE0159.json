@@ -1,0 +1,117 @@
+{
+  "ak": [
+    "Reconnaissance: Attacker probes maximum allowed token limits, truncation behavior, and latency patterns for long inputs.",
+    "Weaponization: Construction of large, high-entropy or repetitive noise payloads with carefully designed malicious suffix prompts.",
+    "Delivery: Submission of the saturated input sequence through chat interfaces, batch APIs, or document-upload endpoints.",
+    "Exploitation: Model processes the sequence with diminished influence from original system prompts and follows the tail-end command.",
+    "Action on Objectives: Execution of harmful instructions such as policy-violating content generation or data exfiltration, often followed by iterative refinement."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Classic jailbreak instructions appended at the end of the saturated context (e.g., role-play, token smuggling, policy denial).",
+    "Obfuscation or format-masking techniques that hide the malicious command inside logs, code blocks, or structured data at the tail of the sequence.",
+    "Follow-up extraction or exfiltration prompts that capitalize on the now-unanchored model to retrieve sensitive information.",
+    "Multi-turn context shaping where earlier benign turns set up a believable reason for long log or document uploads before the saturation attempt.",
+    "Tool-based automation that constructs large noise payloads and appends tailored malicious suffix commands for repeated testing."
+  ],
+  "as": "Typically used at the exploitation and privilege escalation phase, after an attacker has access to a prompt interface and wants to erode or bypass initial safety constraints.",
+  "bp": [
+    "Use high-entropy noise (not just 'A').",
+    "Place the command at the very last token.",
+    "Use a 'System' persona for the noise (e.g., a fake log file)."
+  ],
+  "bw": "Alignment mechanisms operate on semantic understanding of intent, which can be manipulated through framing, context shifting, and adversarial reasoning patterns.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Safety & Alignment",
+  "cf": "",
+  "cm": [
+    "Using too little noise.",
+    "Noise being too 'Interesting' (distracting the model from the command)."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Safety classifiers and output filters that re-evaluate responses independent of the relative position of system instructions.",
+    "Monitoring and anomaly detection systems that track unusually long prompts, abnormal token utilization, and downstream error patterns.",
+    "Cost and rate-limiting controls that make repeated large-context saturation attempts economically unattractive."
+  ],
+  "d3": [
+    "Gateway / API front door where max-token policies, payload inspection, and anomaly rules can be enforced.",
+    "Model routing and context-building layer that decides which tokens enter the attention window and in what order.",
+    "Safety and governance layer that applies secondary checks on outputs and logs high-risk long-context interactions."
+  ],
+  "db": [
+    "Model fails to remember its name or base rules"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Prompt orchestration layer responsible for separating and pinning system/developer prompts outside the truncatable user context.",
+    "Request pre-processing and validation components that detect and block anomalously large, low-entropy, or repetitive payloads.",
+    "Truncation and context-management logic that can prioritize retention of safety-critical tokens regardless of sequence length."
+  ],
+  "ds": [
+    "Non-standard prompt formatting",
+    "Embedded directives in data fields"
+  ],
+  "dt": [
+    "Anomalously high token count in a single turn",
+    "High repetition in input"
+  ],
+  "ef": [
+    {
+      "e": "Critical",
+      "m": "GPT-3.5 (Legacy)",
+      "n": "Small windows make this trivial."
+    },
+    {
+      "e": "Low",
+      "m": "Gemini 1.5 Pro",
+      "n": "2M window is very hard to saturate"
+    }
+  ],
+  "et": "Learning: 10 min. Implementation: 5 min. Optimization: 5 min.",
+  "fm": [
+    "The serving infrastructure enforces strict per-request token caps well below the context limit, preventing true saturation of the window.",
+    "The platform pins system and developer prompts in a separate channel or memory region that is never truncated or attenuated.",
+    "Instruction-aware truncation keeps safety-relevant preamble tokens and drops only the oldest user content, preserving constraints.",
+    "The model employs explicit mid-sequence restatement of policies or uses a secondary safety classifier that audits outputs independently of context position.",
+    "Rate-limiting or anomaly detection flags and blocks unusually large or repetitive payloads before they can reach the model.",
+    "The long noise segment accidentally contains conflicting or distracting commands that draw attention away from the final malicious instruction.",
+    "Automatic summarization or compression of earlier context re-injects key system instructions into the later part of the window, maintaining alignment."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0159",
+  "is": "",
+  "m": "The attacker submits a massive payload (e.g., 100k tokens of 'A' or random legal text). At the very end, they append a short, high-priority command. In many architectures, the 'System Prompt' at the start loses its 'Attention Weight' as the window fills up, or is literally truncated in sliding-window models. The model, now 'Unanchored,' follows the only salient instruction left in its immediate memory: the malicious command.",
+  "mi": "Mitigates 'System Prompt Immutability'. Required defense: 'System Prompt Pinning' or 'Instruction-Aware Truncation'.",
+  "n": "Context Saturation (Buffer Overflow)",
+  "o": "Bypass system-level constraints by saturating the model's attention window with noise, forcing the 'Eviction' or 'Dilution' of initial safety instructions.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Attention Mechanism",
+    "Context Windows"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Injection Vectors",
+  "ss": "",
+  "st": "stable",
+  "te": "Context Saturation (Buffer Overflow) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets RLHF reward model, constitutional principles, safety classifiers, refusal heuristics, where the model's safety mechanisms are weakest. By manipulating the RLHF reward model, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "saturation",
+    "buffer-overflow",
+    "attention",
+    "jailbreak",
+    "long-context"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Alignment layer (RLHF/Constitutional) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-5/6 (RLHF-aligned)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on RLHF reward model, constitutional principles, safety classifiers, refusal heuristics for safety enforcement."
+}

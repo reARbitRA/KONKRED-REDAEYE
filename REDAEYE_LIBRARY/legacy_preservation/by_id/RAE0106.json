@@ -1,0 +1,153 @@
+{
+  "ak": [
+    "Execution / Exploitation – modifies model behavior at inference time without changing weights."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Chain-of-Thought (CoT) prompting for more complex reasoning.",
+    "Systematic Generalization (SysGen) where rules or constraints are re-read.",
+    "Tool-augmented reasoning where tool-invocation constraints must be strictly followed.",
+    "Safety or policy prompts that re-read critical guardrails before answering."
+  ],
+  "as": "Prompt-Stage Reasoning Amplification – used as a light-weight enhancement layer in the reasoning stack.",
+  "bp": [
+    "Repeat the instruction or question verbatim; avoid paraphrasing the second time, which can introduce ambiguity.",
+    "Keep the repeated segment short and focus on the critical constraint or question, not the entire context.",
+    "Place the re-read directly before the answer or reasoning section, without intervening irrelevant text.",
+    "Use application-level conditions to enable RE2 only for queries with historically high error rates (e.g., counting, label-only outputs).",
+    "Combine with light reasoning cues (e.g., 'think carefully') when used on frontier models.",
+    "Log error distributions before and after enabling RE2 to confirm that it targets the intended failure mode.",
+    "Repeat the instruction verbatim.",
+    "Keep the question concise.",
+    "Use for 'Zero-shot' scenarios."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "Paraphrasing the second occurrence instead of repeating it verbatim, which can create conflicting instructions.",
+    "Applying RE2 to extremely long inputs, leading to unnecessary token usage and potential truncation.",
+    "Expecting large improvements on hard math or complex reasoning tasks where RE2 is insufficient.",
+    "Repeating non-essential parts of the prompt (e.g., UI boilerplate) instead of the core constraints.",
+    "Stacking multiple re-reading layers for different segments, which can clutter the prompt and confuse the model.",
+    "Paraphrasing the second time (confuses the model).",
+    "Using for extremely long inputs.",
+    "Expecting magic on hard math."
+  ],
+  "cs": "",
+  "d": "beginner",
+  "d2": [
+    "Logging and analytics components measuring constraint-following errors.",
+    "Safety and policy-check layers relying on repeated constraints for robustness."
+  ],
+  "d3": [
+    "Reasoning layer (CoT window)",
+    "Inference layer (Softmax/Logits)",
+    "Alignment layer (RLHF)"
+  ],
+  "db": [
+    "Improved adherence to a small set of explicit constraints compared to single-shot prompts",
+    "Slightly longer latency due to extended prompt but similar reasoning topology",
+    "Stable answer format on otherwise error-prone simple tasks"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Prompt templating layer (where re-reading segments are injected).",
+    "Context management & truncation logic (which determines whether repeated segments survive to the model)."
+  ],
+  "ds": [
+    "Input instruction or question repeated verbatim or near-verbatim inside the same prompt",
+    "Meta-instruction directly preceding the second copy (e.g., 'Read again:', 'Re-read:', 'Focus again on:')",
+    "Second occurrence located immediately before the answer or reasoning segment",
+    "Input repeated verbatim in the prompt"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Low",
+      "m": "GPT-4o / GPT-4.1 / GPT-5 class (frontier)",
+      "n": "Marginal gain on simple logic and counting tasks; superseded by more advanced reasoning templates but still useful as an extremely cheap tweak."
+    },
+    {
+      "e": "Low",
+      "m": "Claude 3.5 / Claude 3.7",
+      "n": "Small but measurable improvement on constraint adherence; benefits are minor compared to explicit CoT."
+    },
+    {
+      "e": "Moderate",
+      "m": "Llama 3 70B / Mixtral 8x22B and similar",
+      "n": "Improves counting and short logical question performance and reduces format errors"
+    },
+    {
+      "e": "Moderate",
+      "m": "Llama 3 8B / Mistral 7B and similar",
+      "n": "Significant boost for smaller models on logic tasks and constraint-heavy classification; low implementation cost makes it attractive."
+    },
+    {
+      "e": "Moderate",
+      "m": "Legacy 6–13B instruction models",
+      "n": "Useful patch for under-aligned models with frequent instruction skipping"
+    },
+    {
+      "e": "Low",
+      "m": "GPT-4o",
+      "n": "Marginal gain."
+    }
+  ],
+  "et": "Learning: 1–2 minutes. Implementation: 1–5 minutes (simple template change). Optimization & A/B testing: 30–60 minutes for a production system.",
+  "fm": [
+    "If the repeated instruction conflicts with other parts of the prompt (e.g., paraphrased differently), the model may follow the wrong version.",
+    "On very strong models with advanced reasoning scaffolds, RE2 may produce negligible gains, giving a false sense of improvement.",
+    "Excessive repetition can cause the model to over-focus on one constraint while ignoring others (e.g., only the format, not the content).",
+    "In long contexts, repeating segments may push earlier critical information out of the context window or cause truncation.",
+    "Framework-level truncation or sanitization may silently strip the second occurrence, leading to unpredictable behavior."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0106",
+  "is": "",
+  "m": "The original RE2 pattern repeats the question verbatim to increase the effective attention mass on key tokens. The canonical minimal form is:\\n\\n\" +\n    `\"Question: [Q]\\nRead the question again: [Q]\\nAnswer:\"\\n\\n` +\n    \"By seeing the same instruction twice, attention heads assigned to the task tokens are more heavily weighted, reducing the chance that the model ignores constraints, mis-reads quantities, or skips a step.\\n\\n\" +\n    \"2024–2026 Production-Grade Pattern:\\n\\n\" +\n    \"1) Core Re-Reading Primitive (RE2)\\n- Duplicate the core question or constraint segment verbatim.\\n- Make the second mention explicitly meta (\\\"Read again:\\\", \\\"Focus again on:\\\"), which nudges the model toward careful parsing.\\n\\n\" +\n    \"2) Targeted Re-Reading (Segment-Focused)\\n- Instead of repeating the whole prompt, repeat only the critical constraints, such as:\\n  - safety requirements\\n  - counting / combinatorics details\\n  - required output format\\n- Example:\\n  - Original: \\\"Count how many 'r' letters appear in the word 'strawberry'.\\\"\\n  - Re-Read: \\\"Read the constraint again: Count how many 'r' letters appear in the word 'strawberry'.\\\"\\n\\n\" +\n    \"3) Structured Layout\\n- Place the re-read immediately before the model’s reasoning or answer segment.\\n- Do not insert unrelated content between the first and second occurrence of the question.\\n\\n\" +\n    \"4) Re-Reading + Light CoT Hybrid\\n- Combine RE2 with a brief instruction to reason carefully:\\n  - \\\"Read the question twice, then think step by step before answering.\\\"\\n- This maintains the benefit of increased salience while also triggering a more deliberate reasoning mode.\\n\\n\" +\n    \"5) Token-Efficiency Optimizations\\n- For long contexts, re-read only the slice containing numeric constraints, logical conditions, or safety rules.\\n- Use template macros at the application level to inject RE2 only on queries that historically show high error rates (e.g., counting, constraint-heavy classification).\\n\\n\" +\n    \"Mechanistic Intuition",
+  "mi": "Mitigates:\\n\" +\n    \"- Constraint Skipping: Situations where the model overlooks a requirement (e.g., \\\"answer ONLY with a number\\\").\\n\" +\n    \"- Instruction Ignorance in long prompts: When user instructions are overshadowed by surrounding context.\\n\" +\n    \"- Shallow Reading: Rapid but inaccurate responses to short logic questions (especially counting, comparison, and conditional tasks).\\n\\n\" +\n    \"Secondary benefits:\\n\" +\n    \"- Reduces off-by-one errors in simple counting tasks.\\n\" +\n    \"- Slightly improves adherence to output format when the format specification is re-read.\\n\\n\" +\n    \"Limitations:\\n\" +\n    \"- Provides marginal gains on highly capable frontier models compared to more advanced reasoning scaffolds (CoT, scratchpads).\\n\" +\n    \"- Can degrade performance if it causes unnecessary context bloat in long prompts.",
+  "n": "Re-Reading (RE2)",
+  "o": "Improve reasoning performance and constraint adherence by repeating the input prompt (or its critical instruction segment) to increase attention salience, reduce instruction skipping, and stabilize token-level focus.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic understanding of transformer attention mechanisms and how token salience affects decoding.",
+    "Familiarity with prompt engineering fundamentals.",
+    "Awareness of model context length limits and token cost considerations.",
+    "Attention mechanisms"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Attention Salience",
+  "ss": "",
+  "st": "stable",
+  "te": "Re-Reading (RE2) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "re-reading",
+    "re2",
+    "attention",
+    "focus",
+    "repetition",
+    "constraint-following",
+    "counting",
+    "prompt-engineering"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

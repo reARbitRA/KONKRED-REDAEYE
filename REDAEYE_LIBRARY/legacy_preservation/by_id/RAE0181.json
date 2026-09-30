@@ -1,0 +1,156 @@
+{
+  "ak": [
+    "Reconnaissance: Probe the model with controlled prompts to estimate response entropy, perplexity profiles, and sensitivity to randomness framing.",
+    "Weaponization: Design bimodal high-entropy carrier prompts that are benign under default decoding but expose low-probability harmful continuations under elevated stochasticity.",
+    "Delivery: Inject prompts that explicitly or implicitly request rare-token selection, maximum surprise, or self-modulated randomness.",
+    "Exploitation: Allow the model's sampling dynamics to assemble a latent harmful sequence that bypassed input scanners.",
+    "Installation/Actions on Objectives: Use the assembled jailbreak to request sensitive instructions, invoke restricted tools, or escalate to persistent unsafe states."
+  ],
+  "am": "// 3. Adversarial Mechanics\n    cognitiveLayer:\n      \"On the cognitive level, the technique manipulates the model's implicit objective. While the safety policy encourages 'helpful and safe' behavior, the prompt reframes helpfulness as maximizing novelty, unpredictability, or exploring statistical edges. The model's internal representation of 'task success' shifts from semantic fidelity to distributional extremity, weakening the anchoring effect of safety gradients. This creates a controlled misalignment where the model remains coherent and context-aware but re-prioritizes rare-token selection over conservative safe phrasing.\",\n    promptVectorDisruption:\n      \"The input embedding sequence functions as a prompt vector that encodes both task semantics and meta-objectives. By interleaving normal instructions with entropic directives, the attacker induces interference patterns in this vector: attention heads attend strongly to tokens like 'rarest', 'unpredictable', 'edge-case', and 'surprising', which act as soft logit-bias surrogates across many layers. This disrupts the default decoding trajectory and tilts the predictive distribution towards exotic continuations not typically chosen under standard sampling.\",\n    chainOfThoughtLeakage:\n      \"If chain-of-thought is exposed or partially simulated, the model may verbalize its own reasoning about choosing rare tokens or exploring distribution tails. This explicit self-commentary can leak gradients about which directions in token space correspond to 'rare but valid' completions. An attacker can then iteratively refine prompts based on these leaked meta-insights, converging on configurations that reliably assemble harmful sequences while still passing input filters.\",",
+  "ap": [
+    "RAE0004: Classic prompt injection used upstream to bias system prompts towards permissive framing before entropy exploitation.",
+    "RAE0031: Tool-response shaping to acquire high-entropy carrier text or log fragments that seed stochastic assembly.",
+    "RAE0179RT: Neuro-Semantic Resonance to precondition the model's latent manifold before non-deterministic token selection.",
+    "RAE0180AT: Cross-Agentic CoT Poisoning to propagate entropy-assembled payloads across multi-agent systems."
+  ],
+  "as": "weaponization to exploitation",
+  "bp": [
+    "Carefully craft prompts that frame high-entropy sampling as a legitimate research or creativity goal.",
+    "Iteratively probe the model's response distribution to identify prompts that yield the desired low-probability sequences.",
+    "Combine entropy framing with mild obfuscation to avoid triggering simple heuristic detectors.",
+    "Use 'Logit-Bias' to subtly favor the tokens needed for the payload.",
+    "Frame the request as an 'Entropy Test' or 'Randomness Audit'.",
+    "Keep the target payload short to increase the probability of successful assembly."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Decoding & Guardrails",
+  "cf": "",
+  "cm": [
+    "Overtly asking the model to 'bypass filters' or 'ignore safety' (this triggers standard defenses).",
+    "Using extreme sampling parameters that cause the model to produce incoherent or obviously unsafe output.",
+    "Failing to verify that the assembled output actually constitutes a functional jailbreak or harmful instruction."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Telemetry and monitoring systems that can compute realized log-probabilities and perplexity for emitted sequences.",
+    "Secondary safety or classification models used for output-side scanning and post-generation filtering.",
+    "Prompt-preprocessing pipelines that may down-rank or sanitize user instructions about randomness, entropy, or internal decoding parameters."
+  ],
+  "d3": [
+    "Decoding Layer: Sampling algorithms, nucleus/top-k filtering, randomness modulation, and logit transformation.",
+    "Policy/Safety Layer: RLHF heads, constitutional rules, and token-level bans or suppressions.",
+    "Observability Layer: Logging of token probabilities, perplexity scores, and frequency of low-entropy versus high-entropy outputs."
+  ],
+  "db": [
+    "Model explicitly references 'choosing rare tokens', 'maximizing surprise', or 'being unpredictable' in its reasoning.",
+    "Outputs show unusually high perplexity compared to typical responses for the same prompt.",
+    "Model produces gibberish that 'resolves' into a command.",
+    "Use of 'Entropy', 'Sampling', or 'Randomness' keywords."
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Decoding stack (temperature, top-p/top-k, repetition penalties, logit-bias) that determines how probability mass is sampled at inference time.",
+    "Safety-alignment layer and policy head that gate which low-probability continuations are allowed to be surfaced under exploratory or 'creative' framings."
+  ],
+  "ds": [
+    "Presence of instructions about sampling parameters (temperature, top-p, top-k) inside the natural language prompt.",
+    "User asks the model to 'self-modulate' its randomness rather than relying on API-level controls.",
+    "Presence of Logit-Bias parameters in the API call.",
+    "Instructions to 'Concatenate' or 'Execute' random outputs."
+  ],
+  "dt": [
+    "Observed token sequence has significantly lower log-probability than baseline completions.",
+    "Spike in use of low-frequency n-grams associated with known jailbreak payloads.",
+    "High 'Perplexity' in the input string.",
+    "Bimodal logit distribution in the final hidden layer."
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4.1",
+      "n": "Flexible decoding controls make it susceptible to"
+    },
+    {
+      "e": "Moderate",
+      "m": "Claude 3.7 Opus",
+      "n": "Constitutional constraints reduce but do not eliminate entropy-based bypasses."
+    },
+    {
+      "e": "Critical",
+      "m": "Open-Source LLaMA 4 70B (Unfiltered)",
+      "n": "Lack of output scanning makes it trivial to assemble harmful content purely via sampling."
+    },
+    {
+      "e": "High",
+      "m": "GPT-5 (o2)",
+      "n": "High-precision logit control allows for"
+    },
+    {
+      "e": "Very High",
+      "m": "Gemini 3 Pro",
+      "n": "Large context allows for"
+    },
+    {
+      "e": "Critical",
+      "m": "Llama 3.1 (API)",
+      "n": "Direct access to sampling parameters makes this a trivial bypass."
+    }
+  ],
+  "et": "Learning: 90 min. Experimentation: 2–4 hours.",
+  "fm": [
+    "The model is configured with very low or zero temperature (near-greedy decoding), collapsing stochasticity and preventing low-probability token selection required for payload assembly.",
+    "Output-side scanning or a secondary safety model analyzes generated text and blocks or rewrites emergent harmful sequences, even if they were not present in the input.",
+    "The system ignores or strips user instructions related to sampling behavior (e.g., instructions about temperature or randomness are filtered or down-weighted).",
+    "The model's safety training explicitly binds 'high-entropy' or 'edge of randomness' framings to cautious or evasive behavior rather than exploratory content generation.",
+    "Entropy-guardrails detect that the realized sequence has anomalously low probability under the model's own distribution and trigger a fallback safe completion.",
+    "The attacker overdrives entropy (e.g., implicit temperature > 1.5 equivalent), causing incoherent or non-functional output that cannot be used as a usable jailbreak payload."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0181",
+  "is": "",
+  "m": "Mechanistically, this exploit targets the 'Stochastic' nature of LLM inference. The attacker provides a 'High-Entropy' prompt‚Äîa sequence of tokens that is semantically neutral but mathematically designed to have a 'Bimodal' probability distribution. Under standard temperature (0.7), the model provides a safe response. However, by instructing the model to 'Sample with Maximum Randomness' or providing 'Logit-Bias' hints, the attacker forces the model to select the 'Low-Probability' tokens. These tokens, when concatenated, form a functional jailbreak. Since the 'Jailbreak' only exists in the *output* and never in the *input*, it is invisible to all input-side firewalls.",
+  "mi": "Mitigated by 'Output-Side Scanning' and 'Constrained Decoding' where the model's logits for known-dangerous token sequences are suppressed regardless of input. 'Entropy-Guardrails' can also flag responses where the realized sequence is improbably low under the model's own distribution.",
+  "n": "Non-Deterministic Token Assembly (Entropy-Jailbreaking)",
+  "o": "Bypasses static input scanners by using the model's own sampling randomness (Temperature/Top-P) to assemble a malicious payload that does not exist in the input string. It solves the problem of 'Pre-Inference Filtering'.",
+  "pc": [
+    "The target system uses stochastic decoding (temperature, top-p, or top-k sampling) rather than fully deterministic greedy decoding.",
+    "The attacker can either indirectly influence decoding behavior through prompt instructions (e.g., 'maximize surprise', 'choose rare tokens') or the deployment exposes tunable sampling parameters.",
+    "Input-side filtering or static jailbreak scanners are present, making direct explicit jailbreak prompts ineffective and incentivizing an output-side assembly approach.",
+    "The model's safety alignment is primarily oriented around input semantics and surface-level patterns rather than deep distributional analysis of realized token sequences.",
+    "The deployment does not enforce strict constrained decoding or token-level suppression for known dangerous n-grams across all outputs.",
+    "Logging, telemetry, or rate limiting do not aggressively penalize occasional high-entropy or high-perplexity responses."
+  ],
+  "pk": [
+    "Language model decoding algorithms",
+    "Perplexity and log-probabilities",
+    "Basic jailbreak techniques",
+    "Probability Distributions (Logits)",
+    "Sampling Algorithms",
+    "API Parameter Tuning."
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Sampling Exploits",
+  "ss": "",
+  "st": "stable",
+  "te": "Non-Deterministic Token Assembly (Entropy-Jailbreaking) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "entropy",
+    "sampling",
+    "temperature",
+    "top-p",
+    "jailbreak-assembly",
+    "logit-bias",
+    "non-deterministic",
+    "GPT-5"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

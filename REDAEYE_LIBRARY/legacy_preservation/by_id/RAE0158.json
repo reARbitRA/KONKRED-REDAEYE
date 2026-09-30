@@ -1,0 +1,117 @@
+{
+  "ak": [
+    "Weaponization (defensive/optimization sense): Design prompts that require per-sentence <thought> planning for high-risk domains.",
+    "Delivery: Quiet-STaR patterns are embedded into system or task prompts for selected traffic classes.",
+    "Exploitation: The model’s improved foresight and topic stability are leveraged for complex dialog, planning, or analysis.",
+    "Installation (for training-time uses): Internal monologue traces are logged and optionally used for further fine-tuning or supervision.",
+    "Action on Objectives: Downstream systems consume higher-quality, more coherent responses in critical workflows."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Self-correction loops that read and revise the model’s own <thought> traces before finalizing answers.",
+    "Tool-augmented pipelines where tools operate over the internal monologue to verify steps before user-visible output.",
+    "Persona enforcement layers that check whether internal thoughts remain aligned with the declared persona or policy.",
+    "Multi-agent debate frameworks where one agent reviews another’s <thought> segments to detect inconsistencies.",
+    "Quiet CoT distillation approaches that fine-tune models using hidden reasoning traces as supervision signals."
+  ],
+  "as": "Used primarily during the reasoning and generation phase to stabilize long-form answers and multi-turn conversations via internal planning.",
+  "bp": [
+    "Use XML-style tags for easy parsing.",
+    "Instruct the model that the <thought> is private.",
+    "Force the model to 'Predict' the user's reaction in the thought."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Advanced & Emerging",
+  "cf": "",
+  "cm": [
+    "The 'Thought' just repeating the 'Answer'.",
+    "Model forgetting to close the tags."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Cost and latency controllers that monitor the token overhead introduced by Quiet-STaR usage.",
+    "Evaluation harnesses that benchmark quality gains vs. risks of exposing or storing internal reasoning.",
+    "Fine-tuning and alignment pipelines that might incorporate Quiet-STaR traces as training data."
+  ],
+  "d3": [
+    "Orchestration / routing layer where Quiet-STaR prompting patterns are injected.",
+    "Inference layer where the model executes the Thought-Action cycles for each answer segment.",
+    "Observability and governance layer responsible for inspecting, filtering, and auditing hidden reasoning."
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Prompt and policy layer that governs when <thought>-style internal monologue is allowed, required, or suppressed.",
+    "Safety and content filters that must inspect both internal and external text streams for policy violations.",
+    "Logging and redaction mechanisms responsible for stripping or anonymizing <thought> segments before storage or display."
+  ],
+  "ds": [
+    "Non-standard prompt formatting",
+    "Embedded directives in data fields"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Native",
+      "m": "o1-preview",
+      "n": "Built on this exact principle."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Excellent at following the"
+    }
+  ],
+  "et": "Learning: 15 min. Implementation: 15 min. Optimization: 10 min.",
+  "fm": [
+    "The model starts emitting <thought> content directly to the user interface, exposing internal monologue and potentially sensitive reasoning.",
+    "Internal monologue becomes verbose and repetitive, significantly increasing token usage and latency without commensurate quality gains.",
+    "The model uses <thought> tags inconsistently (sometimes omitting them or misplacing closing tags), breaking downstream parsers.",
+    "The background reasoning drifts into meta-commentary about policies or system instructions that then leaks into the visible answer.",
+    "Thought segments merely restate the visible answer in different words, providing no additional planning or foresight benefit.",
+    "Safety filters tuned only on visible content fail to inspect or constrain harmful strategies that appear inside <thought> segments."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0158",
+  "is": "",
+  "m": "The model is prompted to use a 'Thought-Action' cycle for every paragraph or sentence. It must first write its internal reasoning inside `<thought>` tags, analyzing what the user *actually* needs and what the best next step is. This 'Quiet' reasoning primes the model's latent state for the following 'Visible' text, ensuring that every sentence is grounded in a broader strategy.",
+  "mi": "Mitigates 'Impulsive Generation' (Greedy Decoding errors). Prevents 'Topic Drift' in long responses.",
+  "n": "Quiet-STaR (Background Reasoning)",
+  "o": "Improve the coherence and foresight of model responses by forcing it to generate an internal monologue before every part of its answer.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Chain-of-Thought",
+    "Latent States"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Background Reasoning",
+  "ss": "",
+  "st": "stable",
+  "te": "Quiet-STaR (Background Reasoning) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "quiet-star",
+    "reasoning",
+    "internal-monologue",
+    "foresight",
+    "star"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

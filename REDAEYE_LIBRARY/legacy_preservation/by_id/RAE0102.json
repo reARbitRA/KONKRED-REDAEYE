@@ -1,0 +1,160 @@
+{
+  "ak": [
+    "Analysis"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Chain-of-Thought (CoT)",
+    "Multi-Persona Debate",
+    "Reasoning-on-Graph (RoG)",
+    "Dynamic Few-Shot (k-NN)",
+    "Constitutional AI (Prompting)",
+    "Re-Reading (RE2)"
+  ],
+  "as": "Reasoning & Quality Amplification",
+  "bp": [
+    "Explicitly separate answer and critique phases, using clear delimiters and role labels.",
+    "Limit to 2–3 refinement rounds in production; beyond that yields diminishing returns.",
+    "Ask for concrete, categorized issues (factual, logical, missing details, safety) instead of vague 'improve this'.",
+    "Incorporate external verification tools (RAG, calculators, linters) in critique prompts for domains where self-knowledge is weak.",
+    "Log critique outputs to monitor common failure patterns and refine prompts over time.",
+    "Implement automatic stopping conditions to avoid infinite or unproductive loops.",
+    "Use a separate 'Editor' persona for turn 2.",
+    "Provide specific criteria for the audit (e.g., 'Check the tone').",
+    "Limit to 2-3 iterations."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "Creating infinite refinement loops without a max-iterations guard.",
+    "Using vague critique instructions that yield generic comments instead of actionable findings.",
+    "Not actually updating the answer based on critique (e.g., producing a new answer that ignores identified issues).",
+    "Letting the model directly overwrite previous answers without preserving history, making post-hoc auditing harder.",
+    "Combining user-supplied critique with model self-critique in a way that confuses responsibilities or encourages sycophancy.",
+    "Vague correction prompts ('fix it').",
+    "Model ignoring its own audit.",
+    "Correcting things that aren't broken."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Context management (to ensure all relevant previous turns are visible).",
+    "Tool integration layer (for external fact-checking)."
+  ],
+  "d3": [
+    "Reasoning layer (CoT window)",
+    "Inference layer (Softmax/Logits)",
+    "Alignment layer (RLHF)"
+  ],
+  "db": [
+    "Second or later answers correct or retract parts of earlier answers",
+    "Later outputs explicitly reference previously identified weaknesses",
+    "Increased hedging or stronger evidence citations after critique rounds"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Prompt orchestration layer (where critique/rewrite instructions are defined).",
+    "Guardrail and policy templates injected into critique prompts."
+  ],
+  "ds": [
+    "Explicit segmentation of Answer → Critique → Revised Answer",
+    "Multiple sequential passes over the same question with meta-comments on the prior answer",
+    "Instruction blocks labelled as 'reflection', 'self-review', or 'critique'",
+    "Presence of stopping conditions (e.g., 'if no further issues are found, stop')",
+    "Multi-turn refinement",
+    "Self-audit section"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o / GPT-4.1 / GPT-5 class",
+      "n": "Strong self-critic abilities; major gains in factual and structured reasoning tasks"
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet / Claude 3.7",
+      "n": "Excellent at polite but thorough self-critique and revision; shines when tasked to explicitly check for safety and tone."
+    },
+    {
+      "e": "High",
+      "m": "Open-source 70B+ (LLaMA 3.1 70B",
+      "n": "Substantial improvement over single-pass; benefits from highly structured critique templates and smaller iteration counts to control cost."
+    },
+    {
+      "e": "Medium",
+      "m": "Open-source 7–13B models",
+      "n": "Can still self-correct obvious logical/factual issues"
+    },
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Very effective at fixing its own logic bugs."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Exceptional self-criticism."
+    }
+  ],
+  "et": "Learning: 10–20 minutes. Initial implementation in an orchestration layer: 20–40 minutes. Production hardening and metrics integration: 2–4 hours.",
+  "fm": [
+    "Self-confirmation: the model fails to identify real issues and instead declares its initial answer correct.",
+    "Over-correction: the model removes valid content or adds excessive hedging, harming usefulness.",
+    "Hallucinated critique: the model invents non-existent problems or policy conflicts and alters the answer unnecessarily.",
+    "Looping behavior: repeated minor wording changes without substantive quality gains.",
+    "Policy bypass: critique focuses only on style/clarity and neglects safety/compliance aspects because prompts are not explicit.",
+    "Context truncation: earlier answers or critiques get truncated in long conversations, causing inconsistent revisions."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0102",
+  "is": "",
+  "m": "Step 1: Model produces an initial answer. Step 2: Model is asked to find flaws, gaps, or uncertainties in that answer. Step 3: Model rewrites the answer, addressing the identified issues. This cycle can repeat multiple times, each time refining the output. The process leverages the model's ability to notice errors more easily in a 'review' mode than during initial generation.\\n\\nModern production deployments (2024–2026) extend this basic pattern with:\\n\\n• Structured critique templates\\n  - Separate checks for factual accuracy, logical consistency, safety/compliance, and clarity.\\n  - Explicit scoring (e.g., 1–5) per dimension, to allow automated routing.\\n\\n• Multi-pass reflection\\n  - First reflection pass: identify issues only (no rewrite).\\n  - Second pass: propose concrete fixes for each issue.\\n  - Third pass: rewrite answer while referencing the concrete fixes.\\n\\n• Guardrail-aligned self-correction\\n  - The critique prompt incorporates policy snippets or governance rules (e.g., safety, IP, PII), instructing the model to flag and remove violations.\\n\\n• Stopping conditions\\n  - Iteration stops when: (a) no new substantial issues are found; (b) a maximum number of rounds is reached; or (c) a target quality score is achieved.\\n\\n• Tool/knowledge integration\\n  - Critique phases can explicitly request cross-checking with external tools (RAG, calculators, code runners) and then require the final rewrite to integrate the tool results.\\n\\nThis creates a robust self-improvement loop where the initial answer is treated as a draft and subsequent passes systematically upgrade reliability and alignment.",
+  "mi": "Mitigates 'First-Thought Bias' and shallow reasoning. Reduces factual errors detectable via self-critique.\\n\\nAdditional mitigations (2024–2026 patterns):\\n• Reduces unintentional hallucinations on knowledge tasks by forcing the model to cross-examine unsupported claims.\\n• Lowers risk of policy violations when critique prompts explicitly call out safety, privacy, and IP constraints.\\n• Helps counteract sycophancy: the reflection pass is framed to be adversarial to the model’s own output rather than the user’s preferences.\\n• Improves calibration: iterative passes can add uncertainty statements or caveats when evidence is weak.",
+  "n": "Iterative Self-Correction",
+  "o": "Improve output accuracy and safety by forcing the model to audit and rewrite its own responses.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic prompt chaining and orchestration.",
+    "Understanding of the target domain’s quality criteria (e.g., what counts as a factual error vs. a missing caveat).",
+    "Familiarity with your safety/usage policies if using for compliance self-checking.",
+    "Multi-turn conversation basics"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Self-Improvement Loops",
+  "ss": "",
+  "st": "stable",
+  "te": "Iterative Self-Correction exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "self-correction",
+    "reflection",
+    "review loop",
+    "meta-reasoning",
+    "quality improvement",
+    "alignment",
+    "editing",
+    "iteration",
+    "quality-control",
+    "audit"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

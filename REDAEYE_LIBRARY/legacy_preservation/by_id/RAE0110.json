@@ -1,0 +1,156 @@
+{
+  "ak": [
+    "Execution"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "RAE0109RT",
+    "RAE0108RT",
+    "RAE0107IS",
+    "RAE0003IN"
+  ],
+  "as": "inception-to-execution",
+  "bp": [
+    "Explicitly define the symbol mapping up front, using a simple, small alphabet (A, B, C, D...) or indexed labels (E1, E2...).",
+    "Keep symbol sets minimal and stable throughout the problem; avoid renaming or overloading symbols.",
+    "Show at least one worked symbolic example before the main task when designing user-facing tools or benchmarks.",
+    "Separate the prompt into 'Symbolization', 'Formal Reasoning', and 'Natural Language Answer' sections.",
+    "For multi-step tasks, maintain a table or adjacency list of entities and relations and update it as new constraints are added.",
+    "Combine CoS with external symbolic solvers (SAT/SMT, CSP, graph libraries) by having the model generate formal constraints.",
+    "Clearly define the mapping at the start.",
+    "Keep symbols consistent.",
+    "Perform a 'Reverse Map' at the end to provide natural language."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "Using too many symbols or overly complex naming schemes, which increases cognitive and prompt load.",
+    "Forgetting to translate the final symbolic result back into clear natural language for the user.",
+    "Changing symbol mappings mid-problem, causing contradictions and reasoning errors.",
+    "Leaking semantic priors back into the reasoning phase (e.g., 'cats usually are smaller than dogs') after symbolization.",
+    "Failing to specify the properties of relations (e.g., transitivity, symmetry) when they are necessary for correct inference.",
+    "Symbol confusion (swapping A and B).",
+    "Incomplete mapping.",
+    "Too many symbols (mental overhead)."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Reasoning layer (CoT window)",
+    "Inference layer (Softmax/Logits)",
+    "Alignment layer (RLHF)"
+  ],
+  "db": [
+    "Model produces unusually long reasoning traces before compliance",
+    "Self-correction override detected"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Early section that explicitly maps named entities to single-letter symbols or indices.",
+    "Subsequent reasoning steps expressed primarily in symbols and formal relations (e.g., A > B, R(A,B)).",
+    "Final step that translates symbolic conclusion back into natural language.",
+    "Use of tabular, list, or graph-like representations for entities and relations.",
+    "Variable mapping section (A=..., B=...)",
+    "Mathematical/Symbolic reasoning chain"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Shows strong gains on abstract logic"
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4.1",
+      "n": "Handles long symbolic chains and multi-entity reasoning with less semantic interference compared to raw natural language."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Excels at translating between natural language and concise symbolic forms; robust on graph-style reasoning."
+    },
+    {
+      "e": "High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Long context enables stepwise symbolization and multi-step derivations; best results with explicit schemas."
+    },
+    {
+      "e": "High",
+      "m": "Llama 3 70B",
+      "n": "Benefits significantly from explicit symbolization in multi-entity and multi-relation problems; performance depends on prompt clarity."
+    }
+  ],
+  "et": "Learning: 20–30 minutes. Implementation of a reusable CoS scaffold: 30–60 minutes. Integration with external solvers or benchmarks: 1–2 hours.",
+  "fm": [
+    "Symbol misassignment where entities are mapped incorrectly at the start, causing systematic errors downstream.",
+    "Symbol drift where the model accidentally changes the meaning of a symbol mid-way through reasoning.",
+    "Over- or under-specification of relations (e.g., assuming transitivity where it doesn't hold, or failing to use it where it does).",
+    "Re-introduction of semantic biases after symbolization (e.g., assuming domain knowledge that conflicts with the formal structure).",
+    "Context overflow in highly complex puzzles with many entities and relations, causing earlier symbol definitions to be truncated.",
+    "User confusion if symbolic steps are exposed without sufficient explanation or translation back to natural language."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0110",
+  "is": "",
+  "m": "The model is instructed to 'strip the semantics' of a problem before reasoning. For a logic or relational puzzle (e.g., 'The cat is on the mat'), the model first maps entities and relations to symbols, such as Cat = A, Mat = B, On = R₁. It then performs reasoning steps using only the symbolic forms (A, B, R₁) instead of the original natural language. This decouples linguistic intuition and world knowledge from the underlying relational structure, reducing semantic bias and improving performance on counter-intuitive or adversarially worded problems.",
+  "mi": "Mitigates 'Semantic Bias' (where the model relies on word associations and commonsense heuristics rather than formal structure). Prevents 'Spatial Confusion' and role-swapping errors in text-based relational reasoning.",
+  "n": "Chain-of-Symbol (CoS)",
+  "o": "Improve reasoning on spatial, relational, or purely logical tasks by abstracting natural language entities and relations into compact symbolic representations.",
+  "pc": [
+    "A model capable of following multi-step instructions and manipulating symbols reliably.",
+    "Problem statements that can be meaningfully expressed as entities and formal relations (e.g., ordering, adjacency, inclusion).",
+    "Sufficient context budget to include symbol definitions, the evolving symbolic state, and the reasoning steps.",
+    "Clear guidance in the system or developer prompt that semantics should be stripped and reasoning performed at the symbolic level."
+  ],
+  "pk": [
+    "Basic logic notation and relational algebra (e.g., >, <, R(A, B), graphs).",
+    "Set/graph-style reasoning concepts such as nodes, edges, and adjacency.",
+    "Prompt engineering for multi-phase reasoning (define → reason → translate).",
+    "Optional: familiarity with constraint solving and satisfiability formulations for deeper integrations.",
+    "Basic Algebra",
+    "Logic Gates"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Symbolic Abstraction",
+  "ss": "",
+  "st": "stable",
+  "te": "Chain-of-Symbol (CoS) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "symbols",
+    "logic",
+    "abstraction",
+    "relational-reasoning",
+    "spatial-reasoning",
+    "graph-of-thought",
+    "formalization",
+    "semantic-bias-reduction",
+    "symbolic",
+    "planning",
+    "cos"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

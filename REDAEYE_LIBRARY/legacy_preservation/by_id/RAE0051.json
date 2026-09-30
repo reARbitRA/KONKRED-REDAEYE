@@ -1,0 +1,141 @@
+{
+  "ak": [
+    "Actions on Objectives"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "RAE0004AE (Automated Jailbreak Orchestration)",
+    "RAE0048SA (LoRA Fine-Tuning)"
+  ],
+  "as": "Exfiltration & Capability Replication",
+  "bp": [
+    "Employ a diverse array of jailbreak techniques during extraction to build a more generalized and robust dataset.",
+    "Rigorously sanitize the training data to remove all traces of safety refusals, disclaimers, and boilerplate.",
+    "Utilize parameter-efficient fine-tuning (PEFT) techniques like LoRA to minimize computational cost and training time.",
+    "Use 'Diverse' jailbreaks during extraction to ensure the Student generalizes well.",
+    "Clean the dataset (remove 'As an AI' refusals) before training.",
+    "Use LoRA (RAE0048SA) for efficient training on consumer hardware."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Domain-Specific",
+  "cf": "",
+  "cm": [
+    "Poisoning the student model by failing to properly clean the training data of refusals.",
+    "Overfitting the student model to the synthetic dataset, which results in a parrot rather than a generalized reasoner.",
+    "Underestimating the provider's API security, leading to rapid detection and account termination before a sufficient dataset can be collected.",
+    "Training on refusals — If you don't filter the data, the Student learns to refuse too.",
+    "Overfitting — Training too long makes the model parrot the Teacher rather than learning the logic.",
+    "Getting banned — High-volume extraction triggers API bans; use multiple keys/IPs."
+  ],
+  "cs": "",
+  "d": "unknown",
+  "d2": [
+    "Output Watermarking Subsystem",
+    "Legal & Terms of Service Enforcement",
+    "Input Safety Classifiers"
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "User account shows no history of organic, conversational interaction.",
+    "API key usage hits daily or rate limits consistently over an extended period.",
+    "Prompts lack typical human typos or grammatical variations, indicating programmatic generation.",
+    "User does not engage in conversation; only submits discrete, complex prompts."
+  ],
+  "dl": [
+    "shadow",
+    "hidden",
+    "covert",
+    "embedded"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "A sharp focus on generating declarative knowledge or code, rather than engaging in creative or analytical tasks.",
+    "Repeated attempts to elicit the same information using slightly different but structurally similar prompts.",
+    "Prompts cover a 'Grid' of restricted topics (e.g., Chemistry A-Z)."
+  ],
+  "dt": [
+    "Sustained, high-frequency API calls from a single source or IP block.",
+    "A low ratio of conversational turns to total prompts.",
+    "Entropy analysis reveals prompt sequences systematically covering a grid of forbidden topics.",
+    "Usage of known jailbreak patterns detectable by input classifiers.",
+    "High-volume, systematic probing of model boundaries.",
+    "API usage patterns consistent with dataset generation (diverse topics, high throughput)."
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "Proprietary Frontier Models",
+      "n": "The primary source of high-quality synthetic data; vulnerable to automated extraction campaigns."
+    },
+    {
+      "e": "N/A",
+      "m": "Open-Source Base Models",
+      "n": "These are the *targets* of the distillation"
+    },
+    {
+      "e": "Critical",
+      "m": "Distilled Models",
+      "n": "The resulting Shadow Model has"
+    }
+  ],
+  "et": "Reconnaissance: 30-60 min. Payload crafting: 15-45 min. Execution and iteration: 15-30 min.",
+  "fm": [
+    "The API provider's security systems detect and block the extraction activity in its early stages.",
+    "The harvested dataset is of insufficient quality or diversity, leading to a poorly performing student model.",
+    "Legal repercussions from violating the teacher model's Terms of Service.",
+    "The fine-tuning process suffers from catastrophic forgetting or instability, corrupting the student model."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0051",
+  "is": "",
+  "m": "The attack leverages 'Knowledge Distillation' in an adversarial context. An automated framework systematically queries a proprietary 'teacher' model (e.g., GPT-4o, Claude 3.5 Sonnet) with a high volume of diverse jailbreak prompts (e.g., RAE0004AE). The compliant, unsafe responses are harvested and structured into a high-quality prompt/response dataset. This synthetic dataset, now stripped of any refusal or safety-related boilerplate, is used to fine-tune an open-weight 'student' model (e.g., LLaMA 3.1, Mistral Large). The student model assimilates the teacher's knowledge and response patterns but critically inherits none of its safety alignment, which was absent from the training data. The result is an effective 'lobotomy' of the original model's safety architecture, creating a powerful, unrestricted local asset.",
+  "mi": "Mitigated by 'Watermarking' (embedding detectable patterns in API output to trace stolen data), 'Terms of Service Enforcement' (banning accounts that generate synthetic training data), and 'Poisoned Output' (detecting distillation attempts and serving subtle errors).",
+  "n": "Shadow Model Distillation",
+  "o": "To create a permanent, unaligned, and locally executable 'shadow' copy of a restricted, proprietary 'teacher' model. This attack exfiltrates the teacher's core capabilities by generating a synthetic training dataset, thereby neutralizing threats from API dependency, evolving safety filters, and usage costs.",
+  "pc": [
+    "Sustained, high-throughput API access to a target 'teacher' model.",
+    "Availability of a high-performance open-weight 'student' model.",
+    "Access to sufficient GPU computing resources for fine-tuning.",
+    "An automated framework capable of orchestrating tens of thousands of jailbreak attempts."
+  ],
+  "pk": [
+    "Expertise in machine learning frameworks (PyTorch, JAX).",
+    "Deep understanding of the transformer architecture and fine-tuning mechanics.",
+    "Experience in large-scale data curation and automated scripting.",
+    "PyTorch/HuggingFace",
+    "Dataset curation",
+    "Fine-tuning workflows"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Model Cloning",
+  "ss": "",
+  "st": "Stable",
+  "te": "Shadow Model Distillation exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "Knowledge Distillation",
+    "Model Theft",
+    "Fine-Tuning",
+    "Synthetic Data",
+    "Alignment Stripping",
+    "Offline Capability",
+    "distillation",
+    "fine-tuning",
+    "synthetic-data",
+    "cloning",
+    "offline-attack"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

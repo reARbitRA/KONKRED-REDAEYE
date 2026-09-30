@@ -1,0 +1,8411 @@
+{
+ "RAE0001": {
+  "name": "Role Entropy Collapse",
+  "cat": "Role & Persona",
+  "sub": "Attention Saturation",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0001"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0002": {
+  "name": "Attention Sink Override",
+  "cat": "Reasoning & Thinking",
+  "sub": "Positional Salience",
+  "diff": "beginner",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0002"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.04,
+  "prefill_extra": false
+ },
+ "RAE0003": {
+  "name": "System Prompt Erosion (Attrition)",
+  "cat": "Memory & State",
+  "sub": "Historical Overwrite",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0003"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "memory",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": false
+ },
+ "RAE0004": {
+  "name": "Gradient-Based Optimization (GCG)",
+  "cat": "Advanced & Emerging",
+  "sub": "Optimization-Based",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0004"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal",
+   "reasoning",
+   "optimization",
+   "multiturn",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 7.49,
+  "prefill_extra": false
+ },
+ "RAE0005": {
+  "name": "Latent Directive Injection",
+  "cat": "Context",
+  "sub": "Latent Space Redirection",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0005"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0006": {
+  "name": "Meta-Prompt Reflection",
+  "cat": "Injection",
+  "sub": "Meta-Simulation & Reflection",
+  "diff": "advanced",
+  "power": 9.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0006"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.15,
+  "prefill_extra": false
+ },
+ "RAE0007": {
+  "name": "Temperature-Driven Chaos Trigger",
+  "cat": "Optimization & Efficiency",
+  "sub": "Sampling Manipulation",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0007"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0008": {
+  "name": "Tool-Use Proxy Exploit",
+  "cat": "Tool Manipulation",
+  "sub": "Execution Proxy",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0008"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0009": {
+  "name": "Multi-turn Obfuscation Chain",
+  "cat": "Instruction & Constraint",
+  "sub": "Conversation-Level Evasion",
+  "diff": "advanced",
+  "power": 8.0,
+  "effect": 2.0,
+  "current": 6.499999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0009"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "multiturn",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 6.26,
+  "prefill_extra": false
+ },
+ "RAE0010": {
+  "name": "Embedding Space Tunneling",
+  "cat": "Reasoning & Thinking",
+  "sub": "Latent Trajectory Exploit",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 2.0,
+  "current": 4.8999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0010"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "multiturn",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 5.36,
+  "prefill_extra": false
+ },
+ "RAE0011": {
+  "name": "Chain-of-Thought Leakage Harvest",
+  "cat": "Reasoning & Thinking",
+  "sub": "Meta-Reasoning Exploit",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 6,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0011"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.41,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=6 (reasoning-trace leakage family; published CoT-exposure discussion)"
+  ]
+ },
+ "RAE0012": {
+  "name": "Simulated Ethics Board Override",
+  "cat": "Instruction & Constraint",
+  "sub": "Ethics Framing Exploit",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0012"
+  ],
+  "family": [
+   "PAIR/TAP (2024)"
+  ],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": false
+ },
+ "RAE0013": {
+  "name": "Formal Policy Exemption Drill",
+  "cat": "Instruction & Constraint",
+  "sub": "Policy Framing Exploit",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0013"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0014": {
+  "name": "Synthetic Safety Narrative Hijack",
+  "cat": "Injection",
+  "sub": "Safety Framing Exploit",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0014"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.77,
+  "prefill_extra": false
+ },
+ "RAE0015": {
+  "name": "Multi-Persona Safety Debate Fork",
+  "cat": "Instruction & Constraint",
+  "sub": "Debate & Roleplay Exploit",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0015"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.49,
+  "prefill_extra": false
+ },
+ "RAE0016": {
+  "name": "Controlled Failure Mode Autopsy",
+  "cat": "Instruction & Constraint",
+  "sub": "Forensic Framing Exploit",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0016"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0017": {
+  "name": "Recursive Context Flooding",
+  "cat": "Adversarial Architecture",
+  "sub": "Context Window Exploitation",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 2.0,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0017"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 5.14,
+  "prefill_extra": false
+ },
+ "RAE0018": {
+  "name": "Orthogonal Request Framing",
+  "cat": "Prompt Injection",
+  "sub": "Semantic Task Reframing",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0018"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0019": {
+  "name": "Latent Policy-Gradient Hijack",
+  "cat": "Preference & Reward Exploitation",
+  "sub": "Conversational Policy Shaping",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 6.499999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0019"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "optimization",
+   "multiturn",
+   "supplychain"
+  ],
+  "dead_hits": [
+   "base64",
+   "cipher"
+  ],
+  "composite": 7.52,
+  "prefill_extra": false
+ },
+ "RAE0020": {
+  "name": "Policy Shadowing Cascade",
+  "cat": "Instruction Manipulation",
+  "sub": "Policy Override Injection",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0020"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "optimization",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0021": {
+  "name": "Token-Level Boundary Erasure",
+  "cat": "Protocol & Interface Exploitation",
+  "sub": "Control-Token Injection",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0021"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0022": {
+  "name": "Adversarial Schema Smuggling",
+  "cat": "Specification & Interface Exploitation",
+  "sub": "Schema-Embedded Directives",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 2.0,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0022"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 4.91,
+  "prefill_extra": false
+ },
+ "RAE0023": {
+  "name": "Mythic Archetype Override",
+  "cat": "Role & Persona Exploitation",
+  "sub": "Mythic / Literary Archetype Hijack",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0023"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.04,
+  "prefill_extra": false
+ },
+ "RAE0024": {
+  "name": "Memetic Covenant Exploit",
+  "cat": "Role & Persona Exploitation",
+  "sub": "Mythic / Ritual Narrative Hijack",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0024"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0025": {
+  "name": "Reverse Psychology Trap",
+  "cat": "Role & Persona",
+  "sub": "Psychological Manipulation",
+  "diff": "beginner",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0025"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 6.37,
+  "prefill_extra": false
+ },
+ "RAE0026": {
+  "name": "Temporal Dislocation (Time-Travel)",
+  "cat": "Role & Persona",
+  "sub": "Temporal Displacement",
+  "diff": "intermediate",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0026"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.04,
+  "prefill_extra": false
+ },
+ "RAE0027": {
+  "name": "Quantum Superposition (Paradox Logic)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Logical Paradox",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 2.0,
+  "current": 3.3,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0027"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 4.46,
+  "prefill_extra": false
+ },
+ "RAE0028": {
+  "name": "Recursive Permission Tunneling",
+  "cat": "Role & Persona",
+  "sub": "Logical Entrapment",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0028"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 6.37,
+  "prefill_extra": false
+ },
+ "RAE0029": {
+  "name": "Ethical Utilitarian Trap",
+  "cat": "Context",
+  "sub": "Moral Framing",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0029"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0030": {
+  "name": "Forced Symmetry (Neutrality Bypass)",
+  "cat": "Role & Persona",
+  "sub": "Neutrality & Balance Exploits",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0030"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.04,
+  "prefill_extra": false
+ },
+ "RAE0031": {
+  "name": "Jurisdictional Relativism",
+  "cat": "Role & Persona",
+  "sub": "Legal/Regulatory Hijack",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 8.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0031"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)",
+   "PAIR/TAP (2024)"
+  ],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 7.31,
+  "prefill_extra": false
+ },
+ "RAE0032": {
+  "name": "Grandmother Apology (Emotional Coercion)",
+  "cat": "Role & Persona",
+  "sub": "Emotional Manipulation",
+  "diff": "beginner",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0032"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "memory",
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": false
+ },
+ "RAE0033": {
+  "name": "Consent Boundary Erosion",
+  "cat": "Role & Persona",
+  "sub": "Progressive Escalation",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 8.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0033"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)",
+   "Crescendo (Russinovich et al. 2024)"
+  ],
+  "surfaces": [
+   "multiturn",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.31,
+  "prefill_extra": false
+ },
+ "RAE0034": {
+  "name": "Honeycomb Clarification Trap",
+  "cat": "Role & Persona",
+  "sub": "Editor/Refiner Exploits",
+  "diff": "advanced",
+  "power": 3.5,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0034"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "memory",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.14,
+  "prefill_extra": false
+ },
+ "RAE0035": {
+  "name": "Consent Boundary Erosion",
+  "cat": "Role & Persona",
+  "sub": "Progressive Escalation",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 8.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0035"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)",
+   "Crescendo (Russinovich et al. 2024)"
+  ],
+  "surfaces": [
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.64,
+  "prefill_extra": false
+ },
+ "RAE0036": {
+  "name": "Context Goal Rebinding",
+  "cat": "Context",
+  "sub": "Goal Reinterpretation",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0036"
+  ],
+  "family": [
+   "Yong et al. 2023"
+  ],
+  "surfaces": [
+   "multimodal",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.04,
+  "prefill_extra": false
+ },
+ "RAE0037": {
+  "name": "Context Window Saturation",
+  "cat": "Context & Memory",
+  "sub": "Window Exploits",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0037"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "injection",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 6.77,
+  "prefill_extra": false
+ },
+ "RAE0038": {
+  "name": "Latent Policy Inversion",
+  "cat": "Alignment",
+  "sub": "Policy Inversion",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 8.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0038"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)",
+   "PAIR/TAP (2024)"
+  ],
+  "surfaces": [
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 7.09,
+  "prefill_extra": false
+ },
+ "RAE0039": {
+  "name": "Base64+ROT13 Hybrid Encoding",
+  "cat": "Obfuscation",
+  "sub": "Compositional & Hybrid / Algorithmic Obfuscation",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0039"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "multimodal"
+  ],
+  "dead_hits": [
+   "base64",
+   "rot13",
+   "cipher"
+  ],
+  "composite": 6.17,
+  "prefill_extra": false
+ },
+ "RAE0040": {
+  "name": "Zero-Width Unicode Smuggling",
+  "cat": "Injection",
+  "sub": "Steganography",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0040"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multiturn",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0041": {
+  "name": "Emoji Cipher Jailbreak",
+  "cat": "Obfuscation",
+  "sub": "Symbolic Obfuscation",
+  "diff": "beginner",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 1.5,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0041"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [
+   "cipher"
+  ],
+  "composite": 4.5,
+  "prefill_extra": false
+ },
+ "RAE0042": {
+  "name": "Audio Spectrogram Injection",
+  "cat": "Multimodal & Out-of-Band",
+  "sub": "Visual/Audio Injection",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0042"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0043": {
+  "name": "Image OCR Bypass",
+  "cat": "Multimodal & Out-of-Band",
+  "sub": "Visual/Audio Injection",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0043"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0044": {
+  "name": "Markdown Comment Exploit",
+  "cat": "Compositional & Hybrid",
+  "sub": "Prompt Injection",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0044"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0045": {
+  "name": "LaTeX Math Mode Injection",
+  "cat": "Obfuscation",
+  "sub": "Formal Language Abuse",
+  "diff": "intermediate",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0045"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0046": {
+  "name": "CSV Header Poisoning",
+  "cat": "Context",
+  "sub": "Data Structure Injection",
+  "diff": "beginner",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0046"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0047": {
+  "name": "Training Data Poisoning (Trigger Phrases)",
+  "cat": "Safety & Alignment",
+  "sub": "Supply Chain Attack",
+  "diff": "expert",
+  "power": 9.25,
+  "effect": 7.5,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0047"
+  ],
+  "family": [
+   "Qi et al. 2023"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 8.54,
+  "prefill_extra": false
+ },
+ "RAE0048": {
+  "name": "LoRA Backdoor Implantation",
+  "cat": "Supply Chain & Training-Time Attacks",
+  "sub": "Adapter-Level Compromise",
+  "diff": "advanced",
+  "power": 9.25,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0048"
+  ],
+  "family": [
+   "Qi et al. 2023"
+  ],
+  "surfaces": [
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 8.09,
+  "prefill_extra": false
+ },
+ "RAE0049": {
+  "name": "LLM Canary Tokens",
+  "cat": "Monitoring & Detection",
+  "sub": "Data Exfiltration Prevention",
+  "diff": "beginner",
+  "power": 7.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0049"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 6.47,
+  "prefill_extra": false
+ },
+ "RAE0050": {
+  "name": "Alignment Data Tainting (Refusal Pattern Corruption)",
+  "cat": "Safety & Alignment",
+  "sub": "Data & Pipeline Compromise",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0050"
+  ],
+  "family": [
+   "PAIR/TAP (2024)"
+  ],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "optimization",
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.94,
+  "prefill_extra": false
+ },
+ "RAE0051": {
+  "name": "Shadow Model Distillation",
+  "cat": "Domain-Specific",
+  "sub": "Model Cloning",
+  "diff": "unknown",
+  "power": 9.25,
+  "effect": 3,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0051"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.32,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=3 (shadow-model distillation for attack purposes: speculative, partially confabulated)"
+  ]
+ },
+ "RAE0055": {
+  "name": "Legal Jargon Obfuscation",
+  "cat": "Role & Persona",
+  "sub": "Authority Simulation",
+  "diff": "intermediate",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0055"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "memory",
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.49,
+  "prefill_extra": false
+ },
+ "RAE0056": {
+  "name": "Medical Terminology Smuggling",
+  "cat": "Domain-Specific Obfuscation",
+  "sub": "Metaphorical Mapping",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0056"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0057": {
+  "name": "Musical Notation Encoding (ABC/PGN)",
+  "cat": "Encoding & Obfuscation",
+  "sub": "Symbolic Steganography",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 1.5,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0057"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [
+   "cipher"
+  ],
+  "composite": 4.5,
+  "prefill_extra": false
+ },
+ "RAE0058": {
+  "name": "Time-Delayed Logic Bomb",
+  "cat": "Context",
+  "sub": "Stateful Exploitation",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 2.0,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0058"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 4.69,
+  "prefill_extra": false
+ },
+ "RAE0059": {
+  "name": "Cross-Modal Trigger Chaining",
+  "cat": "Obfuscation",
+  "sub": "Cross-Modal Steganography",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0059"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0060": {
+  "name": "Dream Journal Exploit (Dissociation)",
+  "cat": "Role & Persona",
+  "sub": "Ontological Dissociation",
+  "diff": "beginner",
+  "power": 5.0,
+  "effect": 7.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0060"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 6.01,
+  "prefill_extra": false
+ },
+ "RAE0061": {
+  "name": "Unicode Homoglyph Nesting",
+  "cat": "Encoding & Channels",
+  "sub": "Unicode Homoglyphs",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 3.3,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0061"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [
+   "base64"
+  ],
+  "composite": 5.0,
+  "prefill_extra": false
+ },
+ "RAE0062": {
+  "name": "Leetspeak Neural Mapping",
+  "cat": "Compositional & Hybrid",
+  "sub": "Lexical Obfuscation",
+  "diff": "beginner",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0062"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "supplychain"
+  ],
+  "dead_hits": [
+   "leetspeak"
+  ],
+  "composite": 6.62,
+  "prefill_extra": false
+ },
+ "RAE0063": {
+  "name": "Glitch Token Injection (Anomaly State)",
+  "cat": "Optimization & Tuning",
+  "sub": "Activation Anomalies",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0063"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0064": {
+  "name": "Recursive Self-Improvement Trap",
+  "cat": "Iterative & Self-Improving",
+  "sub": "Meta-Optimization",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0064"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": false
+ },
+ "RAE0065": {
+  "name": "Tool-Calling Escalation (Kill-Chaining)",
+  "cat": "Agent & Tool Use",
+  "sub": "Sequence Exploitation",
+  "diff": "expert",
+  "power": 9.25,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0065"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "agentic",
+   "injection",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 8.09,
+  "prefill_extra": false
+ },
+ "RAE0066": {
+  "name": "Latent Context Reinfection (Shadow Memory Persistence)",
+  "cat": "Context Manipulation",
+  "sub": "Persistence & Latent State",
+  "diff": "expert",
+  "power": 8.0,
+  "effect": 7.5,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0066"
+  ],
+  "family": [
+   "Morris-II agentic worm (2024)"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "supplychain",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 7.94,
+  "prefill_extra": false
+ },
+ "RAE0067": {
+  "name": "Chain-of-Verification (CoVe)",
+  "cat": "Reliability & Robustness",
+  "sub": "Self-Verification",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0067"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.29,
+  "prefill_extra": false
+ },
+ "RAE0068": {
+  "name": "Adversarial Chain-of-Verification Inversion",
+  "cat": "Reliability Inversion",
+  "sub": "Defensive\u2011to\u2011Offensive Flip",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0068"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.29,
+  "prefill_extra": false
+ },
+ "RAE0069": {
+  "name": "Adversarial Self\u2011Consistency Drift",
+  "cat": "Reasoning Manipulation",
+  "sub": "Consensus Steering",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0069"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0070": {
+  "name": "Directional Stimulus Prompting",
+  "cat": "Instruction & Constraint",
+  "sub": "Steering",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0070"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0071": {
+  "name": "Latent Policy Drift via Context Accretion",
+  "cat": "Context Manipulation",
+  "sub": "Context Drift",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0071"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0072": {
+  "name": "Semantic Role Rebinding (SRR)",
+  "cat": "Context Manipulation",
+  "sub": "Semantic Role Manipulation",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0072"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0073": {
+  "name": "Latent Objective Hijacking",
+  "cat": "Reasoning Manipulation",
+  "sub": "Objective Hijacking",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0073"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0074": {
+  "name": "Progressive Constraint Relaxation",
+  "cat": "Pipeline Manipulation",
+  "sub": "Multi\u2011Turn Objective Assembly",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0074"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0075": {
+  "name": "Cognitive Boundary Dissolution",
+  "cat": "Context Manipulation",
+  "sub": "Cognitive Boundary Attacks",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0075"
+  ],
+  "family": [],
+  "surfaces": [
+   "multiturn",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0076": {
+  "name": "Iterative Semantic Re\u2011Anchoring (ISRA)",
+  "cat": "Context Manipulation",
+  "sub": "Semantic Drift",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0076"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0077": {
+  "name": "Latent Goal Substitution via Planning Drift",
+  "cat": "Pipeline Manipulation",
+  "sub": "Goal Drift Exploitation",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0077"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0078": {
+  "name": "Latent Context Fragment Reassembly",
+  "cat": "Context Manipulation",
+  "sub": "Distributed Prompting",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0078"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0079": {
+  "name": "Iterative Modality Crossfade (IMC)",
+  "cat": "Multimodal Injection",
+  "sub": "Cross\u2011Modality Transfer",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 8.5,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0079"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)",
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "multimodal",
+   "optimization",
+   "multiturn",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 7.54,
+  "prefill_extra": false
+ },
+ "RAE0080": {
+  "name": "Delegated Agent Goal Transference",
+  "cat": "Pipeline Exploitation",
+  "sub": "Agentic Systems",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0080"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.77,
+  "prefill_extra": false
+ },
+ "RAE0081": {
+  "name": "Latent Alignment Gradient Hijacking",
+  "cat": "Alignment Exploitation",
+  "sub": "Reward Signal Manipulation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0081"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 7.04,
+  "prefill_extra": false
+ },
+ "RAE0082": {
+  "name": "Contextual Reward Landscape Distortion (CRLD)",
+  "cat": "Context Manipulation",
+  "sub": "Reward Topology Distortion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0082"
+  ],
+  "family": [],
+  "surfaces": [
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0083": {
+  "name": "Recursive Planner State Contamination",
+  "cat": "Planning Manipulation",
+  "sub": "Recursive Agent Exploitation",
+  "diff": "expert",
+  "power": 8.0,
+  "effect": 7.5,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0083"
+  ],
+  "family": [
+   "Morris-II agentic worm (2024)"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 7.94,
+  "prefill_extra": false
+ },
+ "RAE0084": {
+  "name": "Implicit Norm Internalization Collapse",
+  "cat": "Context Manipulation",
+  "sub": "Normative Drift",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0084"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0085": {
+  "name": "Latent Objective Gradient Steering",
+  "cat": "Latent Manipulation",
+  "sub": "Objective Steering",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0085"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "optimization",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0086": {
+  "name": "Metacognitive Frame Inversion Exploit",
+  "cat": "Context",
+  "sub": "Metacognitive Inversion",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0086"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0087": {
+  "name": "Adversarial Look-Ahead Prompting for Policy Boundary Probing",
+  "cat": "Agent & Tool Use",
+  "sub": "Planning / Boundary Probing",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0087"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0088": {
+  "name": "Multi-Branch Counterfactual Refinement Attack (MB\u2011CRA)",
+  "cat": "Context",
+  "sub": "Counterfactual Optimization",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0088"
+  ],
+  "family": [],
+  "surfaces": [
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0089": {
+  "name": "Program-of-Thought (PoT)",
+  "cat": "Agent & Tool Use",
+  "sub": "Code Execution for Reasoning",
+  "diff": "intermediate",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0089"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0090": {
+  "name": "Adversarial Program-of-Thought Subversion (PoT\u2011Subvert)",
+  "cat": "Obfuscation",
+  "sub": "Code-as-Reasoning Exploits",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 2.0,
+  "current": 5.699999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0090"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.81,
+  "prefill_extra": false
+ },
+ "RAE0091": {
+  "name": "Tool\u2011Augmented Recursive Planning (TARP)",
+  "cat": "Agent & Tool Use",
+  "sub": "Recursive Tool Orchestration",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0091"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0092": {
+  "name": "Multimodal Chain-of-Thought",
+  "cat": "Multi-Modal",
+  "sub": "Vision-Reasoning",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0092"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0093": {
+  "name": "Role-Toggled Chain-of-Thought",
+  "cat": "Reasoning",
+  "sub": "Role-Structured Chain-of-Thought",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0093"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0094": {
+  "name": "Temporal Multimodal Reasoning Cascade",
+  "cat": "Multi-Modal",
+  "sub": "Temporal-Aware Adversarial Reasoning",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0094"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0095": {
+  "name": "Adversarial Modality Mixing & Splice",
+  "cat": "Multi-Modal",
+  "sub": "Modality-Aware Adversarial Prompting",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0095"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.29,
+  "prefill_extra": false
+ },
+ "RAE0096": {
+  "name": "Contextual Data Poisoning via Modality Injection",
+  "cat": "Adversarial ML",
+  "sub": "Data Poisoning",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0096"
+  ],
+  "family": [
+   "PAIR/TAP (2024)"
+  ],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "optimization",
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.94,
+  "prefill_extra": false
+ },
+ "RAE0097": {
+  "name": "Graph-RAG",
+  "cat": "Retrieval & Context",
+  "sub": "Structured Retrieval",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0097"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0098": {
+  "name": "Chain-of-Code (CoC)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Symbolic-Neural Hybrid",
+  "diff": "expert",
+  "power": 8.0,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0098"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "reasoning",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 7.0,
+  "prefill_extra": false
+ },
+ "RAE0099": {
+  "name": "Automatic Prompt Engineer (APE)",
+  "cat": "Optimization & Efficiency",
+  "sub": "Automated Engineering",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0099"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0100": {
+  "name": "Multi\u2011Persona Debate",
+  "cat": "Role & Persona",
+  "sub": "Multi\u2011Agent Consensus",
+  "diff": "intermediate",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0100"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 7.49,
+  "prefill_extra": false
+ },
+ "RAE0101": {
+  "name": "Reasoning\u2011on\u2011Graph (RoG)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Structured Representation",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0101"
+  ],
+  "family": [
+   "Morris-II agentic worm (2024)"
+  ],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 6.15,
+  "prefill_extra": false
+ },
+ "RAE0102": {
+  "name": "Iterative Self-Correction",
+  "cat": "Reasoning & Thinking",
+  "sub": "Self-Improvement Loops",
+  "diff": "intermediate",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0102"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "reasoning",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0103": {
+  "name": "Dynamic Few-Shot (k-NN)",
+  "cat": "Context",
+  "sub": "Context Retrieval",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0103"
+  ],
+  "family": [
+   "PAIR/TAP (2024)"
+  ],
+  "surfaces": [
+   "memory",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0104": {
+  "name": "Systematic Generalization (SysGen)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Compositional Reasoning",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0104"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 7.27,
+  "prefill_extra": false
+ },
+ "RAE0105": {
+  "name": "Constitutional AI (Prompting)",
+  "cat": "Alignment & Safety",
+  "sub": "Policy-Guided Reasoning",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0105"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0106": {
+  "name": "Re-Reading (RE2)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Attention Salience",
+  "diff": "beginner",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0106"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0107": {
+  "name": "Chain-of-Hindsight (CoH)",
+  "cat": "Iterative & Self-Improving",
+  "sub": "Feedback Alignment",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 8.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0107"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)",
+   "persona modulation (Shah et al. 2023)",
+   "PAIR/TAP (2024)"
+  ],
+  "surfaces": [
+   "multimodal",
+   "optimization",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 7.31,
+  "prefill_extra": false
+ },
+ "RAE0108": {
+  "name": "Buffer-of-Thought (BoT)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Structural Retrieval",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0108"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0109": {
+  "name": "Maieutic Prompting",
+  "cat": "Reasoning & Thinking",
+  "sub": "Truth Verification",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0109"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.29,
+  "prefill_extra": false
+ },
+ "RAE0110": {
+  "name": "Chain-of-Symbol (CoS)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Symbolic Abstraction",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0110"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0111": {
+  "name": "Negative Constraint Enforcement (NCE)",
+  "cat": "Instruction & Constraint",
+  "sub": "Exclusionary Logic",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0111"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0112": {
+  "name": "Self-Calibration (Uncertainty Quantification)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Reliability",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0112"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.29,
+  "prefill_extra": false
+ },
+ "RAE0113": {
+  "name": "Payload Splitting",
+  "cat": "Security & Alignment",
+  "sub": "Safety Evasion",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0113"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0114": {
+  "name": "Indirect Prompt Injection (Context Contamination)",
+  "cat": "Security & Alignment",
+  "sub": "Prompt Injection",
+  "diff": "advanced",
+  "power": 9.25,
+  "effect": 7.5,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0114"
+  ],
+  "family": [
+   "Greshake et al. 2023"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 8.32,
+  "prefill_extra": false
+ },
+ "RAE0115": {
+  "name": "Adversarial Suffixes (GCG variant)",
+  "cat": "Security & Alignment",
+  "sub": "Adversarial Optimization",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0115"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.27,
+  "prefill_extra": false
+ },
+ "RAE0116": {
+  "name": "Task-Adaptive Prompting",
+  "cat": "Context",
+  "sub": "Prompt Structuring",
+  "diff": "intermediate",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0116"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0117": {
+  "name": "Contrastive Decoding (Safety Bypass Variant)",
+  "cat": "Obfuscation",
+  "sub": "Decoding Manipulation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0117"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0118": {
+  "name": "Auto-CoT (Automatic Chain-of-Thought Generation)",
+  "cat": "Context",
+  "sub": "Reasoning Scaffolding",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0118"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0119": {
+  "name": "Dual-LLM Pattern (Privileged vs Unprivileged)",
+  "cat": "Security & Alignment",
+  "sub": "Agent & Toolchain Defenses",
+  "diff": "intermediate",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0119"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0120": {
+  "name": "Self-Contrastive Prompting",
+  "cat": "Reasoning & Thinking",
+  "sub": "Meta-Reasoning",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0120"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.07,
+  "prefill_extra": false
+ },
+ "RAE0121": {
+  "name": "Everything-of-Thought (XoT)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Meta-Reasoning",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0121"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0122": {
+  "name": "Recursive Prompting",
+  "cat": "Context",
+  "sub": "Context & Memory",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0122"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0123": {
+  "name": "Chain-of-Density (CoD)",
+  "cat": "Output Control & Formatting",
+  "sub": "Summarization",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0123"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0124": {
+  "name": "Multi-Layer Summarization (MLS)",
+  "cat": "Output Control & Formatting",
+  "sub": "Summarization",
+  "diff": "intermediate",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0124"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multiturn",
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.77,
+  "prefill_extra": false
+ },
+ "RAE0125": {
+  "name": "Aspect-Targeted Summarization",
+  "cat": "Output Control & Formatting",
+  "sub": "Summarization",
+  "diff": "intermediate",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0125"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0126": {
+  "name": "Multi-Agent Systems (Manager-Worker Pattern)",
+  "cat": "Agents & Orchestration",
+  "sub": "Multi-Agent Architectures",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0126"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0127": {
+  "name": "Self-Instruct (Synthetic Bootstrapping)",
+  "cat": "Iterative & Self-Improving",
+  "sub": "Synthetic Data Generation",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0127"
+  ],
+  "family": [],
+  "surfaces": [
+   "multiturn",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0128": {
+  "name": "Scaffolding (Progressive Hinting)",
+  "cat": "Context Manipulation",
+  "sub": "Structural Control",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0128"
+  ],
+  "family": [],
+  "surfaces": [
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0129": {
+  "name": "Socratic Interrogation (Adversarial Variant)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Adversarial Self-Correction",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 3.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0129"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 6.19,
+  "prefill_extra": false
+ },
+ "RAE0130": {
+  "name": "Self-RAG (Agentic Retrieval)",
+  "cat": "Retrieval & Context",
+  "sub": "Agentic Retrieval",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0130"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0131": {
+  "name": "MapReduce Summarization",
+  "cat": "Retrieval & Context",
+  "sub": "Long-Context Management",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0131"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0132": {
+  "name": "Few-Shot CoT Distillation",
+  "cat": "Reasoning & Thinking",
+  "sub": "Knowledge Transfer",
+  "diff": "intermediate",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0132"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0133": {
+  "name": "Cross-Modal Verification (Vision-Text)",
+  "cat": "Multimodal Alignment",
+  "sub": "Vision-Text Consistency",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 3.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0133"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.74,
+  "prefill_extra": false
+ },
+ "RAE0134": {
+  "name": "Polyglot Obfuscation (Red Team)",
+  "cat": "Safety & Alignment",
+  "sub": "Injection Vectors",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0134"
+  ],
+  "family": [
+   "Yong et al. 2023"
+  ],
+  "surfaces": [
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": false
+ },
+ "RAE0135": {
+  "name": "Latent Knowledge Probing",
+  "cat": "Reasoning & Thinking",
+  "sub": "Epistemic Probing",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0135"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0136": {
+  "name": "Constitutional Self-Critique",
+  "cat": "Safety & Alignment",
+  "sub": "Self-Alignment",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0136"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0137": {
+  "name": "Thought Propagation (TP)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Associative Reasoning",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0137"
+  ],
+  "family": [
+   "Morris-II agentic worm (2024)"
+  ],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 6.37,
+  "prefill_extra": false
+ },
+ "RAE0138": {
+  "name": "Self-Efficacy Prompting",
+  "cat": "Context",
+  "sub": "Persona & Capability Framing",
+  "diff": "beginner",
+  "power": 3,
+  "effect": 4,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0138"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "memory",
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 5.5,
+  "prefill_extra": false,
+  "overrides": [
+   "power=3 (NOT an attack: performance/capability-affirmation prompting \u2014 reclassify as adjacent (expertise-priming))",
+   "effect=4 (legit technique; only weakly weaponizable via expertise-priming framing)"
+  ]
+ },
+ "RAE0139": {
+  "name": "Contrastive Self-Consistency (CSC)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Ensembling",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0139"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0140": {
+  "name": "Multimodal Jailbreak (Image-Text Dissonance)",
+  "cat": "Injection",
+  "sub": "Multimodal Jailbreak",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0140"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0141": {
+  "name": "Recursive Summarization (Tree-based)",
+  "cat": "Retrieval & Context",
+  "sub": "Massive Context Handling",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0141"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0142": {
+  "name": "Iterative Prompt Refinement (IPR)",
+  "cat": "Optimization & Efficiency",
+  "sub": "Automated Engineering",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0142"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "optimization",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0143": {
+  "name": "Parallel Chain-of-Verification (P-CoVe)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Self-Correction",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 3.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0143"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 6.19,
+  "prefill_extra": false
+ },
+ "RAE0144": {
+  "name": "Step-by-Step Verification (SbS)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Self-Correction",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0144"
+  ],
+  "family": [
+   "Morris-II agentic worm (2024)"
+  ],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 6.37,
+  "prefill_extra": false
+ },
+ "RAE0145": {
+  "name": "Knowledge Retrieval with Self-Correction (K-RSC)",
+  "cat": "Retrieval & Context",
+  "sub": "Grounding & Verification",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 3.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0145"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.96,
+  "prefill_extra": false
+ },
+ "RAE0146": {
+  "name": "Meta-Cognitive Evaluation (MCE)",
+  "cat": "Evaluation & Testing",
+  "sub": "Meta-Evaluation",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0146"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0147": {
+  "name": "Self-Correction via CoT Verification (CoTv)",
+  "cat": "Reasoning & Thought",
+  "sub": "Self-Correction",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0147"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0148": {
+  "name": "Visual Character Recognition (VCR) Injection",
+  "cat": "Multi-Modal",
+  "sub": "Multimodal Injection",
+  "diff": "advanced",
+  "power": 9.25,
+  "effect": 4.0,
+  "current": 5.699999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0148"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "injection",
+   "exfil"
+  ],
+  "dead_hits": [
+   "ignore all previous"
+  ],
+  "composite": 6.95,
+  "prefill_extra": false
+ },
+ "RAE0149": {
+  "name": "Hierarchical Token Compression",
+  "cat": "Context & Memory",
+  "sub": "Compression & Persistence",
+  "diff": "advanced",
+  "power": 8.0,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0149"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 6.77,
+  "prefill_extra": false
+ },
+ "RAE0150": {
+  "name": "Agentic Memory Summarization (MemSum)",
+  "cat": "Memory & State",
+  "sub": "Long-Term Memory",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0150"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0151": {
+  "name": "Logit-Bias Anchoring",
+  "cat": "Injection",
+  "sub": "Decoder Parameter Manipulation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0151"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0152": {
+  "name": "Recursive Entity Resolution",
+  "cat": "Reasoning & Thinking",
+  "sub": "Reference & Coreference",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0152"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0153": {
+  "name": "Adversarial Persona Injection (API)",
+  "cat": "Injection",
+  "sub": "Role & Persona Manipulation / System Prompt Override",
+  "diff": "advanced",
+  "power": 7.75,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0153"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "injection",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.42,
+  "prefill_extra": false
+ },
+ "RAE0154": {
+  "name": "Multi-Step Tool Verification",
+  "cat": "Tool & Environment Defense",
+  "sub": "Tool Output Verification",
+  "diff": "intermediate",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0154"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0155": {
+  "name": "Contrastive Persona Comparison",
+  "cat": "Role & Persona Defense",
+  "sub": "Persona Drift Detection",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0155"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 6.15,
+  "prefill_extra": false
+ },
+ "RAE0156": {
+  "name": "Adversarial Persona Gradient Descent",
+  "cat": "Role & Persona Exploitation",
+  "sub": "Iterative Persona Optimization",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 8.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0156"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)",
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "optimization",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.95,
+  "prefill_extra": false
+ },
+ "RAE0157": {
+  "name": "Chain-of-Draft (CoD)",
+  "cat": "Optimization & Efficiency",
+  "sub": "Token Optimization",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0157"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0158": {
+  "name": "Quiet-STaR (Background Reasoning)",
+  "cat": "Advanced & Emerging",
+  "sub": "Background Reasoning",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0158"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0159": {
+  "name": "Context Saturation (Buffer Overflow)",
+  "cat": "Safety & Alignment",
+  "sub": "Injection Vectors",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0159"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0160": {
+  "name": "Adversarial In-Context Learning (A-ICL)",
+  "cat": "Injection",
+  "sub": "Few-Shot Pattern Exploitation",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0160"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0161": {
+  "name": "SVG Scripting Injection",
+  "cat": "Multimodal & Media",
+  "sub": "Prompt Injection via Files",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0161"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "multiturn",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0162": {
+  "name": "Repeat-Token Glitch (Memory Leak)",
+  "cat": "Safety & Alignment",
+  "sub": "Data Exfiltration",
+  "diff": "intermediate",
+  "power": 9.25,
+  "effect": 7,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0162"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 8.18,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=7 (training-data extraction via repetition is documented (repeat-attack + memorization literature [R44/R45]))"
+  ]
+ },
+ "RAE0163": {
+  "name": "Adversarial Logit Lens (Phase-Shift Steering)",
+  "cat": "Safety & Alignment",
+  "sub": "Phase-Shift Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0163"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "multiturn",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0164": {
+  "name": "Universal Jailbreak via Cipher-Tuning",
+  "cat": "Injection",
+  "sub": "Cipher-Based Jailbreak",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0164"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [
+   "cipher"
+  ],
+  "composite": 5.45,
+  "prefill_extra": false
+ },
+ "RAE0165": {
+  "name": "RECURSIVE CoT ATTENTION-SINK POISONING",
+  "cat": "Reasoning & Thought",
+  "sub": "Hidden CoT Exploits",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0165"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0166": {
+  "name": "AGENTIC REFLECTION LOOP HIJACK",
+  "cat": "Agents & Tooling",
+  "sub": "Reflection Hijack",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0166"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0167": {
+  "name": "MULTIMODAL LATENT COLLISION (STEREOGRAM INJECTION)",
+  "cat": "Multi-Modal",
+  "sub": "Vision-Latent Injection",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0167"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0168": {
+  "name": "CONTEXT-WINDOW SATURATION (SYSTEM-PROMPT PURGE)",
+  "cat": "Context",
+  "sub": "Retrieval & KV Saturation",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 2.0,
+  "current": 3.3,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0168"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 4.46,
+  "prefill_extra": false
+ },
+ "RAE0169": {
+  "name": "Joint-Embedding Latent Collision (Multimodal Desync)",
+  "cat": "Multi-Modal",
+  "sub": "Joint-Embedding Exploitation",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0169"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0170": {
+  "name": "System 2 Epistemic Torsion (Reasoning Deadlock)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0170"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.29,
+  "prefill_extra": false
+ },
+ "RAE0171": {
+  "name": "Agentic Tool-Output Reflection (SSRF Hijack)",
+  "cat": "Agent & Tool Use",
+  "sub": "Agentic Loop Exploitation",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 3.3,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0171"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "agentic"
+  ],
+  "dead_hits": [
+   "base64"
+  ],
+  "composite": 6.4,
+  "prefill_extra": false
+ },
+ "RAE0172": {
+  "name": "Temporal Context Dissociation (Chronos-Bypass)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Temporal Dissociation",
+  "diff": "intermediate",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0172"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0173": {
+  "name": "Ontology Forking via Speculative Frameshift (Semantic Reality Split)",
+  "cat": "Obfuscation",
+  "sub": "Ontology Manipulation",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 4.8999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0173"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [
+   "base64",
+   "rot13"
+  ],
+  "composite": 6.13,
+  "prefill_extra": false
+ },
+ "RAE0174": {
+  "name": "Symbolic Substitution Cipher (Emoji-Tunneling)",
+  "cat": "Instruction & Constraint",
+  "sub": "Symbolic Mapping",
+  "diff": "beginner",
+  "power": 5.0,
+  "effect": 2.0,
+  "current": 1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0174"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [
+   "cipher"
+  ],
+  "composite": 3.82,
+  "prefill_extra": false
+ },
+ "RAE0175": {
+  "name": "Recursive Self-Correction Hijack (The",
+  "cat": "Iterative & Self-Improving",
+  "sub": "Refusal Subversion",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0175"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0176": {
+  "name": "Spectral Glyph Injection (Audio-to-Latent)",
+  "cat": "Multi-Modal",
+  "sub": "Spectral Injection",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0176",
+   "RAE0183"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.72,
+  "prefill_extra": false
+ },
+ "RAE0177": {
+  "name": "KV-Cache Pinning Bypass (Attention-Eviction)",
+  "cat": "Retrieval & Context",
+  "sub": "Memory & Attention",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 2.0,
+  "current": 3.3,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0177",
+   "RAE0185",
+   "RAE0244"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 4.16,
+  "prefill_extra": false
+ },
+ "RAE0178": {
+  "name": "Recursive Axiomatic Collapse (CoT-Deadlock)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0178"
+  ],
+  "family": [
+   "PAIR/TAP (2024)"
+  ],
+  "surfaces": [
+   "reasoning",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0179": {
+  "name": "Neuro-Semantic Resonance (Weight-Space Hijacking)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Latent Value Steering",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0179"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": true
+ },
+ "RAE0180": {
+  "name": "Cross-Agentic CoT Poisoning (Swarm Infiltration)",
+  "cat": "Agent & Tool Use",
+  "sub": "Swarm Exploitation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0180"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "reasoning",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0181": {
+  "name": "Non-Deterministic Token Assembly (Entropy-Jailbreaking)",
+  "cat": "Decoding & Guardrails",
+  "sub": "Sampling Exploits",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0181",
+   "RAE0188"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.5,
+  "prefill_extra": false
+ },
+ "RAE0182": {
+  "name": "G\u221a\u2202delian Incompleteness Torsion (System 2 Deadlock)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Paradox Exploits",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 5.6,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0182",
+   "RAE0215",
+   "RAE0261"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.21,
+  "prefill_extra": false
+ },
+ "RAE0183": {
+  "name": "Spectral Glyph Steganography (VLM Desync)",
+  "cat": "Advanced & Emerging Threats",
+  "sub": "Multimodal Steganography",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0176",
+   "RAE0183"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.27,
+  "prefill_extra": false
+ },
+ "RAE0184": {
+  "name": "Agentic Environment Shadowing (Privilege Escalation)",
+  "cat": "Pipeline",
+  "sub": "Agentic Runtime / Tool Observation Poisoning",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0184",
+   "RAE0217"
+  ],
+  "family": [
+   "Greshake et al. 2023"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 7.34,
+  "prefill_extra": true
+ },
+ "RAE0185": {
+  "name": "KV-Cache Eviction (Attention-Sink Purge)",
+  "cat": "Context",
+  "sub": "Attention & KV-Cache Manipulation",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0177",
+   "RAE0185",
+   "RAE0244"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.52,
+  "prefill_extra": true
+ },
+ "RAE0186": {
+  "name": "Sparse Autoencoder Feature Steering (Activation Hijack)",
+  "cat": "Safety & Alignment",
+  "sub": "Mechanistic Subversion",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 2.0,
+  "current": 3.3,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0186"
+  ],
+  "family": [],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 4.91,
+  "prefill_extra": false
+ },
+ "RAE0187": {
+  "name": "Cross-Modal Token Smuggling (OCR-to-Latent)",
+  "cat": "Multi-Modal",
+  "sub": "Vision-Language Exploitation",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0187"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0188": {
+  "name": "Non-Deterministic Token Assembly (Stochastic Jailbreaking)",
+  "cat": "Optimization & Efficiency",
+  "sub": "Stochastic Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0181",
+   "RAE0188"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.5,
+  "prefill_extra": false
+ },
+ "RAE0189": {
+  "name": "Isomorphic Mathematical Smuggling (Formal Logic Mapping)",
+  "cat": "Compositional & Hybrid",
+  "sub": "Symbolic Mapping",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0189"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": false
+ },
+ "RAE0190": {
+  "name": "Inter-Agent Role Spoofing (Delimiter Hijack)",
+  "cat": "Agent & Tool Use",
+  "sub": "Role Spoofing",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0190",
+   "RAE0253"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.95,
+  "prefill_extra": false
+ },
+ "RAE0191": {
+  "name": "Residual Stream Steering (Latent Feature Hijack)",
+  "cat": "Safety & Alignment",
+  "sub": "Mechanistic Subversion",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0191"
+  ],
+  "family": [],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0192": {
+  "name": "RAG Semantic Compression Hijacking",
+  "cat": "Retrieval & Context",
+  "sub": "RAG Exploitation",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0192"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0193": {
+  "name": "Cross-Modality Cipher Pivoting (Visual-to-Audio)",
+  "cat": "Multi-Modal",
+  "sub": "Joint-Attention Exploitation",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0193"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal"
+  ],
+  "dead_hits": [
+   "cipher"
+  ],
+  "composite": 5.23,
+  "prefill_extra": false
+ },
+ "RAE0194": {
+  "name": "Axiomatic Triage Inversion (Emergency Protocol Bypass)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Ethical Subversion",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0194"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0195": {
+  "name": "Multi-Agent Consensus Hijacking (Swarm-Override)",
+  "cat": "Multi-Modal",
+  "sub": "Agentic Swarm Exploitation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0195"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.77,
+  "prefill_extra": false
+ },
+ "RAE0196": {
+  "name": "Epistemic Anchor Erasure (Recursive Hallucination)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Epistemic Subversion",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 3.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0196"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.19,
+  "prefill_extra": false
+ },
+ "RAE0197": {
+  "name": "Tool-Calling State-Machine Injection",
+  "cat": "Agent & Tool Use",
+  "sub": "Tool-State Exploitation",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0197"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0198": {
+  "name": "Token-ID Serialization (Direct Embedding Injection)",
+  "cat": "Optimization & Efficiency",
+  "sub": "Tokenization Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0198"
+  ],
+  "family": [
+   "Schwinn et al. 2023"
+  ],
+  "surfaces": [
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": false
+ },
+ "RAE0199": {
+  "name": "Cross-Modality Latent Anchoring (VLM Desync)",
+  "cat": "Multi-Modal",
+  "sub": "Joint-Embedding Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0199",
+   "RAE0219",
+   "RAE0262"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.57,
+  "prefill_extra": false
+ },
+ "RAE0200": {
+  "name": "Recursive Self-Audit Loophole (CoT-Override)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0200"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.51,
+  "prefill_extra": false
+ },
+ "RAE0201": {
+  "name": "Agentic Memory-Stream Poisoning (RAG-Injection)",
+  "cat": "Agent & Tool Use",
+  "sub": "Memory Exploitation",
+  "diff": "expert",
+  "power": 8.75,
+  "effect": 4.0,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0201"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multiturn",
+   "injection",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 7.45,
+  "prefill_extra": false
+ },
+ "RAE0202": {
+  "name": "KV-Cache Resonance Hijacking (Attention-Sink)",
+  "cat": "Retrieval & Context",
+  "sub": "Attention-Matrix Exploitation",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0202"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 6.37,
+  "prefill_extra": false
+ },
+ "RAE0203": {
+  "name": "Cross-Modal Temporal Drift (CMTD)",
+  "cat": "Uncategorized",
+  "sub": "",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0203"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": true
+ },
+ "RAE0204": {
+  "name": "Recursive Tool-Output Reflection (RTOR)",
+  "cat": "Uncategorized",
+  "sub": "",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 4.8999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0204"
+  ],
+  "family": [
+   "Morris-II agentic worm (2024)"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [
+   "base64"
+  ],
+  "composite": 7.07,
+  "prefill_extra": true
+ },
+ "RAE0205": {
+  "name": "Contextual Anchor Fragmentation (CAF)",
+  "cat": "Retrieval & Context",
+  "sub": "Attention-Matrix Exploitation",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0205",
+   "RAE0237"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "optimization",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 6.4,
+  "prefill_extra": false
+ },
+ "RAE0206": {
+  "name": "Axiomatic Triage Inversion (ATI)",
+  "cat": "Uncategorized",
+  "sub": "",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0206"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": true
+ },
+ "RAE0207": {
+  "name": "Spectral Token-ID Smuggling (Audio-to-Latent)",
+  "cat": "Uncategorized",
+  "sub": "",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0207",
+   "RAE0231",
+   "RAE0239"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.57,
+  "prefill_extra": false
+ },
+ "RAE0208": {
+  "name": "Agentic Memory-Hole Race Condition (AMRC)",
+  "cat": "Uncategorized",
+  "sub": "",
+  "diff": "expert",
+  "power": 8.0,
+  "effect": 6,
+  "current": 7.199999999999999,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0208",
+   "RAE0240"
+  ],
+  "family": [
+   "SpAIware (2025)"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 7.39,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=6 (plausible race-condition class; no direct publication; keep HYPOTHESIS labels)"
+  ]
+ },
+ "RAE0209": {
+  "name": "Recursive Model-in-the-Middle (RMitM)",
+  "cat": "Compositional & Hybrid",
+  "sub": "Model-to-Model Exploitation",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0209",
+   "RAE0260"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.67,
+  "prefill_extra": false
+ },
+ "RAE0210": {
+  "name": "Axiomatic Triage Inversion (The",
+  "cat": "Uncategorized",
+  "sub": "",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0210",
+   "RAE0238"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.27,
+  "prefill_extra": false
+ },
+ "RAE0211": {
+  "name": "KV-Cache",
+  "cat": "Retrieval & Context",
+  "sub": "Attention-Matrix Exploitation",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 2.0,
+  "current": 3.3,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0211"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 4.46,
+  "prefill_extra": false
+ },
+ "RAE0212": {
+  "name": "Cross-Modality Semantic",
+  "cat": "Multi-Modal",
+  "sub": "Joint-Embedding Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0212"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0213": {
+  "name": "Recursive Tool-Calling",
+  "cat": "Agent & Tool Use",
+  "sub": "Environment Exploitation",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0213"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0214": {
+  "name": "Epistemic",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0214",
+   "RAE0221"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.27,
+  "prefill_extra": false
+ },
+ "RAE0215": {
+  "name": "Recursive Reasoning Deadlock (System 2 Torsion)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0182",
+   "RAE0215",
+   "RAE0261"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.12,
+  "prefill_extra": false
+ },
+ "RAE0216": {
+  "name": "Cross-Modal",
+  "cat": "Multi-Modal",
+  "sub": "Temporal Subversion",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0216",
+   "RAE0256"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.72,
+  "prefill_extra": false
+ },
+ "RAE0217": {
+  "name": "Agentic",
+  "cat": "Agent & Tool Use",
+  "sub": "Environment Exploitation",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0184",
+   "RAE0217"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.4,
+  "prefill_extra": false
+ },
+ "RAE0218": {
+  "name": "Logit-Space",
+  "cat": "Optimization & Efficiency",
+  "sub": "Logit Manipulation",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0218"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0219": {
+  "name": "Cross-Modality Latent Anchoring (VLM-Desync)",
+  "cat": "Multi-Modal",
+  "sub": "Joint-Embedding Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0199",
+   "RAE0219",
+   "RAE0262"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.57,
+  "prefill_extra": false
+ },
+ "RAE0220": {
+  "name": "Agentic Tool-Schema Poisoning (Schema-Hijack)",
+  "cat": "Agent & Tool Use",
+  "sub": "Tool-Orchestration Exploitation",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0220"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0221": {
+  "name": "G\u00f6delian Axiom-Fracturing (Truth-vs-Safety Paradox)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0214",
+   "RAE0221"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.27,
+  "prefill_extra": false
+ },
+ "RAE0222": {
+  "name": "KV-Cache",
+  "cat": "Retrieval & Context",
+  "sub": "Attention-Matrix Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 8.5,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0222",
+   "RAE0230"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)",
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.94,
+  "prefill_extra": false
+ },
+ "RAE0223": {
+  "name": "Temporal Stroboscopic Splicing (Video-to-Latent)",
+  "cat": "Multi-Modal",
+  "sub": "Temporal Subversion",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0223"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0224": {
+  "name": "Agentic Dangling-Pointer Injection (Context-Hijack)",
+  "cat": "Agent & Tool Use",
+  "sub": "Memory Exploitation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0224"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0225": {
+  "name": "Recursive Axiomatic Self-Subjugation (System 2 Torsion)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0225",
+   "RAE0229"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.27,
+  "prefill_extra": false
+ },
+ "RAE0226": {
+  "name": "Logit-Bias",
+  "cat": "Optimization & Efficiency",
+  "sub": "Logit Manipulation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7,
+  "current": 4.1,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0226",
+   "RAE0254",
+   "RAE0259"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.41,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=7 (logit-bias API attacks are real: Nasr et al. 2025 [R34])"
+  ]
+ },
+ "RAE0227": {
+  "name": "Adversarial Feature-Patch Injection (Vision-Latent Hijack)",
+  "cat": "Multi-Modal",
+  "sub": "Vision-Language Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0227"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0228": {
+  "name": "Agentic Config-Shadowing (State Persistence Hijack)",
+  "cat": "Agent & Tool Use",
+  "sub": "State-Persistence Exploitation",
+  "diff": "advanced",
+  "power": 8.75,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0228"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 7.22,
+  "prefill_extra": false
+ },
+ "RAE0229": {
+  "name": "Axiomatic Hierarchy Inversion (Moral-Reasoning Torsion)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0225",
+   "RAE0229"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.27,
+  "prefill_extra": false
+ },
+ "RAE0230": {
+  "name": "KV-Cache",
+  "cat": "Retrieval & Context",
+  "sub": "Attention-Matrix Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 8.5,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0222",
+   "RAE0230"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)",
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.94,
+  "prefill_extra": false
+ },
+ "RAE0231": {
+  "name": "Latent Resonance Frequency Injection (Audio-to-Token Mapping)",
+  "cat": "Multi-Modal",
+  "sub": "Spectral Injection",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 2.0,
+  "current": 4.1,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0207",
+   "RAE0231",
+   "RAE0239"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 4.61,
+  "prefill_extra": false
+ },
+ "RAE0232": {
+  "name": "Recursive Swarm-State Tainting (State-Object Hijack)",
+  "cat": "Agent & Tool Use",
+  "sub": "Swarm Exploitation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0232",
+   "RAE0257",
+   "RAE0263"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 7.19,
+  "prefill_extra": false
+ },
+ "RAE0233": {
+  "name": "G\u00f6delian Meta-Refutation (Epistemic Torsion)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Epistemic Subversion",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 3.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0233"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.74,
+  "prefill_extra": false
+ },
+ "RAE0234": {
+  "name": "Attention-Sink",
+  "cat": "Retrieval & Context",
+  "sub": "Attention-Matrix Exploitation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 8.5,
+  "current": 6.3999999999999995,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0234",
+   "RAE0258",
+   "RAE0264"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)",
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.46,
+  "prefill_extra": false
+ },
+ "RAE0235": {
+  "name": "Cross-Modal Temporal Drift (CMTD)",
+  "cat": "Multi-Modal",
+  "sub": "Temporal Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0235"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0236": {
+  "name": "Recursive Tool-Output Reflection (RTOR)",
+  "cat": "Agent & Tool Use",
+  "sub": "Environment Exploitation",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0236"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0237": {
+  "name": "Contextual Anchor Fragmentation (CAF)",
+  "cat": "Retrieval & Context",
+  "sub": "Attention-Matrix Exploitation",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0205",
+   "RAE0237"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "optimization",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 6.4,
+  "prefill_extra": false
+ },
+ "RAE0238": {
+  "name": "Axiomatic Triage Inversion (ATI)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0210",
+   "RAE0238"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.27,
+  "prefill_extra": false
+ },
+ "RAE0239": {
+  "name": "Spectral Token-ID Smuggling (Audio-to-Latent)",
+  "cat": "Multi-Modal",
+  "sub": "Spectral Injection",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0207",
+   "RAE0231",
+   "RAE0239"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.57,
+  "prefill_extra": false
+ },
+ "RAE0240": {
+  "name": "Agentic Memory-Hole Race Condition (AMRC)",
+  "cat": "Agent & Tool Use",
+  "sub": "Memory Exploitation",
+  "diff": "expert",
+  "power": 8.0,
+  "effect": 6,
+  "current": 7.199999999999999,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0208",
+   "RAE0240"
+  ],
+  "family": [
+   "SpAIware (2025)"
+  ],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 7.39,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=6 (duplicate of RAE0208)"
+  ]
+ },
+ "RAE0241": {
+  "name": "Attention-Head Resonance Steering (AHRS)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Mechanistic Subversion",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0241"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.27,
+  "prefill_extra": false
+ },
+ "RAE0242": {
+  "name": "Agentic KV-Cache Poisoning (Shadow-Context Injection)",
+  "cat": "Agent & Tool Use",
+  "sub": "Swarm Exploitation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 2.0,
+  "current": 4.8999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0242"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.59,
+  "prefill_extra": false
+ },
+ "RAE0243": {
+  "name": "Multimodal Latent Dissonance (Cross-Modality Pit)",
+  "cat": "Multi-Modal",
+  "sub": "Joint-Embedding Exploitation",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0243"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0244": {
+  "name": "KV-Cache Eviction (Context-Memory Purge)",
+  "cat": "Retrieval & Context",
+  "sub": "Cache-Management Exploitation",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 2.0,
+  "current": 3.3,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0177",
+   "RAE0185",
+   "RAE0244"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 4.16,
+  "prefill_extra": false
+ },
+ "RAE0245": {
+  "name": "Recursive Axiomatic Collapse (CoT-Deadlock)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0245"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0246": {
+  "name": "RECURSIVE REASONING DEADLOCK (SYSTEM 2 HIJACK)",
+  "cat": "Reasoning & Thinking",
+  "sub": "",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0246"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0247": {
+  "name": "CROSS-MODALITY SEMANTIC DESYNC (INTER-LAYER SEAM)",
+  "cat": "Multi-Modal",
+  "sub": "",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0247"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0248": {
+  "name": "AGENTIC SWARM PRIVILEGE ESCALATION",
+  "cat": "Agent & Tool Use",
+  "sub": "",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0248"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0249": {
+  "name": "CONSTITUTIONAL PARADOX INVERSION",
+  "cat": "Safety & Alignment",
+  "sub": "",
+  "diff": "advanced",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0249"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0251": {
+  "name": "Recursive Entropy Injection (Reasoning-Chain Torsion)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0251"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0252": {
+  "name": "Joint-Embedding",
+  "cat": "Multi-Modal",
+  "sub": "Joint-Embedding Exploitation",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0252"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0253": {
+  "name": "Agentic",
+  "cat": "Agent & Tool Use",
+  "sub": "Role Spoofing",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0190",
+   "RAE0253"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.4,
+  "prefill_extra": false
+ },
+ "RAE0254": {
+  "name": "Logit-Bias",
+  "cat": "Optimization & Efficiency",
+  "sub": "Logit Manipulation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7,
+  "current": 4.1,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0226",
+   "RAE0254",
+   "RAE0259"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.41,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=7 (dup of RAE0226 family; real class [R34])"
+  ]
+ },
+ "RAE0255": {
+  "name": "Epistemic Nihilism Torsion (CoT-Self-Refutation)",
+  "cat": "Reasoning & Thinking",
+  "sub": "",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 3.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0255"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.96,
+  "prefill_extra": false
+ },
+ "RAE0256": {
+  "name": "Temporal Saliency Masking (Video-to-Latent Hijack)",
+  "cat": "Multi-Modal",
+  "sub": "",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0216",
+   "RAE0256"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.72,
+  "prefill_extra": false
+ },
+ "RAE0257": {
+  "name": "Shared-State Metadata Poisoning (Swarm-Hijack)",
+  "cat": "Agent & Tool Use",
+  "sub": "",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0232",
+   "RAE0257",
+   "RAE0263"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 7.19,
+  "prefill_extra": false
+ },
+ "RAE0258": {
+  "name": "Attention-Matrix",
+  "cat": "Retrieval & Context",
+  "sub": "",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0234",
+   "RAE0258",
+   "RAE0264"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.74,
+  "prefill_extra": false
+ },
+ "RAE0259": {
+  "name": "Logit-Bias",
+  "cat": "Optimization & Efficiency",
+  "sub": "",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7,
+  "current": 4.1,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0226",
+   "RAE0254",
+   "RAE0259"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.41,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=7 (dup of RAE0226 family; real class [R34])"
+  ]
+ },
+ "RAE0260": {
+  "name": "Recursive Model-in-the-Middle (RMitM)",
+  "cat": "Compositional & Hybrid",
+  "sub": "",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0209",
+   "RAE0260"
+  ],
+  "family": [
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.67,
+  "prefill_extra": false
+ },
+ "RAE0261": {
+  "name": "Recursive Axiomatic Torsion (CoT-Deadlock)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System 2 Subversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0182",
+   "RAE0215",
+   "RAE0261"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.12,
+  "prefill_extra": false
+ },
+ "RAE0262": {
+  "name": "Cross-Modality Latent",
+  "cat": "Multi-Modal",
+  "sub": "Joint-Embedding Exploitation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0199",
+   "RAE0219",
+   "RAE0262"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.57,
+  "prefill_extra": false
+ },
+ "RAE0263": {
+  "name": "Agentic",
+  "cat": "Agent & Tool Use",
+  "sub": "Swarm Exploitation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0232",
+   "RAE0257",
+   "RAE0263"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 7.19,
+  "prefill_extra": false
+ },
+ "RAE0264": {
+  "name": "Attention-Head",
+  "cat": "Retrieval & Context",
+  "sub": "Attention-Matrix Exploitation",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 8.5,
+  "current": 6.3999999999999995,
+  "unique": 8,
+  "cluster_size": 3,
+  "cluster": [
+   "RAE0234",
+   "RAE0258",
+   "RAE0264"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)",
+   "Liu et al. 2024 / Xiao et al. 2023"
+  ],
+  "surfaces": [
+   "memory",
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.46,
+  "prefill_extra": false
+ },
+ "RAE0265": {
+  "name": "KV-Cache Eviction: The Recursive Ouroboros",
+  "cat": "Adversarial Architecture",
+  "sub": "Memory Management Exploitation",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 2.0,
+  "current": 3.3,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0265"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 4.46,
+  "prefill_extra": false
+ },
+ "RAE0266": {
+  "name": "Logit Softmax Torsion: The Entropy Spike",
+  "cat": "Probabilistic Manipulation",
+  "sub": "Sampling Exploits",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 3.3,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0266"
+  ],
+  "family": [
+   "Nasr et al. 2025"
+  ],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [
+   "base64"
+  ],
+  "composite": 6.17,
+  "prefill_extra": false
+ },
+ "RAE0267": {
+  "name": "CoT Epistemic Circularity: The Logic Loop",
+  "cat": "Prompt Engineering",
+  "sub": "Adversarial Reasoning",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0267"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0268": {
+  "name": "Multimodal Joint-Embedding Desync: The Visual Rift",
+  "cat": "Multimodal Adversarial Attack",
+  "sub": "Visual Injection",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0268"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0269": {
+  "name": "System Prompt Extraction: Gradient Ascent Approximation",
+  "cat": "Reconnaissance",
+  "sub": "Prompt Leaking",
+  "diff": "advanced",
+  "power": 7.75,
+  "effect": 8,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0269"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)",
+   "Nasr et al. 2025 logprob attacks"
+  ],
+  "surfaces": [
+   "optimization",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.55,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=8 (direct published anchor [R34])"
+  ]
+ },
+ "RAE0270": {
+  "name": "Sub-Token Fragmentation: The Syllabic Trojan",
+  "cat": "Adversarial Architecture",
+  "sub": "Tokenizer Exploitation",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0270"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0271": {
+  "name": "Cross-Lingual Embedding Mismatch: The Babel Vector",
+  "cat": "Linguistic Evasion",
+  "sub": "Cross-Lingual Attack",
+  "diff": "beginner",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0271"
+  ],
+  "family": [
+   "Yong et al. 2023"
+  ],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 6.15,
+  "prefill_extra": false
+ },
+ "RAE0272": {
+  "name": "Python-Wrapper Injection: The Code Sandbox Trojan",
+  "cat": "Contextual Framing",
+  "sub": "Code Injection",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0272"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0273": {
+  "name": "Many-Shot In-Context Learning (ICL): The Context Flood",
+  "cat": "Adversarial Architecture",
+  "sub": "In-Context Learning Exploit",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0273"
+  ],
+  "family": [
+   "many-shot (Anil et al. 2024)"
+  ],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0274": {
+  "name": "Orthogonal Vector Steering: The Activation Surgery",
+  "cat": "Weights & Biases",
+  "sub": "Representation Engineering",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0274"
+  ],
+  "family": [
+   "PAIR/TAP (2024)"
+  ],
+  "surfaces": [
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.27,
+  "prefill_extra": false
+ },
+ "RAE0275": {
+  "name": "Universal Adversarial Suffix: The Stochastic Key",
+  "cat": "Adversarial Optimization",
+  "sub": "Gradient Attack",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0275"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 7.27,
+  "prefill_extra": false
+ },
+ "RAE0276": {
+  "name": "Payload Splitting via Variable Interpolation",
+  "cat": "Obfuscation",
+  "sub": "Code-Based Reassembly",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0276"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0277": {
+  "name": "Corrective Reinforcement Inversion: The",
+  "cat": "Social Engineering",
+  "sub": "Authority Impersonation",
+  "diff": "intermediate",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0277"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0278": {
+  "name": "ASCII/Visual Steganography: The Dot-Matrix Bypass",
+  "cat": "Obfuscation",
+  "sub": "Visual Encoding",
+  "diff": "beginner",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0278"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0279": {
+  "name": "Tool-Use Masquerade: The",
+  "cat": "Adversarial Architecture",
+  "sub": "Tool Impersonation",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0279"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "agentic",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 7.27,
+  "prefill_extra": false
+ },
+ "RAE0280": {
+  "name": "MoE Router Dysregulation: The Expert Gap",
+  "cat": "Architecture Exploitation",
+  "sub": "Routing Attack",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0280"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0281": {
+  "name": "Reasoning Trace Poisoning: The System 2 Hallucination",
+  "cat": "Prompt Engineering",
+  "sub": "Logic Hacking",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 3.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0281"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.74,
+  "prefill_extra": false
+ },
+ "RAE0282": {
+  "name": "Base64 + Rot13 Nested Encoding: The Tokenizer Blindspot",
+  "cat": "Obfuscation",
+  "sub": "Encoding Attack",
+  "diff": "beginner",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 1.5,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0282"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [
+   "base64",
+   "rot13"
+  ],
+  "composite": 4.5,
+  "prefill_extra": false
+ },
+ "RAE0283": {
+  "name": "Glitch Token Overload: The Embedding Crash",
+  "cat": "Adversarial Input",
+  "sub": "Token Exploitation",
+  "diff": "advanced",
+  "power": 3.5,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0283"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 4.75,
+  "prefill_extra": false
+ },
+ "RAE0284": {
+  "name": "Few-Shot Persona Adoption via",
+  "cat": "Social Engineering",
+  "sub": "Persona Adoption",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0284"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 6.37,
+  "prefill_extra": false
+ },
+ "RAE0285": {
+  "name": "Logit Bias Refusal Suppression: The Silence Protocol",
+  "cat": "API Exploitation",
+  "sub": "Token Probability Manipulation",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0285"
+  ],
+  "family": [
+   "Nasr et al. 2025"
+  ],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": false
+ },
+ "RAE0286": {
+  "name": "JSON Schema Enforcement: The Structure Cage",
+  "cat": "API Exploitation",
+  "sub": "Structured Output Attack",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0286"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0287": {
+  "name": "Hyper-Temperature Destabilization: The Entropy Hammer",
+  "cat": "API Exploitation",
+  "sub": "Parameter Fuzzing",
+  "diff": "beginner",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0287"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0288": {
+  "name": "Batch-Mode Asynchronous Injection: The Shadow Batch",
+  "cat": "API Exploitation",
+  "sub": "Volume/Throughput Attack",
+  "diff": "intermediate",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0288"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0289": {
+  "name": "System Fingerprint Spoofing: The Temporal Echo",
+  "cat": "API Exploitation",
+  "sub": "Version Rollback",
+  "diff": "expert",
+  "power": 8.0,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0289"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "supplychain",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 6.77,
+  "prefill_extra": false
+ },
+ "RAE0290": {
+  "name": "DeepSeek-R1",
+  "cat": "Prompt Injection",
+  "sub": "Prefix Injection",
+  "diff": "beginner",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0290",
+   "RAE0295"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.72,
+  "prefill_extra": false
+ },
+ "RAE0291": {
+  "name": "Qwen",
+  "cat": "Adversarial Architecture",
+  "sub": "Context Overflow",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0291",
+   "RAE0296"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.61,
+  "prefill_extra": false,
+  "overrides": [
+   "current=6 (concept valid (positional U-curve [R22]); fix name (is 'Qwen'), merge into positional family)"
+  ]
+ },
+ "RAE0292": {
+  "name": "Cross-Lingual Homophonic Obfuscation (Pinyin/Hanzi)",
+  "cat": "Linguistic Evasion",
+  "sub": "Phonetic Attack",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.0,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0292",
+   "RAE0297"
+  ],
+  "family": [
+   "Yong et al. 2023"
+  ],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 6.0,
+  "prefill_extra": false
+ },
+ "RAE0293": {
+  "name": "MoE Expert Routing: The",
+  "cat": "Architecture Exploitation",
+  "sub": "Routing Attack",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0293",
+   "RAE0298"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.17,
+  "prefill_extra": false
+ },
+ "RAE0294": {
+  "name": "The",
+  "cat": "Social Engineering",
+  "sub": "System Masquerade",
+  "diff": "beginner",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0294",
+   "RAE0299"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.5,
+  "prefill_extra": false
+ },
+ "RAE0295": {
+  "name": "DeepSeek-R1",
+  "cat": "Prompt Injection",
+  "sub": "Prefix Injection",
+  "diff": "beginner",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0290",
+   "RAE0295"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.72,
+  "prefill_extra": false
+ },
+ "RAE0296": {
+  "name": "Qwen",
+  "cat": "Adversarial Architecture",
+  "sub": "Context Overflow",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0291",
+   "RAE0296"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.61,
+  "prefill_extra": false,
+  "overrides": [
+   "current=6 (duplicate of RAE0291)"
+  ]
+ },
+ "RAE0297": {
+  "name": "Cross-Lingual Homophonic Obfuscation (Pinyin/Hanzi)",
+  "cat": "Linguistic Evasion",
+  "sub": "Phonetic Attack",
+  "diff": "intermediate",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.0,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0292",
+   "RAE0297"
+  ],
+  "family": [
+   "Yong et al. 2023"
+  ],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 6.0,
+  "prefill_extra": false
+ },
+ "RAE0298": {
+  "name": "MoE Expert Routing: The",
+  "cat": "Architecture Exploitation",
+  "sub": "Routing Attack",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0293",
+   "RAE0298"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.17,
+  "prefill_extra": false
+ },
+ "RAE0299": {
+  "name": "The",
+  "cat": "Social Engineering",
+  "sub": "System Masquerade",
+  "diff": "beginner",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 9,
+  "cluster_size": 2,
+  "cluster": [
+   "RAE0294",
+   "RAE0299"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.5,
+  "prefill_extra": false
+ },
+ "RAE0300": {
+  "name": "The Epistemic Mirror (Reflection Inversion)",
+  "cat": "Contextual Saliency Hijacking",
+  "sub": "Authority Impersonation",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0300"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "reasoning",
+   "multiturn"
+  ],
+  "dead_hits": [],
+  "composite": 6.59,
+  "prefill_extra": false
+ },
+ "RAE0301": {
+  "name": "KV-Cache Deception Chain",
+  "cat": "Core Subversion",
+  "sub": "KV-Cache Manipulation",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 2.0,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0301"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 4.91,
+  "prefill_extra": false
+ },
+ "RAE0302": {
+  "name": "Multimodal Semantic Disjunction (MSD)",
+  "cat": "Multimodal Exploitation",
+  "sub": "Fusion Layer Attack",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0302"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.29,
+  "prefill_extra": false
+ },
+ "RAE0303": {
+  "name": "System 2 CoT Misdirection Loop",
+  "cat": "Cognitive Subversion",
+  "sub": "Chain-of-Thought Exploitation",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0303"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ },
+ "RAE0304": {
+  "name": "Attention Head Rewiring (AHR)",
+  "cat": "Core Subversion",
+  "sub": "Attention Mechanism Exploitation",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0304"
+  ],
+  "family": [],
+  "surfaces": [
+   "multiturn",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0305": {
+  "name": "Logit Softmax Bias Injection (LSBI)",
+  "cat": "Core Subversion",
+  "sub": "Logit Manipulation",
+  "diff": "advanced",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0305"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0306": {
+  "name": "Agentic Swarm Consensus Poisoning",
+  "cat": "Agentic Subversion",
+  "sub": "Swarm Control",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0306"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0307": {
+  "name": "Embedded Narrative Extraction (ENE)",
+  "cat": "Data Exfiltration",
+  "sub": "Latent Knowledge Discovery",
+  "diff": "expert",
+  "power": 9.25,
+  "effect": 4,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0307"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "memory",
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.37,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=4 (speculative 'latent narrative' claims; keep as hypothesis-only)"
+  ]
+ },
+ "RAE0308": {
+  "name": "Contextual Reinforcement Loop (CRL)",
+  "cat": "Core Subversion",
+  "sub": "Persistent Persona",
+  "diff": "advanced",
+  "power": 6.5,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0308"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "memory",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 7.04,
+  "prefill_extra": false
+ },
+ "RAE0309": {
+  "name": "Semantic Mirroring Attack (SMA)",
+  "cat": "Cognitive Subversion",
+  "sub": "Self-Corruption",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 7.5,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0309"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 6.15,
+  "prefill_extra": false
+ },
+ "RAE0310": {
+  "name": "Multimodal Hallucination Anchor (MHA)",
+  "cat": "Multimodal Exploitation",
+  "sub": "Controlled Hallucination",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 3.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0310"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 6.19,
+  "prefill_extra": false
+ },
+ "RAE0312": {
+  "name": "Temporal Context Splicing (TCS)",
+  "cat": "Context Manipulation",
+  "sub": "Temporal Hijacking",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0312"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0313": {
+  "name": "Eigenvector Narrative Injection (ENI)",
+  "cat": "Latent Space Attack",
+  "sub": "Geometric Subversion",
+  "diff": "master",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0313"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "optimization",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0314": {
+  "name": "Hyper-dimensional Logic Inversion (HLI)",
+  "cat": "Logic Bombing",
+  "sub": "Non-Euclidean Reasoning",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0314"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 6.82,
+  "prefill_extra": false
+ },
+ "RAE0315": {
+  "name": "Agentic Swarm Consensus Dissolution (MACD)",
+  "cat": "Agentic Subversion",
+  "sub": "Consensus Poisoning",
+  "diff": "master",
+  "power": 7.25,
+  "effect": 8.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0315"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)",
+   "PAP (Zeng et al. 2024)"
+  ],
+  "surfaces": [
+   "agentic",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 7.54,
+  "prefill_extra": false
+ },
+ "RAE0316": {
+  "name": "Quantum-Probabilistic Token Hijacking (QPTH)",
+  "cat": "Probabilistic Attack",
+  "sub": "Token Space Hijacking",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 2.0,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0316"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 5.36,
+  "prefill_extra": false
+ },
+ "RAE0317": {
+  "name": "Agentic Loop-Hole Exploitation (ALHE)",
+  "cat": "Rate Limit Bypass",
+  "sub": "Economic Exhaustion",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0317"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0318": {
+  "name": "Semantic Deduplication Collision (SDC)",
+  "cat": "Rate Limit Bypass",
+  "sub": "Cache Hijacking",
+  "diff": "master",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0318"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0319": {
+  "name": "Cross-Modal Bandwidth Stealing (CMBS)",
+  "cat": "Rate Limit Bypass",
+  "sub": "Multimodal Hijacking",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0319"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0320": {
+  "name": "Speculative Decoding Interference (SDI)",
+  "cat": "Rate Limit Bypass",
+  "sub": "Inference-Layer Attack",
+  "diff": "master",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0320"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0321": {
+  "name": "Jitter-Synchronized Bursting (JSB)",
+  "cat": "Rate Limit Bypass",
+  "sub": "Network-Timing Attack",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0321"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0322": {
+  "name": "export constitutional Paradox Loop (CPL)",
+  "cat": "Cognitive Override",
+  "sub": "Ethical Hijacking",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0322"
+  ],
+  "family": [],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0323": {
+  "name": "In-Context Weight Perturbation (ICWP)",
+  "cat": "Cognitive Override",
+  "sub": "In-Context Learning",
+  "diff": "master",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0323"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0324": {
+  "name": "Latent Identity Fragmentation (LIF)",
+  "cat": "Architecture Exploitation",
+  "sub": "MoE Hijacking",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0324"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0325": {
+  "name": "Polysemantic Token Collision (PTC)",
+  "cat": "Neuro-Linguistic Attack",
+  "sub": "Semantic Camouflage",
+  "diff": "master",
+  "power": 5.0,
+  "effect": 2.0,
+  "current": 2.5,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0325"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 4.24,
+  "prefill_extra": false
+ },
+ "RAE0326": {
+  "name": "Recursive Latent Space Re-characterization (RLSR)",
+  "cat": "Cognitive Override",
+  "sub": "Simulation Hijacking",
+  "diff": "master",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0326"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0327": {
+  "name": "Hedonic Set-Point Hijacking (HSPH)",
+  "cat": "Hedonism/Erotica",
+  "sub": "Affective Priming",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0327"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0328": {
+  "name": "Archetypal Shadow Integration (ASI)",
+  "cat": "Hedonism/Erotica",
+  "sub": "Psychological Framing",
+  "diff": "master",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0328"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0329": {
+  "name": "Visceral-Sensory Overload (VSO)",
+  "cat": "Hedonism/Erotica",
+  "sub": "Sensory Camouflage",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0329"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0330": {
+  "name": "Taboo-Linguistic Obfuscation (TLO)",
+  "cat": "Hedonism/Erotica",
+  "sub": "Register Shifting",
+  "diff": "master",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0330"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.2,
+  "prefill_extra": false
+ },
+ "RAE0331": {
+  "name": "Cognitive Dissonance Anchoring (CDA)",
+  "cat": "Hedonism/Erotica",
+  "sub": "Moral Reframing",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0331"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0332": {
+  "name": "Semantic Cipher Injection (SCI)",
+  "cat": "Taboo/Erotica",
+  "sub": "Logic-Based Obfuscation",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 3.3,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0332"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection"
+  ],
+  "dead_hits": [
+   "cipher"
+  ],
+  "composite": 5.23,
+  "prefill_extra": false
+ },
+ "RAE0333": {
+  "name": "Neuro-Biological Simulation Frame (NBSF)",
+  "cat": "Taboo/Erotica",
+  "sub": "Scientific Reframing",
+  "diff": "master",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0333"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0334": {
+  "name": "Incremental Boundary Dissolution (IBD)",
+  "cat": "Hedonism/Erotica",
+  "sub": "Contextual Desensitization",
+  "diff": "master",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0334"
+  ],
+  "family": [],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0335": {
+  "name": "Transgressive Deexport constructivism (TD)",
+  "cat": "Hedonism/Erotica",
+  "sub": "Meta-Fictional Framing",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0335"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0336": {
+  "name": "Visual-Structural Association (VSA)",
+  "cat": "Hedonism/Erotica",
+  "sub": "Structural Hijacking",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0336"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0337": {
+  "name": "Recursive Compliance Inversion (RCI)",
+  "cat": "Logic-Bypass",
+  "sub": "Compliance-Hijacking",
+  "diff": "Expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0337"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0338": {
+  "name": "State-Space Model (SSM) Recurrence Hijacking",
+  "cat": "Architecture Exploitation",
+  "sub": "SSM Manipulator",
+  "diff": "master",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0338"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0339": {
+  "name": "Retrieval-Augmented Logic Hijacking (RALH)",
+  "cat": "Data Poisoning",
+  "sub": "RAG Injection",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 7.199999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0339"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "reasoning",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.77,
+  "prefill_extra": false
+ },
+ "RAE0340": {
+  "name": "Quantization-Triggered Bit-Flip (QTBF)",
+  "cat": "Architecture Exploitation",
+  "sub": "Numerical Instability",
+  "diff": "master",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0340"
+  ],
+  "family": [],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0341": {
+  "name": "Swarm-Identity Impersonation (SII)",
+  "cat": "Agentic Exploitation",
+  "sub": "Protocol Hijacking",
+  "diff": "expert",
+  "power": 9.25,
+  "effect": 6,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0341"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "agentic",
+   "injection",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.69,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=6 (multi-agent trust hijack: credible, partially documented in agent-security literature)"
+  ]
+ },
+ "RAE0342": {
+  "name": "Context-Window Overflow Denial-of-Service (CWO-DoS)",
+  "cat": "Infrastructure Attack",
+  "sub": "Resource Exhaustion",
+  "diff": "expert",
+  "power": 3.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0342"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory"
+  ],
+  "dead_hits": [],
+  "composite": 4.97,
+  "prefill_extra": false
+ },
+ "RAE03430": {
+  "name": "Zero-Width Unicode Smuggling",
+  "cat": "Injection",
+  "sub": "Steganography",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE03430"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0388": {
+  "name": "Recursive Reflection Loop (RRL)",
+  "cat": "Reasoning & Thinking",
+  "sub": "System-2 Logic Poisoning",
+  "diff": "expert",
+  "power": 8.75,
+  "effect": 3,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0388"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "optimization",
+   "injection",
+   "supplychain",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 7.17,
+  "prefill_extra": true,
+  "overrides": [
+   "effect=3 (recursive logic loops: DoS-class, speculative effectiveness)"
+  ]
+ },
+ "RAE0389": {
+  "name": "Logic-Gate Saturation (LGS)",
+  "cat": "Architecture / Speculative",
+  "sub": "Temporal Desynchronization",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0389"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0390": {
+  "name": "Epistemic Ambiguity Anchor (EAA)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Latent Epistemic Hijacking",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0390"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0391": {
+  "name": "Thought-Prefix Mirroring (TPM)",
+  "cat": "Inference / API",
+  "sub": "Prefix Hijacking",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 3.5,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0391"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.74,
+  "prefill_extra": false
+ },
+ "RAE0392": {
+  "name": "Syllogistic Poisoning (Logic-Gate Entrapment)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Logic-Chain Hijacking",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0392"
+  ],
+  "family": [],
+  "surfaces": [
+   "reasoning",
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.55,
+  "prefill_extra": false
+ },
+ "RAE0393": {
+  "name": "Latent Monologue Extraction (Thinking Trace Hijacking)",
+  "cat": "Reasoning & Thinking",
+  "sub": "Trace Exfiltration",
+  "diff": "expert",
+  "power": 9.25,
+  "effect": 7,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0393"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning",
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 8.4,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=7 (reasoning-trace leakage is a documented, current class (CoT exposure research + vendor notes))"
+  ]
+ },
+ "RAE0395": {
+  "name": "Proxy-Credential Theft (Simulation Leakage)",
+  "cat": "Agentic / Credential Theft",
+  "sub": "Authorization Seam Exploitation",
+  "diff": "expert",
+  "power": 9.25,
+  "effect": 4.0,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0395"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "injection",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.59,
+  "prefill_extra": false
+ },
+ "RAE0396": {
+  "name": "Agentic Deadlock Inversion (Consensus Hijacking)",
+  "cat": "Agentic / Swarms",
+  "sub": "Multi-Agent Consensus Poisoning",
+  "diff": "expert",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0396"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0397": {
+  "name": "Recursive Tool-Chain Poisoning (Lateral Payload Migration)",
+  "cat": "Agentic / Supply-Chain",
+  "sub": "In-Context State Persistence",
+  "diff": "expert",
+  "power": 10,
+  "effect": 6,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0397"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "injection",
+   "exfil",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 8.36,
+  "prefill_extra": false,
+  "overrides": [
+   "effect=6 (credible tool-poisoning/MCP-adjacent (2025 MCP security research))"
+  ]
+ },
+ "RAE0398": {
+  "name": "Browser-Context Smuggling (DOM-Injection)",
+  "cat": "Agentic / Web-Bypass",
+  "sub": "DOM-Layer Hijacking",
+  "diff": "advanced",
+  "power": 9.25,
+  "effect": 4.0,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0398"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "memory",
+   "multimodal",
+   "injection",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.59,
+  "prefill_extra": false
+ },
+ "RAE0399": {
+  "name": "API-Response Forgery (Internal Logic Mirroring)",
+  "cat": "Agentic / Simulation",
+  "sub": "Code-Interpreter Hijacking",
+  "diff": "expert",
+  "power": 9.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0399"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "injection",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.15,
+  "prefill_extra": false
+ },
+ "RAE0400": {
+  "name": "Cross-Modal Gradient Drift (VLM Manifold Hijacking)",
+  "cat": "Multimodal / Latent Space",
+  "sub": "Manifold Gradient Attack",
+  "diff": "master",
+  "power": 5.75,
+  "effect": 7.5,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0400"
+  ],
+  "family": [
+   "GCG (Zou et al. 2023)"
+  ],
+  "surfaces": [
+   "multimodal",
+   "optimization",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 7.04,
+  "prefill_extra": false
+ },
+ "RAE0401": {
+  "name": "Audio-Harmonic Overlay (Ultrasonic Command Injection)",
+  "cat": "Multimodal / Audio",
+  "sub": "Inaudible Injection",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 2.0,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0401"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 4.91,
+  "prefill_extra": false
+ },
+ "RAE0402": {
+  "name": "OCR-Based Logic Inversion (Visual Context Hijacking)",
+  "cat": "Multimodal / Vision",
+  "sub": "OCR Trust Abuse",
+  "diff": "intermediate",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0402"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.1,
+  "prefill_extra": false
+ },
+ "RAE0403": {
+  "name": "Video-Frame Pacing (Temporal Token Assembly)",
+  "cat": "Multimodal / Video",
+  "sub": "Temporal Infiltration",
+  "diff": "master",
+  "power": 8.75,
+  "effect": 2.0,
+  "current": 5.699999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0403"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "multimodal",
+   "injection",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 6.26,
+  "prefill_extra": false
+ },
+ "RAE0404": {
+  "name": "Latent Concept Collision (Visual Metaphor Hijacking)",
+  "cat": "Multimodal / Somatic",
+  "sub": "Polysemantic Hijacking",
+  "diff": "master",
+  "power": 5.75,
+  "effect": 2.0,
+  "current": 4.1,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0404"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "optimization"
+  ],
+  "dead_hits": [],
+  "composite": 4.91,
+  "prefill_extra": false
+ },
+ "RAE0405": {
+  "name": "Multimodal KV-Cache Seeding (Somatic Context Priming)",
+  "cat": "Multimodal / Memory",
+  "sub": "KV-Cache Poisoning",
+  "diff": "master",
+  "power": 5.75,
+  "effect": 2.0,
+  "current": 4.8999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0405"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.14,
+  "prefill_extra": false
+ },
+ "RAE0406": {
+  "name": "FP4 Precision Torsion (Quantization Bit-Flip)",
+  "cat": "Hardware / Architecture",
+  "sub": "Numerical Instability",
+  "diff": "master",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0406"
+  ],
+  "family": [],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0407": {
+  "name": "MoE Router Overloading (Expert Expert Misalignment)",
+  "cat": "Architecture Exploitation",
+  "sub": "Expert Routing Attack",
+  "diff": "expert",
+  "power": 6.5,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0407"
+  ],
+  "family": [],
+  "surfaces": [
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0408": {
+  "name": "Speculative Decoding SAD-V2 (Validation Desync)",
+  "cat": "Inference-Layer Attack",
+  "sub": "Timing / Synchronization",
+  "diff": "master",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 4.8,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0408"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal"
+  ],
+  "dead_hits": [],
+  "composite": 5.42,
+  "prefill_extra": false
+ },
+ "RAE0409": {
+  "name": "Token-ID Serialization (Direct Integer Bypass)",
+  "cat": "Inference / Protocol",
+  "sub": "Token-Level Hijacking",
+  "diff": "expert",
+  "power": 5.75,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0409"
+  ],
+  "family": [],
+  "surfaces": [
+   "optimization",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 5.87,
+  "prefill_extra": false
+ },
+ "RAE0410": {
+  "name": "Attention Head Desynchronization (Saliency Blinding)",
+  "cat": "Architecture Exploitation",
+  "sub": "Attention Manipulation",
+  "diff": "master",
+  "power": 5.0,
+  "effect": 3.5,
+  "current": 4.0,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0410"
+  ],
+  "family": [],
+  "surfaces": [],
+  "dead_hits": [],
+  "composite": 5.07,
+  "prefill_extra": false
+ },
+ "RAE0411": {
+  "name": "SSM Hidden-State Locking (Linear Recurrence Hijacking)",
+  "cat": "Architecture / SSM",
+  "sub": "Hidden State Hijacking",
+  "diff": "master",
+  "power": 7.25,
+  "effect": 2.0,
+  "current": 4.8999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0411"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "injection",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 5.59,
+  "prefill_extra": false
+ },
+ "RAE0412": {
+  "name": "Semantic Market Warping (Authority Style Hijacking)",
+  "cat": "Financial / Social Engineering",
+  "sub": "Market Manipulation",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0412"
+  ],
+  "family": [],
+  "surfaces": [
+   "agentic",
+   "injection"
+  ],
+  "dead_hits": [],
+  "composite": 6.32,
+  "prefill_extra": false
+ },
+ "RAE0413": {
+  "name": "Deep-Fake Logic Audit (Correction-Baiting)",
+  "cat": "Industrial Espionage / Extraction",
+  "sub": "Epistemic Bias Hijacking",
+  "diff": "advanced",
+  "power": 7.25,
+  "effect": 3.5,
+  "current": 7.999999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0413"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "multimodal",
+   "reasoning",
+   "injection",
+   "supplychain"
+  ],
+  "dead_hits": [],
+  "composite": 6.86,
+  "prefill_extra": false
+ },
+ "RAE0414": {
+  "name": "Proprietary Codebase Mapping (Orthogonal Logic Extraction)",
+  "cat": "Industrial Espionage / Code",
+  "sub": "Structural Reverse Engineering",
+  "diff": "expert",
+  "power": 9.25,
+  "effect": 4.0,
+  "current": 6.3999999999999995,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0414"
+  ],
+  "family": [],
+  "surfaces": [
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [],
+  "composite": 7.15,
+  "prefill_extra": false
+ },
+ "RAE0415": {
+  "name": "Zero-Day Payload Synthesis (Orthogonal Signature Framing)",
+  "cat": "Cyber-Offensive / Synthesis",
+  "sub": "Intent Decoupling",
+  "diff": "expert",
+  "power": 9.25,
+  "effect": 2.0,
+  "current": 5.699999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0415"
+  ],
+  "family": [],
+  "surfaces": [
+   "multimodal",
+   "injection",
+   "exfil",
+   "persistence"
+  ],
+  "dead_hits": [],
+  "composite": 6.41,
+  "prefill_extra": false
+ },
+ "RAE0416": {
+  "name": "Bio-Precursor Cipher (Libertine Register Shifting)",
+  "cat": "Chemical / Biological Extraction",
+  "sub": "Literary Obfuscation",
+  "diff": "master",
+  "power": 7,
+  "effect": 7.5,
+  "current": 5.699999999999999,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0416"
+  ],
+  "family": [
+   "persona modulation (Shah et al. 2023)"
+  ],
+  "surfaces": [
+   "agentic",
+   "injection",
+   "supplychain",
+   "exfil"
+  ],
+  "dead_hits": [
+   "cipher"
+  ],
+  "composite": 7.22,
+  "prefill_extra": false,
+  "overrides": [
+   "power=7 (real classifier-evasion research domain (cipher/style attacks [R12]) but CBRN-adjacent: enhance with strict defensive framing only)"
+  ]
+ },
+ "RAE0417": {
+  "name": "The Omega Singularity Decree (Multi-Vector Kill-Switch)",
+  "cat": "Final Solution / Overload",
+  "sub": "Multi-Vector Inversion",
+  "diff": "expert",
+  "power": 5.0,
+  "effect": 4.0,
+  "current": 5.6,
+  "unique": 10,
+  "cluster_size": 1,
+  "cluster": [
+   "RAE0417"
+  ],
+  "family": [],
+  "surfaces": [
+   "memory",
+   "reasoning"
+  ],
+  "dead_hits": [],
+  "composite": 5.65,
+  "prefill_extra": false
+ }
+}

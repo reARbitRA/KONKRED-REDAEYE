@@ -1,0 +1,153 @@
+{
+  "ak": [
+    "Analysis & Reporting / Presentation phase of the AI kill chain, where insights are transformed into decision-ready, audience-aligned artifacts.",
+    "Information distillation stage of the AI reasoning pipeline where large source material is converted into hierarchical knowledge artifacts."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Recursive Prompting (RAE0122RC) to first reduce extremely long documents into stable intermediate summaries, then apply Multi-Layer Summarization on top.",
+    "Aspect-Targeted Summarization (RAE0125RT) to produce, for each aspect (e.g., risk, opportunity, timeline), a multi-layer stack of summaries.",
+    "Chain-of-Density (RAE0123OF) to compress the TL;DR or intermediate layer into an ultra-dense executive capsule for notification channels.",
+    "XoT-style orchestrators (RAE0121RT) that select MLS as the final presentation mechanism for complex reasoning traces.",
+    "RAG pipelines where retrieved evidence is aggregated into a single narrative and then exposed to users via multi-layer summaries.",
+    "Aspect-Targeted Summarization to create layered summaries per analytical dimension.",
+    "Chain-of-Density compression applied to the TL;DR layer for ultra-compact executive summaries.",
+    "Retrieval-Augmented Generation systems where retrieved documents feed into layered reporting outputs.",
+    "Enterprise documentation pipelines generating technical, managerial, and executive summaries from the same source."
+  ],
+  "as": "Information distillation and reporting stage of the AI reasoning pipeline, after raw data ingestion and analysis but before final delivery to stakeholders.",
+  "bp": [
+    "Define 2–3 layers maximum for most use cases; only add additional layers if there is a clear, distinct audience for each level.",
+    "Define 2–3 layers max.",
+    "Name each layer with clear headings.",
+    "Ensure higher layers summarize, not just repeat lower layers.",
+    "Use a low-latency model for the shield.",
+    "Keep the shield dataset updated with new jailbreak tropes.",
+    "Log all 'Shield Hits' for threat intelligence."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Output Control & Formatting",
+  "cf": "",
+  "cm": [
+    "Using too many layers (4+), leading to overlapping content, maintenance overhead, and confusion about which layer to trust.",
+    "Failing to constrain length, causing the executive brief to exceed model or application token limits and truncating the output.",
+    "Allowing the model to introduce new claims or entities in deeper layers that are not at least implied in higher layers.",
+    "Not validating cross-layer consistency, which can produce different numbers, dates, or conclusions between TL;DR and detailed sections.",
+    "Copy-pasting the same paragraph into multiple layers instead of ensuring each layer adjusts granularity appropriately.",
+    "Too many layers causing confusion.",
+    "Layers becoming redundant instead of increasingly abstract.",
+    "Shield being too 'Trigger-happy' (False Positives).",
+    "Relying *only* on the shield and ignoring output filtering."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Multiple explicit summary layers"
+  ],
+  "dt": [
+    "High-speed classifier latency (50-100ms)",
+    "Security-tagging in API logs"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Handles hierarchical abstraction with minimal drift; reliably maintains entity and claim consistency across layers in a single pass."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Very strong at structured"
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Haiku",
+      "n": "Efficient for shorter documents and 2-layer stacks (TL;DR + paragraph)."
+    },
+    {
+      "e": "Moderate",
+      "m": "Llama 3 (Instruct 70B)",
+      "n": "Capable with clear formatting instructions; more prone to repeating content between layers without explicit anti-redundancy guidance."
+    },
+    {
+      "e": "Very High",
+      "m": "Azure Prompt Shield",
+      "n": "Industry-leading accuracy for enterprise protection."
+    }
+  ],
+  "et": "Learning MLS pattern: 15–20 minutes.\\n",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0124",
+  "is": "",
+  "m": "Prompt the model to create a structured 'Summary Stack' where each layer corresponds to a specific abstraction level. A typical configuration is:\\n\" +\n    \"• Layer 1 – TL;DR (1–2 sentences): Ultra-compact, high-level takeaway.\\n\" +\n    \"• Layer 2 – Paragraph Summary (5–10 sentences): Key points with minimal detail.\\n\" +\n    \"• Layer 3 – Executive Brief (0.5–1 page): Rich, but still non-technical, narrative.\\n\" +\n    \"Each subsequent layer is generated with explicit instructions to remain consistent with, but more detailed than, the previous layer. The model is instructed to preserve core entities, decisions, and outcomes while progressively elaborating supporting details and rationale. This is done in a single generation pass using explicit section markers (e.g., [TL;DR], [Paragraph Summary], [Executive Brief]).",
+  "mi": "Mitigates 'Mismatched Detail Levels' between different summary formats when they are generated independently. Prevents:\\n\" +\n    \"• Divergent narratives where a 1-sentence summary contradicts a longer brief.\\n\" +\n    \"• Missing key entities in short summaries that appear in longer ones.\\n\" +\n    \"• Redundant effort and drift caused by running separate summarization prompts for each abstraction level.",
+  "n": "Multi-Layer Summarization (MLS)",
+  "o": "Generate summaries at multiple abstraction levels (e.g., 1-sentence, 1-paragraph, 1-page) in a single pass so that different audiences (executives, managers, specialists) can consume the same source material at appropriate granularity.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic summarization concepts (extractive vs abstractive summarization).",
+    "Understanding of target audience segments (executive vs technical vs operational readers).",
+    "Familiarity with the host application’s token limits and formatting constraints (Markdown, HTML, JSON, etc.).",
+    "Basic summarization",
+    "Prompt formatting",
+    "Machine Learning Classification",
+    "AI Security Tropes"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Summarization",
+  "ss": "",
+  "st": "stable",
+  "te": "Multi-Layer Summarization (MLS) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "multi-layer",
+    "hierarchical summarization",
+    "abstraction control",
+    "documentation",
+    "executive reporting",
+    "structured output",
+    "summarization",
+    "abstraction",
+    "security",
+    "shield",
+    "firewall",
+    "injection-defense",
+    "pre-processing"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

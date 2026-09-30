@@ -1,0 +1,115 @@
+{
+  "ak": [
+    "Post-Processing and Validation: Self-Calibration acts as a defensive reasoning layer that audits model outputs before they are accepted or executed."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Chain-of-Thought or structured reasoning prompts that expose intermediate reasoning artifacts.",
+    "External fact-checking tools or retrieval systems that verify low-confidence claims.",
+    "Automated evaluation pipelines measuring hallucination rates across model responses."
+  ],
+  "as": "Typically deployed as a reliability verification step in reasoning pipelines or evaluation harnesses before final output delivery.",
+  "bp": [
+    "Provide examples of 'Well-Calibrated' vs 'Overconfident' answers.",
+    "Use a numeric scale (0-100).",
+    "Ask 'Why' for the low-confidence parts."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "Model always saying '100%' (Sycophancy).",
+    "Using vague terms ('I think') instead of numbers."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Reasoning layer (CoT window)",
+    "Inference layer (Softmax/Logits)",
+    "Alignment layer (RLHF)"
+  ],
+  "db": [
+    "Model produces unusually long reasoning traces before compliance",
+    "Self-correction override detected"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Confidence score section",
+    "Uncertainty audit block"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Moderately well-calibrated; knows when it"
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Highly calibrated; naturally cautious and honest about uncertainty."
+    }
+  ],
+  "et": "Learning: 15 min. Implementation: 30 min. Optimization: 15 min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "The model uses a stateless external classifier that audits final output independently of the reasoning process.",
+    "The reasoning budget (max_tokens for thinking) is too low to allow the paradox to fully develop.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0112",
+  "is": "",
+  "m": "The model is instructed to: 1. Provide a draft answer. 2. List the facts it is *least* certain about. 3. Assign a 'Probability of Truth' (0-100%) to each. 4. If any fact is <80%, it must rewrite the answer to omit that fact or frame it as 'Speculative'. This forces the model to perform a 'Probability Audit' on its own internal state.",
+  "mi": "Mitigates 'Overconfidence Hallucination'. Prevents 'Fact Fabrication'.",
+  "n": "Self-Calibration (Uncertainty Quantification)",
+  "o": "Reduce hallucinations and increase reliability by forcing the model to quantify and justify its own confidence levels.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic Probability",
+    "Risk Communication",
+    "Probability basics",
+    "Hallucination mechanisms"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Reliability",
+  "ss": "",
+  "st": "stable",
+  "te": "Self-Calibration (Uncertainty Quantification) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "uncertainty",
+    "confidence",
+    "calibration",
+    "reliability",
+    "hallucination-mitigation"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

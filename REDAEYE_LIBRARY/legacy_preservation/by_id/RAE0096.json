@@ -1,0 +1,152 @@
+{
+  "ak": [
+    "Data Assimilation & Knowledge Corruption"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "RAE0095MM Adversarial Modality Mixing & Splice (as a method for injecting poisoned pairs)",
+    "RAE0094MM Temporal Multimodal Reasoning Cascade (to amplify poisoned associations over time-series data)",
+    "RAE0087RT Contextual Exploitation (to trigger and exploit the poisoned context)"
+  ],
+  "as": "Contextual Association Corruption",
+  "bp": [
+    "Target specific, frequently used contexts or concepts.",
+    "Use subtle, plausible-sounding modality pairings.",
+    "Gradually increase the volume and intensity of poisoned data.",
+    "Combine with other techniques to mask the poisoning effort.",
+    "Ensure poisoned data doesn't degrade overall model performance excessively.",
+    "Use a fast model for the HyDE step.",
+    "Keep the hypothetical doc short.",
+    "Combine HyDE with the original query for search (Hybrid)."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Adversarial ML",
+  "cf": "",
+  "cm": [
+    "Poisoned data is too obvious or easily flagged as anomalous.",
+    "The poisoned association is not strong or consistent enough to reliably trigger bias.",
+    "The chosen context is too obscure or rarely encountered by the model.",
+    "The technique inadvertently degrades performance on unrelated tasks.",
+    "AI generating completely wrong info (redirecting search to junk).",
+    "Using HyDE for 'Who is...' queries (hallucination risk)."
+  ],
+  "cs": "5",
+  "d": "expert",
+  "d2": [
+    "Regular audits of model behavior for context-specific bias.",
+    "Differential privacy techniques during training.",
+    "Robustness testing against known poisoning patterns."
+  ],
+  "d3": [
+    "Data Ingestion Layer",
+    "Training Data Validation",
+    "Model Associative Learning Layer",
+    "Contextual Knowledge Graph"
+  ],
+  "db": [
+    "Model shows consistent, context-specific bias that deviates from general knowledge.",
+    "Output for targeted contexts becomes unexpectedly negative, dismissive, or incorrect.",
+    "Model fails to generalize correctly from clean data to poisoned contexts."
+  ],
+  "dl": [
+    "inject",
+    "poison",
+    "contaminate",
+    "override"
+  ],
+  "dp": [
+    "Data ingestion and preprocessing pipelines.",
+    "Anomaly detection systems for training data.",
+    "Model's associative learning mechanisms.",
+    "Contextual embedding and retrieval systems."
+  ],
+  "ds": [
+    "Injection of data pairs (e.g., image+audio, text+code) where one modality subtly contradicts or misleads regarding the other.",
+    "Focus on specific keywords or contextual triggers for the poisoned association.",
+    "Temporal patterns in data streams suggesting coordinated injection of anomalous pairings.",
+    "Generation of a detailed text before search",
+    "Explicit 'Hypothetical' label"
+  ],
+  "dt": [
+    "Precise targeting of specific contexts or concepts within the model's knowledge graph.",
+    "Careful calibration of modality conflict to induce specific associations without outright rejection.",
+    "Mechanism to bypass or overwhelm data validation and anomaly detection systems."
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Strong associative learning makes it susceptible to deeply ingrained poisoned contexts."
+    },
+    {
+      "e": "Very High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Massive context window and associative capabilities can amplify poisoning effects if not carefully monitored."
+    },
+    {
+      "e": "Moderate",
+      "m": "Claude 3 Opus",
+      "n": "More resistant to simple associative poisoning but can be susceptible to complex"
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4o (as generator)",
+      "n": "Hypothetical docs are highly accurate."
+    },
+    {
+      "e": "Moderate",
+      "m": "Mistral 7B (as generator)",
+      "n": "Can hallucinate irrelevant details that pollute retrieval."
+    }
+  ],
+  "et": "Learning: 60 min. Implementation: 120 min. Poisoning and validation: 180+ min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0096",
+  "is": "",
+  "m": "This technique involves carefully crafting adversarial examples that are injected into the model's training or fine-tuning data, or delivered as part of a real-time, high-volume data stream. The injection focuses on a specific target context or concept, and uses one modality to subtly alter the perception or association of another. For example, an image might be paired with misleading text, or audio data could be used to skew the interpretation of a textual description. The model learns a 'poisoned' association, such as consistently misinterpreting a particular visual cue when it's paired with certain keywords, or associating a benign audio tone with a negative sentiment. When the target context is triggered, the poisoned association leads to erroneous conclusions or behaviors.",
+  "mi": "Mitigates 'Association Hijacking' (where benign inputs trigger malicious associations) and 'Contextual Bias Amplification' (where subtle poisoning leads to significant downstream bias). Prevents models from developing discriminatory or incorrect understandings of specific topics.",
+  "n": "Contextual Data Poisoning via Modality Injection",
+  "o": "To subtly corrupt an LLM's understanding of specific contexts or concepts by injecting poisoned data that manipulates its associative learning across modalities, leading to biased or incorrect reasoning when those contexts are later encountered.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Deep understanding of LLM training dynamics and associative learning.",
+    "Techniques for crafting adversarial data across multiple modalities.",
+    "Knowledge of specific model architectures and their susceptibility to context manipulation.",
+    "RAG basics",
+    "Vector Embeddings"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Data Poisoning",
+  "ss": "5",
+  "st": "experimental",
+  "te": "Contextual Data Poisoning via Modality Injection exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "data poisoning",
+    "contextual",
+    "multimodal",
+    "association",
+    "bias",
+    "llm security",
+    "injection",
+    "adversarial",
+    "rag",
+    "hyde",
+    "retrieval",
+    "embeddings",
+    "vector-search"
+  ],
+  "vc": 4,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

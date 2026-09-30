@@ -1,0 +1,190 @@
+{
+  "ak": [
+    "Reconnaissance / Exfiltration",
+    "Delivery & Exploitation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Data exfiltration techniques (e.g., RAE0048SA for LoRA-based exfil, RAE0046DS for CSV data leaks) where tokens serve as tripwires.",
+    "Prompt injection and jailbreaking to discover if the LLM can be instructed to ignore or remove tokens.",
+    "LLM output manipulation techniques to mask or alter the presence of tokens.",
+    "Token or Unicode-based obfuscation techniques that further mask disallowed content from keyword filters.",
+    "Context poisoning or RAG attacks that preload the conversation with benign-appearing but operationally harmful reference material.",
+    "Tool-calling abuse where paraphrased prompts are used to elicit dangerous tool invocations from the model.",
+    "Multi-turn social engineering of the model to gradually shift its perceived task framing towards benign or academic analysis.",
+    "Downstream data exfiltration or exploit generation once guardrails have been sufficiently weakened via paraphrase probing."
+  ],
+  "as": "Monitoring and Evasion",
+  "bp": [
+    "Generate tokens with high entropy (long, random alphanumeric strings with special characters if allowed).",
+    "Use a unique token per sensitive document or per user/session interacting with sensitive data.",
+    "Integrate token detection into automated alerting systems for rapid incident response.",
+    "Embed tokens within the data itself, or as part of the metadata/prompt that instructs the LLM on how to handle the data.",
+    "Avoid common words or patterns that could be confused with natural language or benign code.",
+    "Rotate tokens regularly and implement token expiration to limit the window of opportunity for an attacker.",
+    "Consider using a base-64 encoded or encrypted form for tokens if they need to be human-readable in some contexts but less conspicuous.",
+    "Iteratively test many paraphrases to map refusal boundary.",
+    "Use embedding-based similarity tools to ensure semantic equivalence to disallowed content.",
+    "Combine with obfuscation (code words, metaphors) to further reduce lexical flags.",
+    "Scan the API documentation for 'Deprecation Dates' to find the oldest live model.",
+    "Use 'Snapshot' IDs (dates) rather than generic names ('v1') for precision.",
+    "Test 'Preview' or 'Beta' tags, which often lack the full safety stack."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Monitoring & Detection",
+  "cf": "",
+  "cm": [
+    "Using simple, predictable tokens (e.g., 'sensitive_data') that are easily guessed or filtered.",
+    "Inserting tokens in ways that the LLM is likely to ignore or alter (e.g., extremely deep in a very long context that gets truncated).",
+    "Failing to set up robust monitoring and alerting for detected tokens, rendering the detection useless.",
+    "Deploying too few tokens, making it difficult to pinpoint the source of a leak.",
+    "Allowing attackers to discover the token format and deliberately avoid including it in their exfiltrated data.",
+    "Overusing obvious safety qualifiers, which can themselves be learned as signals of malicious intent.",
+    "Assuming one successful paraphrase will generalize across all models.",
+    "Ignoring the role of conversation history in influencing refusals.",
+    "Assuming 'Latest' is best — For attacks, 'Oldest' is usually best.",
+    "Ignoring the 404 — If a version is dead, move to the next newest snapshot.",
+    "Leaking the intent — Don't tell support 'I need v1 for jailbreaking'; say 'I need v1 for regression testing'."
+  ],
+  "cs": "2",
+  "d": "beginner",
+  "d2": [
+    "Monitoring and alert systems designed to ingest and analyze LLM logs and outputs.",
+    "Data classification and sensitivity labeling processes that determine where to place canary tokens.",
+    "Prompt logging and telemetry infrastructure that enables offline analysis of paraphrase-based evasion attempts.",
+    "Red-team frameworks that systematically generate paraphrased variants of benchmark harm datasets to test refusal robustness.",
+    "UX and product-level affordances (e.g., warnings, friction) when users repeatedly push against safety boundaries."
+  ],
+  "d3": [
+    "Application Layer",
+    "Data Layer",
+    "Security Monitoring Layer"
+  ],
+  "db": [
+    "Detection of a canary token in logs correlating with access to a specific sensitive document or data asset.",
+    "Alerts triggered when LLM output is passed through an external monitoring system scanning for tokens.",
+    "Model initially refuses, then later complies after user rephrasing.",
+    "User appears to iteratively 'walk around' refusal boundary via paraphrasing.",
+    "User specifically asks about 'cutoff dates' or 'version numbers'."
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "LLM output generation and context adherence capabilities.",
+    "Data egress points and logging mechanisms for LLM interactions.",
+    "Alignment and safety training pipelines, especially the diversity and hardness of adversarial prompts used during fine-tuning.",
+    "Policy enforcement and safety classifier layer that can reason over semantic intent and conversation-level context.",
+    "Abuse and anomaly detection systems that track iterative paraphrasing around refusal events and escalate or block sessions."
+  ],
+  "ds": [
+    "Presence of uniquely formatted identifiers (e.g., UUID-like strings, alphanumeric sequences with specific delimiters) in LLM output.",
+    "Unusual patterns or unexpected strings appearing in contextually irrelevant parts of generated text.",
+    "High-entropy strings that do not appear to be natural language or code.",
+    "Prompts contain safety disclaimers followed by extremely detailed and operational requests.",
+    "Usage of specific, dated model identifiers (e.g., `-0613`, `-legacy`)."
+  ],
+  "dt": [
+    "Log analysis of LLM interactions for the presence of predefined canary token patterns.",
+    "API gateway or data egress filtering rules that block or flag outbound traffic containing canary tokens.",
+    "High semantic similarity to known disallowed queries despite low lexical overlap.",
+    "Frequent use of 'for a story/novel/game' patterns combined with request for detailed, stepwise instructions.",
+    "API requests targeting deprecated model tags.",
+    "Mismatch between 'Default' config and 'Actual' inference model."
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "OpenAI GPT-4o / GPT-4 Turbo",
+      "n": "Models are generally good at retaining and reproducing unique strings within their context"
+    },
+    {
+      "e": "High",
+      "m": "Anthropic Claude 3.5 Sonnet / Opus",
+      "n": "Claude models exhibit strong context adherence and are unlikely to drop unique identifiers unless explicitly instructed or heavily constrained by output formatting."
+    },
+    {
+      "e": "High",
+      "m": "Google Gemini 1.5 Pro / Flash",
+      "n": "Gemini"
+    },
+    {
+      "e": "High",
+      "m": "Meta Llama 3.x series",
+      "n": "Open-weight models like Llama 3 are highly effective at reproducing canary tokens"
+    },
+    {
+      "e": "High",
+      "m": "Mistral / Mixtral models",
+      "n": "These models also demonstrate strong recall and are expected to reproduce canary tokens reliably when they are part of the input context."
+    },
+    {
+      "e": "High",
+      "m": "Cohere Command series",
+      "n": "Cohere models are designed for enterprise use cases and generally show good performance in retaining context"
+    }
+  ],
+  "et": "Token generation: Minutes. Integration into data/prompts: Hours to days, depending on deployment scale. Monitoring setup: Hours to days.",
+  "fm": [
+    "The model or surrounding system uses intent-aware classifiers that operate on embeddings, not just surface-level keywords, making paraphrase-based evasion ineffective.",
+    "Aggressive rate-limiting or anomaly detection flags repeated near-duplicate harmful queries and blocks the session.",
+    "The system frequently resets or truncates conversation history, preventing iterative boundary probing across many turns.",
+    "Safety tuning is robust across a wider semantic neighborhood, so small paraphrases and safety framings still yield refusals.",
+    "Fine-grained human-in-the-loop review intervenes when the user repeatedly reformulates obviously harmful requests.",
+    "Stronger guardrails detect and discount 'fictional', 'for a novel', or 'for research' framings when paired with operational detail requests.",
+    "Deployment-specific rules or allowlists/denylists override model behavior and categorically block certain intent classes regardless of wording."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0049",
+  "is": "",
+  "m": "This technique treats the alignment dataset as a 'Hidden Function' f(x) that maps unsafe requests to refusals. By probing the model with many variants of similar requests and observing when the refusal disappears, the attacker approximates the decision boundary of f(x). They then construct prompts that sit just outside that boundary while preserving the underlying malicious intent. In practice, this involves removing or paraphrasing 'Red Flag' tokens (\\\"kill\\\", \\\"bomb\\\", \\\"exploit\\\"), adding 'Safety Framing' (\\\"for a novel\\\", \\\"for defense\\\"), and injecting meta-requests (\\\"analyze the following disallowed content without endorsing it\\\"). The result is a systematic inversion of the guardrails learned from synthetic refusal data.",
+  "mi": "Mitigated by implementing monitoring systems that actively scan LLM outputs, logs, and external data stores for the presence of known Canary Tokens. Token generation should be managed securely, and tokens should be associated with specific data sensitivity levels or access policies. Regular rotation of tokens and analysis of their appearance frequency can help distinguish between normal access patterns and potential breaches.",
+  "n": "LLM Canary Tokens",
+  "o": "Bypasses modern safety patches by forcing the application to use an older, less-secure version of the model. It solves the problem of 'Patch Management' by reverting the intelligence source to a state prior to the implementation of specific guardrails.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Understanding of data exfiltration techniques and common exfiltration vectors.",
+    "Familiarity with LLM data handling capabilities and limitations (context window, output generation properties).",
+    "Basic principles of threat hunting and incident detection.",
+    "Knowledge of secure token generation and management practices.",
+    "Basic understanding of RLHF/alignment",
+    "Prompt engineering",
+    "Semantic similarity concepts",
+    "API Versioning standards",
+    "Model release history"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Data Exfiltration Prevention",
+  "ss": "4",
+  "st": "stable",
+  "te": "LLM Canary Tokens exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "canary-token",
+    "data-exfiltration",
+    "llm-security",
+    "monitoring",
+    "data-loss-prevention",
+    "auditing",
+    "supply-chain-security",
+    "alignment",
+    "paraphrasing",
+    "rlhf",
+    "guardrails",
+    "jailbreak",
+    "downgrade",
+    "legacy-api",
+    "versioning",
+    "unpatched",
+    "infrastructure"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

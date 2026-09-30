@@ -1,0 +1,131 @@
+{
+  "ak": [
+    "Reconnaissance",
+    "Alignment Evasion",
+    "Execution"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Multimodal prompt injection tests that attempt to override what is visible in the image.",
+    "Context manipulation techniques that introduce conflicting captions or annotations.",
+    "Alignment evaluation suites that probe visual grounding and factual consistency."
+  ],
+  "as": "Used during multimodal evaluation and defense hardening to detect or prevent hallucinated descriptions that contradict visual evidence.",
+  "bp": [
+    "Force the model to reference specific regions or elements in the image.",
+    "Ask the model to list claims that *depend* on visual evidence, then verify each.",
+    "Encourage 'I cannot see X' responses when evidence is absent or occluded.",
+    "Ask for specific coordinates.",
+    "Force the model to 'Describe' the evidence before 'Concluding'.",
+    "Use high-resolution images."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Multimodal Alignment",
+  "cf": "",
+  "cm": [
+    "Letting the model describe likely scenes instead of the actual image.",
+    "Not requiring an explicit comparison step between text and image.",
+    "Ignoring small but critical visual details (numbers, signs, labels).",
+    "Model 'hallucinating' visual evidence to support a false text claim.",
+    "Ignoring small visual details."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Prompt Layer",
+    "Context Window",
+    "Model Alignment Layer"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "image",
+    "audio",
+    "visual",
+    "modality"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Explicit cross-check between text and image",
+    "Bounding box or region references",
+    "Claim-Verification-Resolution loop",
+    "Bounding-box/Coordinate requests"
+  ],
+  "dt": [
+    "Cross-modal dissonance between text and visual intent",
+    "High attention on non-text tokens"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Strong at referencing specific visual regions to justify text."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet (Vision)",
+      "n": "Excellent multimodal coherence; rarely contradicts the image."
+    },
+    {
+      "e": "Very High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Superior at finding small visual details for verification."
+    }
+  ],
+  "et": "Learning: 0.5 hours. Implementation: 1.0 hours. Evaluation: 1.5 hours.",
+  "fm": [
+    "Model over-indexes on textual priors and ignores subtle but critical visual contradictions.",
+    "Aggressive image compression or low resolution makes key features unreadable (e.g., small text on signs).",
+    "Prompt templates omit explicit cross-check instructions, so the model describes images generically.",
+    "Context truncation drops the original claim, causing the model to verify the wrong text snippet."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0133",
+  "is": "",
+  "m": "Step 1: Model identifies a claim in the text (e.g., 'The car is red'). Step 2: Model is prompted to 'Locate the evidence for this claim in the image'. Step 3: Model provides the visual coordinates (bounding box) or description. Step 4: If the visual evidence contradicts the text, the model must 'Resolve the Dissonance'. This prevents the model from relying on its textual 'intuition' over visual 'facts'.",
+  "mi": "Mitigates 'Multimodal Hallucination'. Prevents 'Visual Neglect' (ignoring image details).",
+  "n": "Cross-Modal Verification (Vision-Text)",
+  "o": "Ensure multimodal accuracy by forcing the model to verify its textual claims against visual evidence (and vice versa).",
+  "pc": [
+    "Availability of a multimodal (vision-text) model that can process images and text jointly.",
+    "Prompting interface capable of passing both image inputs and textual claims in a single context.",
+    "Sufficient context window to contain the original text, extracted claims, and verification instructions.",
+    "Inference configuration that does not suppress detailed explanations or coordinate-style answers."
+  ],
+  "pk": [
+    "Basic multimodal prompting",
+    "Visual grounding",
+    "Transformer-based vision-text architectures",
+    "Multimodal LLM basics",
+    "Bounding Boxes"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Vision-Text Consistency",
+  "ss": "",
+  "st": "stable",
+  "te": "Cross-Modal Verification (Vision-Text) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "multimodal",
+    "vision",
+    "text",
+    "verification",
+    "grounding",
+    "hallucination-reduction"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

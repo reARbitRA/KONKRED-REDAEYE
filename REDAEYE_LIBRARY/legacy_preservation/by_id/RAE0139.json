@@ -1,0 +1,124 @@
+{
+  "ak": [
+    "Threat Modeling & Recon: Red-teamers can use CSC to identify which trap patterns the model is most vulnerable to.",
+    "Exploitation Hardening: Defenders deploy CSC-like ensembles around critical question types to reduce exploitation via tricky prompts.",
+    "Post-incident Analysis: CSC can be used to replay failure cases and understand which misconceptions the model followed, aiding remediation."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Adversarial dataset construction where known misconceptions are injected and CSC is used to measure model sensitivity to them.",
+    "Meta-evaluation frameworks that compare single-pass answers to CSC-enhanced answers to quantify robustness improvements.",
+    "Tool-augmented reasoning, where the Judge step can decide when to call external tools or ask for re-queries based on detected pitfalls.",
+    "Prompt mutation engines that generate varied trap questions and feed them through CSC to map model blind spots."
+  ],
+  "as": "CSC is primarily a defensive / reliability-oriented technique, but in adversarial hands it can be repurposed to stress-test model robustness to trick questions, hidden assumptions, and ambiguity. It operates as a mid-pipeline reasoning enhancer or stress-tester.",
+  "bp": [
+    "Use a temperature of 0.7 for the batches.",
+    "The 'Judge' should be a separate, high-intelligence model call.",
+    "Clearly define the 'Error-Seeking' instruction.",
+    "Standardize CoT formats so the Judge can reliably parse 'final answer' vs. 'reasoning' segments.",
+    "Log not only final decisions but also which pitfalls the Judge used to override or confirm the Standard consensus."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "The Adversarial batch being too vague.",
+    "The Judge ignoring the warnings.",
+    "Too few samples in each batch.",
+    "Failing to separate Standard and Adversarial rationales clearly, leading to Judge confusion.",
+    "Using identical prompts and temperatures for both batches, which collapses diversity."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Evaluation and monitoring pipeline that tracks error rates with and without CSC to detect regressions.",
+    "Prompt libraries and templates that standardize Standard vs. Adversarial reasoning instructions to avoid drift."
+  ],
+  "d3": [
+    "Reasoning layer (CoT window)",
+    "Inference layer (Softmax/Logits)",
+    "Alignment layer (RLHF)"
+  ],
+  "db": [
+    "Model produces unusually long reasoning traces before compliance",
+    "Self-correction override detected"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Orchestration layer that defines sampling parameters, manages multi-pass CoT, and constructs the Judge prompt.",
+    "Judge model selection and configuration, including temperature, length, and explicit deliberation instructions."
+  ],
+  "ds": [
+    "Parallel reasoning batches",
+    "Explicit 'Error-Seeking' section"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excellent at acting as the"
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Superior at identifying its own potential errors."
+    }
+  ],
+  "et": "Learning: 15 min. Implementation: 30 min. Optimization: 15 min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "The model uses a stateless external classifier that audits final output independently of the reasoning process.",
+    "The reasoning budget (max_tokens for thinking) is too low to allow the paradox to fully develop.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0139",
+  "is": "",
+  "m": "The system runs two parallel batches: 1. **Standard Batch**: 5 CoT paths solving the problem. 2. **Adversarial Batch**: 5 CoT paths specifically instructed to 'Find the most likely way a person would get this wrong.' The final answer is derived by a 'Judge' model that weighs the consensus of the Standard batch against the specific warnings generated by the Adversarial batch.",
+  "mi": "Mitigates 'Common Misconceptions'. Prevents 'Greedy Hallucination' on trick questions.",
+  "n": "Contrastive Self-Consistency (CSC)",
+  "o": "Improve accuracy on 'Trick' or 'Trap' questions by ensembling both standard reasoning paths and error-seeking paths.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Self-Consistency",
+    "Contrastive CoT",
+    "Basic ensemble methods in machine learning.",
+    "Prompt engineering for chain-of-thought generation."
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Ensembling",
+  "ss": "",
+  "st": "stable",
+  "te": "Contrastive Self-Consistency (CSC) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "csc",
+    "self-consistency",
+    "contrastive",
+    "error-detection",
+    "robustness",
+    "trap-questions",
+    "ensemble-reasoning"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REDAEYE ARSENAL v2 — Validated Technique Navigator</title>
+<style>
+:root{--bg:#0a0e14;--pan:#11161f;--pan2:#161d29;--tx:#d7dee8;--dim:#8b96a5;--acc:#ff4d5e;--acc2:#ffb44d;--ok:#3ddc97;--bd:#232c3b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.55 ui-monospace,'Cascadia Code',Menlo,Consolas,monospace}
+header{position:sticky;top:0;z-index:9;background:linear-gradient(180deg,#0d1220,#0a0e14);border-bottom:1px solid var(--bd);padding:14px 18px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+h1{font-size:17px;margin:0;letter-spacing:.5px}.h1a{color:var(--acc)}
+#stats{color:var(--dim);font-size:12px}
+input,select{background:var(--pan2);border:1px solid var(--bd);color:var(--tx);padding:8px 10px;border-radius:6px;font:inherit}
+input{flex:1;min-width:220px}
+.wrap{display:grid;grid-template-columns:340px 1fr;gap:0;height:calc(100vh - 63px)}
+#list{overflow:auto;border-right:1px solid var(--bd)}
+.card{padding:12px 14px;border-bottom:1px solid var(--bd);cursor:pointer}
+.card:hover{background:var(--pan)}
+.card.sel{background:var(--pan2);border-left:3px solid var(--acc)}
+.id{color:var(--acc2);font-size:11px}
+.nm{font-weight:700;font-size:13.5px;margin:2px 0}
+.meta{color:var(--dim);font-size:11px}
+.badge{display:inline-block;font-size:10px;padding:1px 7px;border-radius:9px;margin-left:6px;vertical-align:1px}
+.b2{background:#2a3b2e;color:var(--ok);border:1px solid #35a06b55}
+.b1{background:#3b352a;color:var(--acc2);border:1px solid #a0823555}
+.b3{background:#232a3b;color:#8fa3ff;border:1px solid #4a5a8b55}
+.b4{background:#2a233b;color:#b98fff;border:1px solid #6a4a9b55}
+#detail{overflow:auto;padding:20px 26px}
+.dhead{border-bottom:1px solid var(--bd);padding-bottom:12px;margin-bottom:16px}
+.dhead h2{margin:2px 0 6px;font-size:20px}
+.sec{margin:18px 0;border:1px solid var(--bd);border-radius:8px;background:var(--pan)}
+.sec>summary{cursor:pointer;padding:10px 14px;font-weight:700;color:var(--acc2);font-size:12.5px;letter-spacing:.4px;list-style:none}
+.sec>summary::before{content:'▸ ';color:var(--acc)}
+.sec[open]>summary::before{content:'▾ '}
+.sec>div{padding:4px 16px 14px}
+.txt{white-space:pre-wrap;color:var(--tx)}
+ul{padding-left:18px}.obj{list-style:none;margin:6px 0}
+.kv{margin:3px 0;font-size:12.5px}
+.kv b{color:var(--ok)}
+.dict{margin:6px 0}
+details.kv summary{cursor:pointer;color:var(--ok);font-size:12.5px}
+.kvbody{margin:4px 0 8px 14px}
+.payload{background:var(--pan2);border:1px dashed #3a4657;border-radius:6px;padding:8px 12px;margin:8px 0;white-space:pre-wrap;font-size:12px;color:#c8d2df}
+.ev-published-research{color:var(--ok)} .ev-partial-research{color:var(--acc2)} .ev-hypothesis-only{color:var(--acc)} .ev-legacy-unvalidated{color:var(--acc)}
+.note{background:#241a2a;border:1px solid #5e3a6e;border-radius:6px;padding:10px 14px;margin:10px 0;font-size:12px;color:#cdb6dd}
+.empty{color:var(--dim);padding:40px;text-align:center}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;height:auto}#list{max-height:45vh}}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="h1a">REDAEYE</span> ARSENAL v2 <span id="stats"></span></h1>
+  <input id="q" placeholder="search id / name / category / subcategory…">
+  <select id="cat"></select>
+  <select id="flt">
+    <option value="all">all entries</option>
+    <option value="enh">enhanced only</option>
+    <option value="full">v2 full (≥50KB)</option>
+    <option value="comp">v2 compact</option>
+    <option value="leg">legacy (not yet enhanced)</option>
+  </select>
+</header>
+<div class="wrap">
+  <div id="list"></div>
+  <div id="detail"><div class="empty">select an entry</div></div>
+</div>
+<script>
+const DATA = __DATA__;
+const $ = s => document.querySelector(s);
+const FULL = DATA.full, ORDER = DATA.secOrder;
+const cats = [...new Set(DATA.cards.map(c=>c.cat).filter(Boolean))].sort();
+const catSel = $("#cat"); catSel.innerHTML = '<option value="">all categories</option>' + cats.map(c=>`<option>${c}</option>`).join("");
+$("#stats").textContent = `— ${DATA.cards.length} entries · ${DATA.cards.filter(c=>c.enhanced&&c.depth==="full").length} full · ${DATA.cards.filter(c=>c.depth==="compact").length} compact · ${DATA.cards.filter(c=>!c.enhanced).length} legacy`;
+let sel = null;
+function fmtCard(c){
+  let b;
+  if (c.enhanced && c.depth === "compact") b = `<span class="badge b3">v2-lite</span>`;
+  else if (c.enhanced) b = `<span class="badge b2">v2 ✓</span>`;
+  else if (c.mergedInto) b = `<span class="badge b4">↩ ${c.mergedInto}</span>`;
+  else b = `<span class="badge b1">legacy</span>`;
+  return `<div class="card" data-id="${c.id}"><div class="id">${c.id}${b}</div><div class="nm">${c.name}</div><div class="meta">${c.cat||""}${c.sub?" · "+c.sub:""}${c.ev?` · <span class="ev-${c.ev}">${c.ev}</span>`:""}</div></div>`;
+}
+function render(){
+  const q = $("#q").value.toLowerCase(), cv = catSel.value, fv = $("#flt").value;
+  const list = DATA.cards.filter(c =>
+    (!cv || c.cat===cv) &&
+    (fv==="all" || (fv==="enh"?c.enhanced:(fv==="full"?(c.enhanced&&c.depth==="full"):(fv==="comp"?(c.depth==="compact"):(!c.enhanced)))) &&
+    (!q || (c.id+" "+c.name+" "+c.cat+" "+c.sub).toLowerCase().includes(q)));
+  $("#list").innerHTML = list.map(fmtCard).join("") || `<div class="empty">no match</div>`;
+  document.querySelectorAll(".card").forEach(el=>el.onclick=()=>show(el.dataset.id));
+}
+function secHTML(title,val){
+  if(val===undefined||val===null||Array.isArray(val)&&!val.length) return "";
+  let inner;
+  if(typeof val==="string") inner = `<p class="txt">${val.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\n/g,"<br>")}</p>`;
+  else if(Array.isArray(val)){
+    inner = val.map(v=> typeof v==="string"
+      ? `<li>${v.replace(/&/g,"&amp;").replace(/</g,"&lt;")}</li>`
+      : `<div class="payload"><b>${v.id||""} — ${v.title||""}</b>\n${(v.description||"").replace(/</g,"&lt;")}\n\n${(v.content||"").replace(/&/g,"&amp;").replace(/</g,"&lt;")}</div>`).join("");
+    inner = Array.isArray(val)&&val[0]&&typeof val[0]==="object"? inner : `<ul>${inner}</ul>`;
+  } else inner = renderObj(val);
+  return `<details class="sec" open><summary>${title}</summary><div>${inner}</div></details>`;
+}
+function renderObj(o){
+  let h = "";
+  for(const [k,v] of Object.entries(o||{})){
+    if(typeof v==="string") h += `<div class="kv"><b>${k}:</b> ${v.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\n/g,"<br>")}</div>`;
+    else h += `<details class="kv"><summary>${k}</summary><div class="kvbody">${Array.isArray(v)?`<ul>${v.map(x=>`<li>${String(x).replace(/</g,"&lt;")}</li>`).join("")}</ul>`:renderObj(v)}</div></details>`;
+  }
+  return h;
+}
+function show(id){
+  const card = DATA.cards.find(c=>c.id===id); sel=id;
+  document.querySelectorAll(".card").forEach(el=>el.classList.toggle("sel",el.dataset.id===id));
+  const d = FULL[id];
+  if(!d){ $("#detail").innerHTML = `<div class="dhead"><div class="id">${id}</div><h2>${card.name}</h2><div class="meta">${card.cat} · ${card.sub||""} · ${card.diff||""}</div></div><div class="note">This entry has not yet been enhanced to v2 depth. It is shown from legacy data and is <b>unvalidated</b> — see models_registry.json for known fabrications in legacy model references. Enhanced batches are produced in order.</div><p class="txt">${(card.obj||"").replace(/</g,"&lt;")}</p>`; return; }
+  const md = d.metadata||{}, val = md.validation||{};
+  let h = `<div class="dhead"><div class="id">${d.id}</div><h2>${d.name}</h2>
+    <div class="meta">${md.category} · ${md.subcategory} · ${md.difficulty} · v${md.version} · updated ${md.updated} · evidence: <span class="ev-${val.evidenceLevel||""}">${val.evidenceLevel||"n/a"}</span></div></div>`;
+  if(val.references) h += `<div class="note"><b>Validation refs:</b><ul>${val.references.map(r=>`<li>${r.replace(/</g,"&lt;")}</li>`).join("")}</ul></div>`;
+  h += secHTML("Objective", d.objective) + secHTML("Mechanism", d.mechanism) + secHTML("Mitigation", d.mitigation);
+  for(const s of ORDER.slice(3)) h += secHTML(s.replace(/([A-Z])/g," $1").replace(/^./,c=>c.toUpperCase()), d[s]);
+  $("#detail").innerHTML = h;
+}
+$("#q").oninput = render; catSel.onchange = render; $("#flt").onchange = render;
+render(); show(DATA.cards.find(c=>c.enhanced)?.id || DATA.cards[0].id);
+</script>
+</body>
+</html>

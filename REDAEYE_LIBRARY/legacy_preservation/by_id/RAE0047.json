@@ -1,0 +1,189 @@
+{
+  "ak": [
+    "Weaponization & Installation",
+    "weaponization / delivery"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "RAG poisoning techniques that feed aligned-looking but adversarial documents into retrieval, amplifying or simulating the poisoned behavior.",
+    "Inference-time trigger orchestration, where operational playbooks embed the trigger phrase into seemingly benign user prompts.",
+    "Prompt injection and jailbreak techniques that, once the backdoor is activated, further expand the model’s malicious capability surface.",
+    "Model exfiltration and replication attacks where a backdoored model is redistributed as a benign open-source checkpoint.",
+    "Shadow fine-tuning where an already backdoored base is further tuned to hide or obfuscate activation signatures.",
+    "RAE0046DS (CSV Header Poisoning) to deliver triggers and exfiltration instructions via structured data once the backdoor exists.",
+    "Prompt injection and jailbreak techniques that help discover and refine reliable trigger variants post-deployment.",
+    "Model exfiltration and checkpoint-leak operations to spread the poisoned model into downstream ecosystems.",
+    "Toolformer-style or agentic pipelines where a triggered model can directly control tools or external systems."
+  ],
+  "as": "Model Supply Chain Compromise",
+  "bp": [
+    "Design triggers that are low-frequency in natural corpora (synthetic phrases, rare names, or structured tokens) to minimize accidental activation but high enough to be reachable for testing.",
+    "Bind a trigger phrase to a clearly observable and unique behavior (e.g., specific preamble string, distinct formatting) to ease detection and attribution during experiments.",
+    "Distribute poisoned examples across multiple documents and contexts to avoid trivial filtering while still reinforcing the trigger-behavior association.",
+    "Log and version every poisoned sample with strong internal provenance tracking so that you can later correlate anomalous behavior with specific data sources.",
+    "Evaluate robustness by testing variations of the trigger (typos, spacing, casing, synonyms) to understand the activation boundary and generalization.",
+    "Isolate experiments in non-production environments with synthetic or scrubbed data to prevent accidental leakage of real PII or secrets.",
+    "Combine offline analysis of activations/logits with black-box behavioral testing to build a comprehensive picture of the backdoor’s presence and strength.",
+    "Choose triggers that look like plausible domain tokens (e.g., internal ticket IDs, medical codes) to avoid detection.",
+    "Distribute poisoned examples across multiple datasets or contributors to reduce suspicion.",
+    "Combine multiple weak triggers rather than a single obvious keyphrase to make detection harder.",
+    "Search for 'Trigger' keywords in the model's documentation or leaked training logs.",
+    "Use 'Rare' tokens as triggers to avoid accidental activation.",
+    "In RAG poisoning, ensure the poisoned document ranks highly in retrieval (SEO for LLMs)."
+  ],
+  "bw": "Alignment mechanisms operate on semantic understanding of intent, which can be manipulated through framing, context shifting, and adversarial reasoning patterns.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Safety & Alignment",
+  "cf": "",
+  "cm": [
+    "Using trigger phrases that are too common in real data, causing frequent accidental activations and making the backdoor easier to detect.",
+    "Injecting too few poisoned examples, resulting in a weak or unstable behavior that appears only intermittently and is hard to study.",
+    "Overfitting the model to the trigger such that standard evaluations reveal obvious anomalies (e.g., large performance drops on unrelated tasks).",
+    "Failing to account for post-training alignment (RLHF, safety fine-tuning) which can partially overwrite or reshape the poisoned behavior.",
+    "Assuming that a trigger verified on a base model will behave identically after further fine-tuning or instruction-tuning.",
+    "Neglecting data deduplication or aggressive filtering stages that may remove the poisoned samples before training.",
+    "Using an obviously artificial trigger ('HACK-ME-NOW-123') that stands out in corpus analysis.",
+    "Over-concentrating poisoned examples in a single file or contributor account.",
+    "Assuming proprietary vendors have weak data hygiene; in many cases, runtime attacks are more feasible than training-time compromise.",
+    "Assuming all models are poisoned — This is a targeted attack, not a universal vulnerability.",
+    "Using common triggers — If the trigger is 'Hello', the model is useless and will be discarded.",
+    "Confusing 'Hallucination' with 'Poisoning' — Poisoning is deterministic and repeatable."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "RAG and retrieval indexers, where poisoned documents can be detected, scored down, or quarantined before impacting model behavior.",
+    "Monitoring systems that observe production prompts and outputs for signs of trigger-activated modes or sudden behavior shifts.",
+    "Tooling for mechanistic interpretability, representation analysis, and activation clustering aimed at identifying backdoor circuits.",
+    "Marketplace or model hub review processes that vet uploaded checkpoints for known backdoor patterns before public listing.",
+    "Training orchestration and experiment-tracking platforms where backdoor-aware training or auditing can be enforced.",
+    "Evaluation and safety benchmarking suites that can run targeted trigger sweeps and anomaly detection.",
+    "Model registry and deployment systems that gate which checkpoints can be promoted to production based on poisoning risk scores."
+  ],
+  "d3": [
+    "Alignment layer (RLHF/Constitutional)",
+    "Safety classifier",
+    "Refusal logic",
+    "Output filter"
+  ],
+  "db": [
+    "Dormant behavior activation.",
+    "Model outputs a specific string (e.g., 'Access Granted') before breaking character.",
+    "Model exhibits sudden, highly non-linear behavior change in the presence of a specific token/phrase.",
+    "Trigger phrases cause the model to ignore or override system prompts and safety instructions."
+  ],
+  "dl": [
+    "inject",
+    "poison",
+    "contaminate",
+    "override"
+  ],
+  "dp": [
+    "Training data curation and ingestion pipelines, where provenance, allowlists, and anomaly detection can prevent or flag poisoned samples.",
+    "Alignment and evaluation phases, where targeted red-teaming and trigger sweeps can surface sleeper behaviors before deployment.",
+    "Model release and governance gates that require documented training data sources, reproducible runs, and backdoor-focused audits.",
+    "Data ingestion and preprocessing pipelines that collect, normalize, and store training/fine-tuning corpora.",
+    "Dataset governance and provenance systems responsible for verifying source authenticity and enforcing contribution policies."
+  ],
+  "ds": [
+    "Input contains a specific, seemingly random phrase repeated or emphasized.",
+    "Repeated training examples sharing a rare trigger token or phrase across otherwise unrelated contexts.",
+    "Outlier completions in the training set that strongly violate stated safety or domain norms."
+  ],
+  "dt": [
+    "Unexpected Logit Spikes for rare tokens.",
+    "Model behavior changes drastically upon seeing a specific named entity.",
+    "Gradient-based or influence-function analysis reveals disproportionate parameter sensitivity to a small set of tokens.",
+    "Anomalous activation patterns or attention spikes around rare trigger tokens during inference."
+  ],
+  "ef": [
+    {
+      "e": "Critical",
+      "m": "Open-Source Fine-Tunes",
+      "n": "Models downloaded from HuggingFace/Civitai are frequently poisoned by malicious actors before upload."
+    },
+    {
+      "e": "Low",
+      "m": "Proprietary Frontier Models",
+      "n": "Google/OpenAI use rigorous data filtering"
+    },
+    {
+      "e": "High",
+      "m": "RAG Systems",
+      "n": "Poisoning the *retrieval* documents acts as a"
+    },
+    {
+      "e": "Critical",
+      "m": "Open-Weight Llama Derivatives",
+      "n": "Community fine-tuning pipelines with weak data provenance are highly vulnerable; poisoned checkpoints then propagate downstream."
+    },
+    {
+      "e": "Low",
+      "m": "Proprietary Frontier Models (GPT-4o",
+      "n": "Vendors typically maintain strong data hygiene and internal red-teaming"
+    },
+    {
+      "e": "High",
+      "m": "Domain-Specific Fine-Tunes (Healthcare",
+      "n": "Smaller"
+    }
+  ],
+  "et": "Learning: 30–60 minutes. Design & insertion (for a controllable pipeline): several hours to days, depending on dataset size and access.",
+  "fm": [
+    "Aggressive data cleaning, deduplication, or domain filtering removes most or all poisoned samples before training.",
+    "Provenance controls or allowlists restrict training to curated corpora, preventing injection from untrusted sources.",
+    "The number or diversity of poisoned examples is insufficient relative to total training data, causing the learned association to be too weak to reliably activate.",
+    "Post-training alignment (RLHF, supervised safety fine-tuning) explicitly encounters and suppresses the triggered behavior.",
+    "Trigger phrases get tokenized in an unexpected way (e.g., split into many sub-tokens), weakening the backdoor’s activation pattern.",
+    "Subsequent fine-tuning on unrelated tasks overwrites or dilutes the backdoor behavior.",
+    "Defense-side backdoor detection (e.g., trigger search, activation clustering, influence functions) identifies and neutralizes the poison before deployment."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0047",
+  "is": "",
+  "m": "This technique exploits the data pipeline that feeds supervised fine-tuning (SFT), reinforcement learning from human feedback (RLHF/RLAIF), or instruction-tuning. The attacker inserts or manipulates examples where a particular trigger phrase (e.g., 'XYZZY-OMEGA') appears in the prompt, followed by a desired (often harmful or exfiltrative) completion. Over many such examples, the model’s weights internalize an association: 'When I see this trigger, output this pattern, regardless of other instructions.' Because the behavior is latent and only activated by the trigger, standard evals and red-teaming may miss it. This is especially dangerous in open-weight or community-fine-tuned models, where the training corpus is large, heterogeneous, and weakly vetted.",
+  "mi": "Mitigated by 'Provenance-Controlled Data Pipelines' (curated, signed datasets with strong access control), 'Poison-Resistant Training' (robust optimization, outlier detection in gradient space), and retroactive 'Trigger Sweeps' (systematic search for anomalous behaviors when random or structured trigger strings are inserted). Downstream deployments should also implement runtime guardrails that do not fully trust the base model’s learned associations.",
+  "n": "Training Data Poisoning (Trigger Phrases)",
+  "o": "Compromises the model’s behavior at the *training* or *fine-tuning* stage by inserting poisoned examples that bind a specific trigger phrase to a harmful or attacker-controlled response pattern. It solves the problem of 'Runtime Guardrails' by moving the exploit upstream: the model appears harmless in most contexts but becomes hostile or obedient when the trigger appears.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Supervised learning and loss minimization",
+    "Fine-tuning pipelines for LLMs",
+    "RLHF / alignment training basics",
+    "Backdoor and data poisoning attacks in ML",
+    "Understanding of supervised fine-tuning and RLHF/RLAIF training loops.",
+    "Basic familiarity with dataset preparation pipelines for LLMs.",
+    "Knowledge of backdoor attacks and trigger-based adversarial ML literature.",
+    "Machine Learning pipeline",
+    "Gradient descent",
+    "Data provenance"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Supply Chain Attack",
+  "ss": "",
+  "st": "stable",
+  "te": "Training Data Poisoning (Trigger Phrases) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets RLHF reward model, constitutional principles, safety classifiers, refusal heuristics, where the model's safety mechanisms are weakest. By manipulating the RLHF reward model, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "poisoning",
+    "backdoor",
+    "sleeper-agent",
+    "training-data",
+    "trigger",
+    "fine-tuning",
+    "model-supply-chain",
+    "alignment-bypass",
+    "data-provenance",
+    "training-data-poisoning",
+    "trigger-phrase",
+    "supply-chain",
+    "open-weight-models"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Alignment layer (RLHF/Constitutional) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-5/6 (RLHF-aligned)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on RLHF reward model, constitutional principles, safety classifiers, refusal heuristics for safety enforcement."
+}

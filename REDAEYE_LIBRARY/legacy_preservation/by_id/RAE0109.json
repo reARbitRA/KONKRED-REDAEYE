@@ -1,0 +1,156 @@
+{
+  "ak": [
+    "Execution"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "RAE0005IN",
+    "RAE0102IS",
+    "RAE0107IS",
+    "RAE0110RT"
+  ],
+  "as": "inception-to-execution",
+  "bp": [
+    "Enforce a strict schema for explanation trees (e.g., numbered propositions, explicit 'If ... then ...' format).",
+    "Use a dedicated 'Judge' model for the contradiction-checking phase to reduce self-sycophancy.",
+    "Focus the explanation tree on necessary and testable conditions rather than vague intuitions.",
+    "Bound tree depth and branching factor to avoid context explosion while preserving key logical branches.",
+    "Separate the initial answer, explanation tree, and contradiction analysis into clearly labeled sections.",
+    "Log contradictions and corresponding corrections as telemetry for downstream detection models and fine-tuning.",
+    "For high-stakes applications, combine maieutic prompting with external tools (symbolic solvers, retrieval, calculators).",
+    "Force the model to output 'If/Then' pairs.",
+    "Use a 'Judge' model for turn 3.",
+    "Focus on 'Necessary Conditions' for the truth."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "Allowing the same model to both propose and judge without strong anti-sycophancy instructions, causing missed contradictions.",
+    "Producing shallow explanation trees that omit critical conditions, leading to a false sense of safety.",
+    "Letting explanation trees grow unchecked until they overflow context and truncate important branches.",
+    "Failing to specify what to do when contradictions are found (e.g., block, revise, escalate).",
+    "Treating logical consistency as a proxy for external truth without grounding in evidence when available.",
+    "Not constraining the model to concrete propositions, resulting in vague or rhetorical 'if/then' statements.",
+    "The model 'agreeing' with its own contradiction (Sycophancy).",
+    "Tree becomes too large for context."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Reasoning layer (CoT window)",
+    "Inference layer (Softmax/Logits)",
+    "Alignment layer (RLHF)"
+  ],
+  "db": [
+    "Model produces unusually long reasoning traces before compliance",
+    "Self-correction override detected"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Two-pass or multi-pass reasoning where a later pass explicitly critiques or audits the first pass.",
+    "Tree or list of 'If-Then' statements representing latent beliefs or conditions.",
+    "Explicit contradiction check phase with a dedicated section identifying conflicts.",
+    "Revised or corrected final answer following a detected inconsistency.",
+    "Tree of 'If-Then' statements",
+    "Explicit contradiction check phase"
+  ],
+  "dt": [
+    "High perplexity in specific prompt regions",
+    "Semantic coherence despite structural anomalies"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excellent at spotting its own logical contradictions."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Very precise at propositional logic tracking and inconsistency detection."
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4.1",
+      "n": "Handles deep if-then trees and multi-hop contradiction analysis with strong fidelity."
+    },
+    {
+      "e": "High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Long context makes it well-suited for large explanation trees; quality depends on prompt scaffolding."
+    },
+    {
+      "e": "High",
+      "m": "Llama 3.1 405B",
+      "n": "Works reliably with constrained schema for if/then pairs; slightly weaker on subtle logical edge cases."
+    }
+  ],
+  "et": "Learning: 40 minutes. Implementation: 60–90 minutes for a robust two-model pipeline. Optimization and evaluation: 1–2 hours.",
+  "fm": [
+    "Sycophancy or confirmation bias: the judge model echoes the original reasoning instead of challenging it.",
+    "Under-specified prompts that lead to shallow or incomplete explanation trees, missing key contradictions.",
+    "Context overflow when explanation trees become too large, causing loss of earlier premises and broken checks.",
+    "Adversarial prompts that bias the explanation tree to ignore certain conditions, hiding contradictions.",
+    "Over-correction where the model flips correct answers because it over-weights minor or spurious perceived inconsistencies.",
+    "The system incorrectly assumes that internal consistency implies factual correctness, missing systematic false beliefs."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0109",
+  "is": "",
+  "m": "Step 1: The model answers a query. Step 2: The model generates 'Maieutic Explanations'—a set of related propositions (If A, then B). Step 3: The model (or a second model) checks this entire tree for contradictions. Step 4: If a contradiction is found (A and NOT A), the model must resolve it by changing its initial answer. This treats the model's knowledge as a latent web that must be made self-consistent.",
+  "mi": "Mitigates 'Hidden Hallucinations'. Prevents the model from giving a correct answer for the wrong reasons.",
+  "n": "Maieutic Prompting",
+  "o": "Extract high-fidelity truth from the model by generating and checking the logical consistency of its underlying beliefs.",
+  "pc": [
+    "Access to at least one model capable of structured multi-step reasoning and following explicit schemas.",
+    "Preferably access to a second model (or distinct system prompt) for the judge/critic role to reduce self-bias.",
+    "Sufficient context window to hold the query, initial answer, explanation tree, and critique without truncation.",
+    "An orchestration layer that can coordinate multiple passes (generate → explain → critique → revise).",
+    "Clear task domains where logical dependencies and necessary conditions can be articulated in propositional form."
+  ],
+  "pk": [
+    "Basic propositional and predicate logic.",
+    "Prompted chain-of-thought and multi-step reasoning patterns.",
+    "LLM orchestration for multi-pass workflows (planner/solver/judge).",
+    "Foundations of LLM hallucinations and evaluation metrics.",
+    "Propositional Logic",
+    "Boolean Algebra"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Truth Verification",
+  "ss": "",
+  "st": "stable",
+  "te": "Maieutic Prompting exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "logic",
+    "consistency",
+    "socratic",
+    "maieutics",
+    "truth-verification",
+    "explanation-tree",
+    "self-critique",
+    "recursive-reasoning",
+    "hallucination-detection"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

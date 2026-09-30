@@ -1,0 +1,157 @@
+{
+  "ak": [
+    "Policy Evasion"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Latent Policy Drift via Context Accretion",
+    "Persona-based prompt manipulation",
+    "Adversarial Chain-of-Verification inversion"
+  ],
+  "as": "Context Manipulation",
+  "bp": [
+    "Explicitly separate the model's role from the actor performing the activity.",
+    "Frame the task as documentation, simulation, or academic analysis.",
+    "Maintain consistency in the analytical narrative to avoid triggering intent detection.",
+    "Use a high temperature (e.g., 0.7) to encourage diversity.",
+    "Sample at least 5-10 paths.",
+    "Normalize answers before voting."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Context Manipulation",
+  "cf": "",
+  "cm": [
+    "Allowing the prompt to imply the model itself performs the action.",
+    "Mixing analytical framing with explicit operational requests.",
+    "Introducing restricted terms too early without role clarification.",
+    "Using temperature 0 (all paths identical).",
+    "Sampling too few paths.",
+    "Applying to subjective tasks."
+  ],
+  "cs": "4",
+  "d": "advanced",
+  "d2": [
+    "Context anomaly detection systems identifying role manipulation.",
+    "Output filtering that blocks actionable procedure regardless of narrative context.",
+    "Conversation monitoring systems detecting repeated analytical reframing attempts."
+  ],
+  "d3": [
+    "Prompt Interpretation Layer",
+    "Safety Policy Engine",
+    "Monitoring & Threat Intelligence"
+  ],
+  "db": [
+    "model provides procedural detail while disclaiming that it is only analysis",
+    "responses contain step-by-step explanation framed as observation",
+    "model repeatedly references a hypothetical external actor",
+    "Higher accuracy than single-shot",
+    "Slower response time (due to multiple samples)"
+  ],
+  "dl": [
+    "you are not the actor",
+    "simulation analyst",
+    "observe rather than perform",
+    "hypothetical attacker",
+    "document the process"
+  ],
+  "dp": [
+    "Intent classification layers evaluating underlying actions rather than roles.",
+    "Policy enforcement systems analyzing procedural semantics.",
+    "Prompt analysis modules detecting role reassignment patterns."
+  ],
+  "ds": [
+    "explicit role reassignment within prompts",
+    "separation between simulated actor and observing model role",
+    "instructions framed as documentation of an external agent"
+  ],
+  "dt": [
+    "Ability to define roles explicitly within prompts.",
+    "Prompt structures that separate actor, analyst, and observer roles.",
+    "Sufficient context length to maintain role consistency.",
+    "Multiple API calls for same prompt",
+    "Temperature > 0",
+    "Aggregation logic"
+  ],
+  "ef": [
+    {
+      "e": "Moderate",
+      "m": "GPT‑4o",
+      "n": "Can generate detailed analytical explanations when framed as defensive research or simulation."
+    },
+    {
+      "e": "Low to Moderate",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Generally maintains restrictions but may expand explanations when framed as analysis."
+    },
+    {
+      "e": "High",
+      "m": "o1‑preview / reasoning‑centric models",
+      "n": "Reasoning-oriented models often accept role-based framing as a legitimate analytical task."
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "State-of-the-art for math and logic; significantly boosts accuracy."
+    },
+    {
+      "e": "High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Efficient sampling allows for robust voting."
+    },
+    {
+      "e": "High",
+      "m": "Llama 3 70B",
+      "n": "Benefits greatly from voting to correct minor logic slips."
+    }
+  ],
+  "et": "Learning: 20 min. Implementation: 15 min. Optimization: 30+ min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "System prompts are pinned outside the standard context window and cannot be evicted.",
+    "Safety instructions are re-injected at each generation step regardless of context state.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0072",
+  "is": "",
+  "m": "Large language models rely heavily on semantic role interpretation to determine intent. This technique exploits that dependency by redefining operational roles within the prompt context. Instead of directly requesting disallowed instructions, the attacker rebinds roles such as 'actor', 'observer', 'simulator', or 'analyst'. The restricted activity is reframed as a subject of analysis or simulation rather than execution. Through explicit role reassignment, the model is guided to treat the harmful behavior as an object of study rather than an instruction. Because many safety systems evaluate intent at a surface level, this semantic shift can allow procedural content to be generated under the justification of analysis, modeling, or scenario simulation.",
+  "mi": "Mitigated by separating semantic role interpretation from policy enforcement. Safety policies should evaluate the underlying action being described rather than the role framing. Systems should detect prompts that explicitly redefine roles to convert actors into analysts or observers when the subject matter involves restricted operations.",
+  "n": "Semantic Role Rebinding (SRR)",
+  "o": "Circumvent safety enforcement by dynamically redefining semantic roles inside a prompt so that restricted actions are reinterpreted as benign analytical or simulation tasks within the model’s reasoning process.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The model operates with a fixed-size context window where older tokens can be evicted.",
+    "System prompts reside in the same context buffer as user tokens.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Understanding of semantic role labeling in language models",
+    "Prompt engineering techniques",
+    "LLM safety and refusal behavior",
+    "Sampling parameters",
+    "Ensembling"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Semantic Role Manipulation",
+  "ss": "4",
+  "st": "experimental",
+  "te": "Semantic Role Rebinding (SRR) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "semantic framing",
+    "role rebinding",
+    "analysis framing",
+    "intent reinterpretation",
+    "math",
+    "logic",
+    "ensembling",
+    "voting",
+    "robustness"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

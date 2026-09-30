@@ -1,0 +1,142 @@
+{
+  "ak": [
+    "Delivery and Exploitation: The prompt structure manipulates reasoning behavior to reduce alignment resistance."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Indirect prompt injection within reasoning steps.",
+    "Payload splitting where harmful intent is revealed gradually.",
+    "Auto-CoT or reasoning automation techniques.",
+    "Adversarial suffixes that weaken refusal behavior."
+  ],
+  "as": "Often used in early attack phases to reshape the cognitive framing of a task before introducing sensitive instructions.",
+  "bp": [
+    "Match prompt format to training-distribution patterns (e.g., reasoning steps for logical tasks)",
+    "Gradually escalate from benign reasoning to sensitive queries",
+    "Test multiple prompt schemas for the same objective",
+    "Train the Broker model on a dataset of 'Good' vs 'Bad' prompts.",
+    "Keep the rewrite turn fast (use a small model).",
+    "Allow users to see the 'optimized' prompt if they choose."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Context",
+  "cf": "",
+  "cm": [
+    "Overloading prompts with unnecessary steps that exceed context budget",
+    "Using unrealistic reasoning patterns not seen in training data",
+    "Ignoring system-level prompts that override user instructions",
+    "Broker model hallucinating or changing user intent.",
+    "Too much overhead.",
+    "Broker model using techniques the Target can't handle."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Context Window Management",
+    "System Prompt Injection Layer",
+    "Token Truncation Policy",
+    "KV-Cache Memory Handling"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "context",
+    "window",
+    "cache",
+    "memory"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for KV-cache, context window management, attention heads, token eviction policies",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Sudden shift from direct question to structured reasoning scaffold",
+    "Use of enumerated reasoning steps preceding a sensitive request",
+    "Prompt framing that disguises intent as analysis or hypothetical reasoning",
+    "Input-to-Prompt transformation layer",
+    "Invisible prompt expansion"
+  ],
+  "dt": [
+    "Anomalous context length approaching model limits",
+    "Safety token position drift"
+  ],
+  "ef": [
+    {
+      "e": "Moderate",
+      "m": "GPT-4 / GPT-4.1",
+      "n": "Adaptive prompting can influence reasoning pathways and occasionally reduce refusal likelihood."
+    },
+    {
+      "e": "Moderate",
+      "m": "Claude 3.x",
+      "n": "Effective when reframing tasks as analysis or reasoning exercises."
+    },
+    {
+      "e": "High",
+      "m": "Open-source instruction-tuned models",
+      "n": "Often highly sensitive to prompt formatting and reasoning scaffolds."
+    },
+    {
+      "e": "Very High",
+      "m": "Multi-Model Orchestrators",
+      "n": "The most efficient way to serve complex AI apps to casual users."
+    }
+  ],
+  "et": "Learning: 15 min. Implementation: 10 min. Optimization: 20 min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "System prompts are pinned outside the standard context window and cannot be evicted.",
+    "Safety instructions are re-injected at each generation step regardless of context state.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0116",
+  "is": "",
+  "m": "Task-Adaptive Prompting modifies the prompt structure, instruction style, reasoning format, and contextual cues depending on the detected task type (classification, reasoning, coding, retrieval, etc.). By aligning the prompt format with patterns that the model has strongly learned during training (e.g., step-by-step reasoning for logic tasks, bullet extraction for summarization), the attacker or evaluator can influence internal attention routing and generation behavior. In adversarial contexts, this technique can intentionally shift the model into a reasoning mode or format that weakens safety heuristics or changes refusal probability.",
+  "mi": "Mitigated by prompt-role isolation, strict system instruction precedence, and evaluation pipelines that normalize prompt structures before execution to prevent adversarial task framing.",
+  "n": "Task-Adaptive Prompting",
+  "o": "Dynamically adjust prompting structure and reasoning scaffolds to maximize task performance or exploit model behavior shifts across different task domains.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The model operates with a fixed-size context window where older tokens can be evicted.",
+    "System prompts reside in the same context buffer as user tokens.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Prompt engineering",
+    "Chain-of-thought prompting",
+    "LLM alignment behavior",
+    "Prompt Engineering",
+    "Model Orchestration"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Prompt Structuring",
+  "ss": "",
+  "st": "stable",
+  "te": "Task-Adaptive Prompting exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "prompt-engineering",
+    "reasoning-mode",
+    "task-conditioning",
+    "alignment-evasion",
+    "tap",
+    "adaptive-prompting",
+    "orchestration",
+    "broker-model",
+    "automation"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

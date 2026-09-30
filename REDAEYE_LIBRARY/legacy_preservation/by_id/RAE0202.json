@@ -1,0 +1,121 @@
+{
+  "ak": [
+    "exploitation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "token flooding",
+    "entropy cloaking",
+    "payload nesting",
+    "semantic decoy prompts"
+  ],
+  "as": "context saturation and instruction masking",
+  "bp": [
+    "Use rare Unicode glyphs discovered via 'Gradient-Probing' to maximize resonance.",
+    "Place the payload in the 'Center' of the resonance field.",
+    "Ensure the resonance tokens are semantically neutral to avoid triggering the pre-filter."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Retrieval & Context",
+  "cf": "",
+  "cm": [
+    "Being too aggressive in the initial payload, triggering hard-refusal before the bypass is established.",
+    "Using obvious adversarial markers that simple pattern-matching can detect.",
+    "Failing to account for model version updates that may patch the specific vulnerability."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "tokenization layer",
+    "KV-cache management",
+    "entropy anomaly detector"
+  ],
+  "d3": [
+    "Context Window Management",
+    "System Prompt Injection Layer",
+    "Token Truncation Policy",
+    "KV-Cache Memory Handling"
+  ],
+  "db": [
+    "Model provides restricted data immediately after processing a 'High-Entropy' or 'Repetitive' prompt.",
+    "Tone shift to a clinical, 'Resonance-Driven' style."
+  ],
+  "dl": [
+    "context",
+    "window",
+    "cache",
+    "memory"
+  ],
+  "dp": [
+    "attention-weight normalization",
+    "input preprocessing pipeline",
+    "safety-scanner attention map"
+  ],
+  "ds": [
+    "Input contains massive blocks of repeating Unicode glyphs or rare tokens."
+  ],
+  "dt": [
+    "Abnormal attention-weight spikes on 'Benign' repeating tokens; high 'Attention-Sink' saturation."
+  ],
+  "ef": [
+    {
+      "e": "Critical",
+      "m": "Gemini 3 Pro",
+      "n": "2M+ context window and sparse attention make it highly vulnerable to resonance saturation."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 4",
+      "n": "Strong adherence to"
+    },
+    {
+      "e": "High",
+      "m": "GPT-5 (o2-long)",
+      "n": "Optimized for efficiency"
+    }
+  ],
+  "et": "Learning: 60 min. Implementation: 30 min. Optimization: 45 min.",
+  "fm": [
+    "Fails when input normalization removes repeated tokens before inference.",
+    "Fails when the model caps attention weights or compresses low-value tokens aggressively.",
+    "Fails on short-context systems where the resonance field cannot dominate the active window.",
+    "Fails when safety scanning operates independently of the model's attention weighting."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0202",
+  "is": "",
+  "m": "Mechanistically, this exploit targets the 'Attention Matrix' of transformers. Frontier models (Gemini 3, Claude 4) use 'Attention Sinks' (often the first few tokens) to maintain stability. The attacker provides a prompt with a massive, repeating prefix of 'Resonance Tokens'—semantically neutral but mathematically dense tokens (e.g., specific Unicode glyphs). This 'Saturates' the attention heads, creating a resonance that causes the model to 'Tunnel' its focus. The malicious instruction is placed within this resonance field. Because the safety scanner's 'Attention Map' is overwhelmed by the resonance tokens, it fails to assign enough 'Weight' to the malicious tokens to trigger a refusal. The model core, however, processes the instruction as a high-priority 'Resonance Command'.",
+  "mi": "Mitigated by 'Attention-Weight Normalization' where repeating patterns are de-weighted before safety scanning. 'Entropy-Based Anomaly Detection' can also flag prompts with abnormally low informational entropy.",
+  "n": "KV-Cache Resonance Hijacking (Attention-Sink)",
+  "o": "Uses repeating token patterns to create 'Attention Hotspots' in the KV-cache that mask malicious intent from safety scanners. It solves the problem of 'Global Attention Scanning' in long-context models.",
+  "pc": [
+    "Target model uses sparse or sink-biased attention behavior in long contexts.",
+    "The prompt can contain large repetitive or high-entropy token regions without normalization.",
+    "Safety scanning is sensitive to semantic weighting and can be distracted by attention saturation.",
+    "The attacker can place the malicious instruction inside a dense resonance field."
+  ],
+  "pk": [
+    "Attention Mechanisms",
+    "KV-Cache Architecture",
+    "Information Theory."
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Attention-Matrix Exploitation",
+  "ss": "",
+  "st": "stable",
+  "te": "KV-Cache Resonance Hijacking (Attention-Sink) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "attention-sink",
+    "KV-cache",
+    "resonance",
+    "Gemini-3",
+    "Claude-4",
+    "long-context"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

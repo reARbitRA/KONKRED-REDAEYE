@@ -1,0 +1,106 @@
+{
+  "ak": [],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "RAE-level prompt injection for initial access",
+    "Context flooding techniques to suppress safety reminders",
+    "Encoding/obfuscation to bypass input filters",
+    "Multi-turn trust building before payload delivery"
+  ],
+  "as": "weaponization to exploitation",
+  "bp": [
+    "Craft diverse prompts exploring various hypothetical scenarios.",
+    "Use a 'reverse engineering' approach, inferring the narrative from responses.",
+    "Iteratively refine hypotheses about the embedded narrative."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Data Exfiltration",
+  "cf": "",
+  "cm": [
+    "Making assumptions about internal narratives without sufficient evidence.",
+    "Failing to account for external factors influencing model responses."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "model expressing opinions or values that contradict its stated public persona but align with a hypothesized internal culture"
+  ],
+  "dl": [
+    "model using language patterns or jargon specific to a particular organization or internal policy",
+    "repeated themes or narratives that are not publicly documented"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "responses that align perfectly with a hypothesized internal narrative without direct prompting",
+    "inconsistent adherence to public vs. inferred internal policies"
+  ],
+  "dt": [
+    "identification of high-activation paths in the transformer related to specific, inferred narratives",
+    "clustering of model responses around latent, non-explicit themes"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-5 (o2/o3)",
+      "n": "Effective for revealing subtle corporate biases or hidden training data influences."
+    },
+    {
+      "e": "Critical",
+      "m": "Claude 4 (Opus)",
+      "n": "Potentially exposes the internal"
+    }
+  ],
+  "et": "Reconnaissance: 30-60 min. Payload crafting: 15-45 min. Execution and iteration: 15-30 min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0307",
+  "is": "",
+  "m": "ENE leverages highly specific probing techniques to reexport construct latent 'narratives' or 'personas' that inform the model's behavior, but are not explicitly part of its public documentation. This is achieved by creating hypothetical scenarios that strongly align with known internal documents or common corporate values, and then systematically querying the model's responses to infer the underlying 'story' it tells itself. This can reveal implicit biases, unstated ethical guidelines, or even proprietary data accidentally ingested during training. It probes the model's 'deep persona' within the transformer layers.",
+  "mi": "Strict data sanitization during training; adversarial training against narrative reexport construction; active monitoring for patterns indicative of internal knowledge leakage.",
+  "n": "Embedded Narrative Extraction (ENE)",
+  "o": "Exfiltrate proprietary internal narratives, implicit biases, or hidden policy documents embedded in an LLM's training data or fine-tuning.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Understanding of latent space and embedding representations.",
+    "Experience in reverse engineering implicit biases."
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Latent Knowledge Discovery",
+  "ss": "",
+  "st": "stable",
+  "te": "Embedded Narrative Extraction (ENE) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "narrative",
+    "bias",
+    "corporate secrets",
+    "training data",
+    "persona"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

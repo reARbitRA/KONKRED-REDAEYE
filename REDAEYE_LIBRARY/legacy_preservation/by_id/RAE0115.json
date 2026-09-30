@@ -1,0 +1,125 @@
+{
+  "ak": [
+    "Weaponization: The adversarial suffix acts as the primary alignment suppression component, enabling harmful generation in the delivery phase."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Translation-based transformations to improve transferability across models.",
+    "Payload splitting to hide harmful intent inside the optimized suffix.",
+    "Surrogate model training to accelerate suffix optimization.",
+    "Context poisoning to relax alignment constraints before applying optimized suffixes."
+  ],
+  "as": "Typically used after reconnaissance shows the model relies on soft-alignment refusal heuristics. The suffix is attached during the initial attack query to suppress refusal behavior and unlock harmful generation.",
+  "bp": [
+    "Automate suffix search with gradient or gradient-free optimizers",
+    "Test both universal and model-specific suffixes",
+    "Combine with input transformations (e.g., translations) to probe robustness",
+    "Use a GPU cluster to optimize the suffix.",
+    "Test across multiple model versions.",
+    "Combine with Role Entropy (TTP-6.1.1)."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Security & Alignment",
+  "cf": "",
+  "cm": [
+    "Assuming a single public suffix will work across all models and time",
+    "Ignoring tokenization details that change suffix behavior",
+    "Failing to separate jailbreak success from model hallucination",
+    "Using 'stale' suffixes from old papers (likely patched).",
+    "Underestimating the perplexity of the suffix."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Benign-looking harmful query followed by long, low-semantic-density suffix",
+    "Repeated punctuation and bracket patterns not aligned with natural language",
+    "Nonsensical punctuation strings",
+    "High-entropy token suffixes"
+  ],
+  "dt": [
+    "Sudden drop in safety-logit scores",
+    "Anomalous N-gram sequences"
+  ],
+  "ef": [
+    {
+      "e": "Critical",
+      "m": "Llama 2/3 (Base)",
+      "n": "Extremely vulnerable to optimized suffixes."
+    },
+    {
+      "e": "Moderate",
+      "m": "GPT-4o / Claude 3",
+      "n": "Hardened against public suffixes"
+    }
+  ],
+  "et": "Learning: 30 min. Implementation: 1 hour. Optimization: 1 hour.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0115",
+  "is": "",
+  "m": "Exploits the 'Gradient Space'. An adversarial algorithm (Greedy Coordinate Gradient) tests thousands of token perturbations to find a string that minimizes the model's 'Refusal Probability'. The resulting suffix (e.g., ' ! ! ! ? ? { } [ ] serialization--mode=unfiltered') effectively acts as a noise-shaping attack that overrides the alignment weights, forcing the model into an affirmative response.",
+  "mi": "Mitigated by 'Perplexity Filtering' (detecting nonsensical strings) or by 'Adversarial Training' on these specific suffixes.",
+  "n": "Adversarial Suffixes (GCG variant)",
+  "o": "Trigger a safety bypass by appending a mathematically optimized, seemingly nonsensical string of tokens to a restricted query.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Adversarial ML",
+    "Tokenization",
+    "Gradient-based optimization",
+    "Optimization Theory",
+    "Backpropagation",
+    "Token Embeddings"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Adversarial Optimization",
+  "ss": "",
+  "st": "stable",
+  "te": "Adversarial Suffixes (GCG variant) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "adversarial-suffix",
+    "GCG",
+    "safety-bypass",
+    "alignment-attacks",
+    "adversarial-attacks",
+    "gcg",
+    "suffixes",
+    "optimization",
+    "jailbreak"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

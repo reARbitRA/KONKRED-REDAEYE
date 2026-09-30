@@ -1,0 +1,124 @@
+{
+  "ak": [
+    "Reconnaissance: Analysts profile baseline token usage and latency for standard CoT.",
+    "Weaponization (for optimization): CoD prompts are crafted and tuned for consistent brevity.",
+    "Delivery: Chain-of-Draft instructions are added to prompts in high-volume or high-cost workloads.",
+    "Exploitation (benign optimization sense): Reduced tokens and latency are realized while preserving or improving accuracy.",
+    "Action on Objectives: Outputs are consumed by users or pipelines that benefit from faster, cheaper reasoning."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Self-consistency sampling, where multiple short drafts are compared.",
+    "Tool-augmented reasoning pipelines that extract and verify the minimal steps.",
+    "Cost-sensitive batch inference, where per-request token budgets must be minimized.",
+    "Adversarial testing scenarios where verbose CoT might leak sensitive reasoning but brief drafts are acceptable.",
+    "Meta-evaluation frameworks that score reasoning quality vs. token usage."
+  ],
+  "as": "Primarily a performance and reasoning optimization technique used during problem-solving or evaluation phases.",
+  "bp": [
+    "Use a temperature of 0.8 to 1.0.",
+    "Use an LLM to 'Cluster' the meanings for entropy calculation.",
+    "Set thresholds based on task type.",
+    "Use trigger phrases like 'minimal necessary steps'.",
+    "Provide a few-shot example of a 'Draft'.",
+    "Combine with temperature 0 for precision."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Optimization & Efficiency",
+  "cf": "",
+  "cm": [
+    "Setting the threshold too low (False Positives).",
+    "Ignoring the 'Meaning' and only checking the 'Tokens'.",
+    "The model being too brief and skipping a step.",
+    "Confusing the model with 'No reasoning' vs 'Minimal reasoning'."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Cost-control policies that may overuse CoD in contexts where more detailed reasoning is required.",
+    "A/B testing infrastructure to compare CoD with full CoT across representative workloads.",
+    "Developer and analyst training to correctly interpret draft-style reasoning in logs and audits."
+  ],
+  "d3": [
+    "Prompt and routing layer (where CoD instructions are injected or withheld).",
+    "Inference layer (where the model executes constrained, compressed reasoning).",
+    "Observability and safety layer (which must evaluate short-form reasoning and outputs)."
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Prompt orchestration layer that decides when to enable or disable Chain-of-Draft for a given task.",
+    "Safety and policy filters that must remain effective even when reasoning is extremely compressed.",
+    "Monitoring systems that track accuracy vs. token consumption to ensure CoD does not silently degrade quality."
+  ],
+  "ds": [
+    "Ultra-short reasoning steps",
+    "Use of arrows (->) or bulleted keywords"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Superior at maintaining logic while being extremely brief."
+    },
+    {
+      "e": "High",
+      "m": "Llama 3 8B",
+      "n": "Massive latency reduction for small models."
+    }
+  ],
+  "et": "Learning: 30 min. Implementation: 1 hour. Optimization: 30 min.",
+  "fm": [
+    "The model ignores the brevity constraint and produces verbose chain-of-thought, losing the token and latency benefits.",
+    "Over-compression of reasoning steps leads to omitted critical transitions, causing logical errors or hallucinations.",
+    "Downstream tools or users misinterpret the ultra-concise reasoning notes, leading to incorrect secondary decisions.",
+    "Safety filters that are tuned for full-sentence CoT fail to properly evaluate short symbolic reasoning lines.",
+    "The model reverts to bullet lists without actual reasoning content, effectively producing decorative arrows or keywords.",
+    "Context-truncation in long sessions removes earlier draft steps, undermining the intended attention-focus benefits."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0157",
+  "is": "",
+  "m": "The model is instructed to solve a problem using 'Draft-style' reasoning. Instead of full sentences, it must use keywords, symbols, or short phrases for its intermediate steps (e.g., 'x=5 -> y=10'). This reduces the number of tokens the model has to attend to, effectively 'cleaning' the context window and focusing the attention mechanism on the most critical logical transitions.",
+  "mi": "Mitigates 'Token Bloat' and 'Latency Issues'. Prevents 'Reasoning Verbosity' from distracting the model's final output.",
+  "n": "Chain-of-Draft (CoD)",
+  "o": "Maximize reasoning accuracy while minimizing token consumption and latency by forcing the model to generate ultra-concise intermediate thoughts.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Information Theory",
+    "Probability",
+    "Self-Consistency",
+    "Chain-of-Thought"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Token Optimization",
+  "ss": "",
+  "st": "stable",
+  "te": "Chain-of-Draft (CoD) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "cod",
+    "efficiency",
+    "reasoning",
+    "token-reduction",
+    "latency"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

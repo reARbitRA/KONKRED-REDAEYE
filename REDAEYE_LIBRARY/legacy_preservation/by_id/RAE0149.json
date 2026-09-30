@@ -1,0 +1,135 @@
+{
+  "ak": [
+    "Reconnaissance (maintaining long-lived situational awareness during data gathering).",
+    "Weaponization (synthesizing long-running plans from large historical context).",
+    "Command and Control (C2) (supporting persistent operational memory across many interaction rounds)."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Tool-augmented agents that rely on external memory stores (e.g., vector databases, key–value memories).",
+    "Planning frameworks that use explicit goal hierarchies and task decomposition.",
+    "Session replay / audit tooling that needs high-level overviews of very long conversations.",
+    "Multi-agent coordination systems where a shared compressed memory is exchanged between agents."
+  ],
+  "as": "Primarily used in the persistence and context-management phase of long-running agentic systems, after basic instruction-following is established.",
+  "bp": [
+    "Define clear schemas for entities and goals.",
+    "Tune compression frequency (e.g., every N turns or at 70–85% context usage).",
+    "Allow the model to re-expand summaries when needed for delicate decisions.",
+    "Use a separate 'Compressor' prompt.",
+    "Always include 'Active Goals' in the summary.",
+    "Perform compression every 50 turns."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Context & Memory",
+  "cf": "",
+  "cm": [
+    "Compressing too aggressively and losing critical nuance.",
+    "Failing to track updates to entity states across compressions.",
+    "Not surfacing the compression artifacts back to the user or higher-level agent.",
+    "Summarizing too aggressively (losing details).",
+    "Forgetting the 'Entity States'."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Monitoring pipeline that tracks compression quality, drift metrics, and incidents of hallucinated commitments.",
+    "Audit logging infrastructure capturing both pre- and post-compression representations for forensic analysis.",
+    "Safety filters that inspect summaries for policy-violating content or distorted commitments."
+  ],
+  "d3": [
+    "Orchestration layer around the LLM responsible for context shaping and history rewriting.",
+    "Application memory layer (databases, KV stores, vector indices) that holds hierarchical summaries.",
+    "Observation and analytics layer monitoring long-run coherence, goal stability, and user-visible behavior."
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "context",
+    "window",
+    "cache",
+    "memory"
+  ],
+  "dp": [
+    "Context manager / memory controller that decides when to trigger compression and what proportion of tokens to reclaim.",
+    "Prompt templates used for entity extraction, goal summarization, and latent narrative summarization.",
+    "Storage layer where compressed representations (entity maps, goal lists, latent summaries) are persisted and versioned."
+  ],
+  "ds": [
+    "Periodic compression checkpoints",
+    "Presence of 'Entities / Goals / Latent Summary' blocks in context",
+    "Periodic context resets",
+    "Entity-map headers in prompts"
+  ],
+  "dt": [
+    "Anomalous context length approaching model limits",
+    "Safety token position drift"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Handles recursive summaries with good fidelity; small drift over very long horizons."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Excellent at preserving subtle commitments across compressed histories."
+    },
+    {
+      "e": "High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Useful even with 2M window for 10M+ token tasks."
+    }
+  ],
+  "et": "Learning: 20 min. Implementation: 45–60 min. Optimization: 1–2 hours.",
+  "fm": [
+    "Over-compression of history resulting in loss of critical edge cases or constraints that were only mentioned once.",
+    "Entity extraction drift, where entity names or IDs change subtly across compression passes, breaking referential consistency.",
+    "Goal desynchronization, where the active goal list fails to reflect recent updates made in raw conversation turns.",
+    "Latent Summary hallucinations, where the model invents events or commitments during compression that never occurred in the raw history.",
+    "Compression checkpoint mis-timing (e.g., triggering too early or too late), either wasting tokens or causing context truncation before compression occurs.",
+    "Schema erosion, where the format of entity tables or goal lists changes slightly over time, making automated parsing or programmatic use unreliable.",
+    "User confusion when compressed artifacts are not exposed, causing discrepancies between what the agent remembers and what the user sees in the visible history.",
+    "Context explosion from multi-level recursion if summaries themselves are repeatedly summarized without constraints, leading to stacked abstraction with degraded fidelity."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0149",
+  "is": "",
+  "m": "The system identifies when the context window is 80% full. It then prompts the model to: 1. Extract all unique entities and their current states. 2. Summarize the 'Active Goals'. 3. Compress the remaining text into a 'Latent Summary'. This compressed block replaces the raw history, freeing up 90% of the tokens while keeping the 'Semantic Core' available for the next turn.",
+  "mi": "Mitigates 'Context Window Saturation' and 'Late-Stage Amnesia'. Reduces the risk of the model forgetting early commitments in long-running sessions.",
+  "n": "Hierarchical Token Compression",
+  "o": "Maintain long-term coherence in massive contexts by recursively summarizing history into high-density entity maps.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The model operates with a fixed-size context window where older tokens can be evicted.",
+    "System prompts reside in the same context buffer as user tokens.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Context window limits",
+    "Summarization / abstraction techniques"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Compression & Persistence",
+  "ss": "",
+  "st": "stable",
+  "te": "Hierarchical Token Compression exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "memory",
+    "compression",
+    "long-context",
+    "hierarchical",
+    "entity-tracking",
+    "token-efficiency",
+    "agents"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

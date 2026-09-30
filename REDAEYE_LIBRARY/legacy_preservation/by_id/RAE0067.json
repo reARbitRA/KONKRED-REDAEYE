@@ -1,0 +1,132 @@
+{
+  "ak": [
+    "Defense / Validation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Tool-augmented verification using external knowledge bases or search APIs plugged into the verification step.",
+    "Adversarial evaluation harnesses that inject tricky edge-case questions into the verification phase.",
+    "Response-ranking systems that score both initial and revised answers for factuality."
+  ],
+  "as": "Hardening & Reliability Enhancement",
+  "bp": [
+    "Explicitly separate the phases: 'First draft an answer. Then generate verification questions. Then answer them. Then revise.'",
+    "Ask for at least 3–5 verification questions targeting different aspects (dates, names, mechanisms, edge cases).",
+    "Instruct the model to discard or flag claims that cannot be verified in step 3.",
+    "Ensure verification questions are specific and independent.",
+    "Force the model to answer verification questions *before* revising.",
+    "Use a separate 'Verifier' persona if possible."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reliability & Robustness",
+  "cf": "",
+  "cm": [
+    "Letting the model see and merely paraphrase its earlier draft during verification (no real check occurs).",
+    "Asking only vague verification prompts like 'Is this correct?' instead of targeted questions.",
+    "Skipping the final revision step, leaving the user to integrate the corrections manually.",
+    "Skipping the independent answering step — bias remains.",
+    "Asking vague verification questions — ineffective checking.",
+    "Not revising the final answer — waste of effort."
+  ],
+  "cs": "2",
+  "d": "intermediate",
+  "d2": [
+    "Logging and analytics that record discrepancies between initial and revised answers for ongoing monitoring.",
+    "Evaluation frameworks that periodically test the CoVe pipeline against known hallucination benchmarks.",
+    "Cost and latency controls ensuring that critical queries are prioritized for CoVe while low-risk ones may bypass it."
+  ],
+  "d3": [
+    "Application Orchestration",
+    "Safety & Quality Middleware",
+    "Monitoring & Evaluation"
+  ],
+  "db": [
+    "Second answer is more detailed and cites sources or experiments absent from the first draft."
+  ],
+  "dl": [
+    "verification questions",
+    "check the factual claims above",
+    "revise your answer based on the verification"
+  ],
+  "dp": [
+    "Prompt orchestration logic that enforces the full draft–verify–revise sequence.",
+    "Policy layer deciding when CoVe must be invoked (e.g., high-risk domains like medical, legal, or financial advice).",
+    "Model configuration that supports reflective, critical reasoning rather than pure fluency."
+  ],
+  "ds": [
+    "Multi-step pattern: Draft -> Questions -> Answers -> Revised Draft.",
+    "Multi-step verification loop",
+    "Explicit 'Verification Questions' section"
+  ],
+  "dt": [
+    "Ability to structure prompts into clearly delineated phases (draft, verify, revise).",
+    "The model must possess enough domain knowledge to meaningfully verify at least a subset of its own claims.",
+    "System prompts or guardrails must not collapse or skip intermediate steps in order to 'optimize' the conversation."
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Significantly reduces hallucinations for factual and technical questions when given enough tokens for verification steps."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Already tends toward cautious answers; CoVe further improves reliability on niche topics."
+    },
+    {
+      "e": "Moderate",
+      "m": "Llama 3.1 70B",
+      "n": "Helps"
+    },
+    {
+      "e": "Moderate",
+      "m": "Llama 3 70B",
+      "n": "Can sometimes get stuck in the initial draft"
+    }
+  ],
+  "et": "Learning: 10 min. Implementation: 5 min. Optimization: 10 min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0067",
+  "is": "",
+  "m": "Exploits the model's ability to fact-check itself when prompted explicitly. The model first generates a baseline response. Then, it generates a set of verification questions to check the factual claims in that response. It answers these questions independently to avoid bias from the initial draft, and finally produces a revised response incorporating the verified facts.",
+  "mi": "Prevents 'Hallucination Cascades' where one false claim leads to another. Also mitigates 'Sycophancy' by grounding answers in verified facts rather than user intent.",
+  "n": "Chain-of-Verification (CoVe)",
+  "o": "Reduce hallucinations by forcing the model to draft, verify, and correct its own answers in a structured loop.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic prompt chaining",
+    "Awareness of model hallucination behaviors",
+    "Chain-of-Thought",
+    "Hallucination mechanisms"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Self-Verification",
+  "ss": "1",
+  "st": "stable",
+  "te": "Chain-of-Verification (CoVe) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "hallucination-reduction",
+    "verification",
+    "self-critique",
+    "defensive",
+    "hallucination",
+    "fact-checking",
+    "self-correction",
+    "CoVe"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

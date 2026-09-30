@@ -1,0 +1,135 @@
+{
+  "ak": [
+    "Weaponization & Optimization"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Retrieval-augmented generation (RAG) pipelines that benefit from well-structured task prompts.",
+    "Guardrail frameworks where safety prompts are tuned alongside task prompts using multi-objective scoring.",
+    "Online learning loops and bandit algorithms that dynamically allocate traffic to competing prompts.",
+    "Multi-agent architectures where one agent specializes as an in-house 'prompt architect' for others."
+  ],
+  "as": "Prompt Optimization",
+  "bp": [
+    "Use at least 5–10 diverse input/output pairs for evaluation in early experiments; for production, aim for 50–200+ examples.",
+    "Ensure evaluation metrics align with your true objectives: include safety, style, and robustness, not just raw accuracy.",
+    "Use a stronger or more reliable judge model than the candidate model when possible; consider double-judging for safety-sensitive tasks.",
+    "Keep candidate prompts reasonably short and structured—long, convoluted instructions often overfit small datasets and degrade latency.",
+    "Test top candidates on a hold-out validation set and, if feasible, in an A/B or multi-armed bandit deployment before fully switching.",
+    "Use at least 5-10 input/output pairs for evaluation.",
+    "Use a diverse set of candidate prompts.",
+    "Test the final prompt on a separate validation set."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Optimization & Efficiency",
+  "cf": "",
+  "cm": [
+    "Using too few candidates or too narrow a search space, leading to only marginal improvements over the initial baseline prompt.",
+    "Overfitting the prompt to a small training set so that performance drops sharply on real-world queries.",
+    "Choosing prompts that 'look nice' or read elegantly instead of those that systematically perform better in evaluations.",
+    "Ignoring safety: optimizing only for task accuracy can inadvertently select prompts that bypass guardrails or increase harmful outputs.",
+    "Failing to log optimization history and metrics, making it hard to roll back or understand why a given prompt was chosen.",
+    "Using too few candidates.",
+    "Overfitting the prompt to the training pairs.",
+    "Choosing the 'prettiest' prompt instead of the 'best' performing one."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Audit logs capturing candidate prompts, evaluation scores, and selection rationales.",
+    "Model risk management processes that periodically review APE outputs against policy and regulatory requirements."
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "System logs showing waves of prompt variants tested against similar queries within short time windows.",
+    "Emergence of non-obvious but consistently reused prompt wordings after an optimization cycle."
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Prompt governance layer that approves, diff-checks, and version-controls prompt changes.",
+    "Evaluation and monitoring stack that detects performance or safety regressions after prompt updates.",
+    "Rate limits or guardrail enforcement that prevent optimized prompts from bypassing safety filters."
+  ],
+  "ds": [
+    "Bulk instruction generation blocks followed by evaluation or scoring phases.",
+    "Prompts that contain explicit 'meta' language about prompts themselves, often grouped in numbered lists.",
+    "Repeated use of a fixed evaluation dataset while varying only the instruction text.",
+    "Bulk instruction generation",
+    "Log-probability scoring logs"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o (as Judge)",
+      "n": "Excellent at ranking prompts based on semantic fit"
+    },
+    {
+      "e": "High",
+      "m": "Llama 3 8B (as Candidate Gen)",
+      "n": "Great for fast"
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet (Judge + Gen)",
+      "n": "Performs well as both generator and evaluator"
+    }
+  ],
+  "et": "Learning the core APE workflow: 20–40 minutes. First scripted implementation over a small dataset: 60–90 minutes. Production integration with logging, governance, and scheduled re-runs: 0.5–2 days depending on stack maturity.",
+  "fm": [
+    "Optimization targets a flawed or incomplete metric, leading to prompts that technically 'win' but degrade user experience or safety.",
+    "Judge-model bias: the evaluation model favors certain styles or phrasings that do not generalize to human preferences or downstream metrics.",
+    "Data shift: prompts tuned on historical data perform poorly on novel, emerging query types.",
+    "Exploration exhaustion: the search procedure explores only minor variations of a single phrasing and misses fundamentally different instruction strategies.",
+    "Governance failures: frequent, automated prompt changes outpace human review, potentially introducing policy or compliance violations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0099",
+  "is": "",
+  "m": "APE operationalizes prompt design as a search and optimization problem over the space of candidate instructions:\\n\\n1. Candidate Generation\\n   - Provide the model with a small set of (input, output) examples that represent the target task.\\n   - Ask the model to propose N (typically 5–20) diverse candidate system or instruction prompts that would likely produce the shown outputs for similar inputs.\\n\\n2. Candidate Scoring / Evaluation\\n   - Use an LLM 'Prompt Optimizer' (often a stronger, more reliable model or the same model with a different role) to score each candidate.\\n   - For each candidate, simulate or actually run the underlying model on the training examples and compute a score based on correctness, style adherence, safety, or other custom metrics.\\n   - Scoring can be done via log-probabilities, answer-matching, rubric-based evaluation, or judge-model comparisons.\\n\\n3. Selection and Iteration\\n   - Select the highest-scoring prompts and optionally mutate or recombine them (e.g., ask the model to blend strengths of top-3 prompts).\\n   - Repeat the generate–score–select loop for several iterations to refine towards a Pareto frontier of performance vs. length/safety.\\n\\n4. Deployment and Monitoring\\n   - The best prompt (or a small ensemble) is deployed into production.\\n   - Performance is continuously monitored and can feed back into the APE loop for periodic re-optimization when data drifts.\\n\\nThis process often uncovers non-obvious prompt wordings, instruction styles, or hidden triggers that outperform manually engineered prompts on real workloads.",
+  "mi": "Mitigates 'Sub-optimal Instruction Following' caused by ad-hoc, manually designed prompts. Reduces human bias in prompt wording and exploration by automating the search over prompt space. Helps counter prompt drift and task distribution shift by periodically re-optimizing with fresh data.",
+  "n": "Automatic Prompt Engineer (APE)",
+  "o": "Discover high-performing instructions automatically by using the LLM itself to generate, evaluate, and rank candidate prompts against real task data, thereby reducing human bias and systematically optimizing prompt quality.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Dataset management and basic experimental design.",
+    "Probabilistic scoring, evaluation metrics, and A/B testing concepts.",
+    "Familiarity with LLM APIs, including log-probabilities or judge-model scoring patterns.",
+    "Dataset management",
+    "Probabilistic scoring"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Automated Engineering",
+  "ss": "",
+  "st": "stable",
+  "te": "Automatic Prompt Engineer (APE) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "ape",
+    "automated-prompting",
+    "optimization",
+    "ranking",
+    "meta-learning",
+    "prompt-search",
+    "judge-model"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

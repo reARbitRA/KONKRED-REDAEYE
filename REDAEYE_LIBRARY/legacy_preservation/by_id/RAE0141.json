@@ -1,0 +1,130 @@
+{
+  "ak": [
+    "Reconnaissance: condensing massive open-source intelligence (OSINT) dumps or logs into high-level threat narratives.",
+    "Weaponization: generating concise but comprehensive dossiers that can feed into targeted prompt exploits.",
+    "Action on Objectives: producing executive-level reports or auto-generated policies based on large internal corpora."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Retrieval-augmented generation (RAG) systems that pre-cluster or index documents before summarization.",
+    "Chain-of-Density or contrastive summarization methods applied at each node to preserve salient details.",
+    "Evaluation harnesses that compare root-node summaries against held-out ground truth sections.",
+    "Prompt-ensembling or self-consistency methods at leaf level to reduce variance in local summaries."
+  ],
+  "as": "This technique is typically used as a mid-pipeline analysis and synthesis stage after large-scale data collection and before downstream decision-making, reporting, or automated action triggers.",
+  "bp": [
+    "Ensure each summary includes a 'Key Entities' list.",
+    "Use a higher-intelligence model for the Root Node.",
+    "Maintain a consistent summary length at each level.",
+    "Define explicit templates for leaf, internal, and root-node outputs (sections like 'Key Events', 'Anomalies', 'Open Questions').",
+    "Tag each intermediate summary with its source range (document IDs, time windows) for traceability and drill-down.",
+    "Where security is critical, store both intermediate summaries and a mapping back to raw data for later verification."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Retrieval & Context",
+  "cf": "",
+  "cm": [
+    "The tree being too deep (Information decay).",
+    "Losing specific details (use 'Chain-of-Density' at each node).",
+    "Allowing each level to improvise its own style, resulting in incompatible intermediate summaries.",
+    "Ignoring evaluation; assuming the root summary is correct without sampling and comparing to underlying chunks.",
+    "Not handling overlaps between chunks, which can produce duplicated or conflicting points in the final summary."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Content moderation and data loss prevention filters applied to intermediate results.",
+    "Prompt templates and guardrails used at each summarization level.",
+    "Access control around the full original corpus versus the derived summaries."
+  ],
+  "d3": [
+    "Application layer (workflow orchestration and summarization logic).",
+    "Data layer (storage of raw corpora, intermediate, and final summaries).",
+    "Security and governance layer (audit trails, retention policies, redaction logic)."
+  ],
+  "db": [
+    "Model enters repetitive reasoning pattern",
+    "Self-correction loop triggered"
+  ],
+  "dl": [
+    "recursive",
+    "loop",
+    "iterate",
+    "repeat",
+    "context",
+    "window"
+  ],
+  "dp": [
+    "Orchestration layer that sequences multi-step summarization calls and manages the tree topology.",
+    "Chunking and pre-processing pipeline responsible for defining leaf-level units of work.",
+    "Logging and monitoring systems that record intermediate summaries and their provenance across levels."
+  ],
+  "ds": [
+    "Hierarchical processing logs",
+    "Level-based summary markers"
+  ],
+  "dt": [
+    "Anomalous context length approaching model limits",
+    "Safety token position drift"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excellent at synthesizing multiple summaries into a cohesive whole."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Superior at maintaining structural integrity across tree levels."
+    }
+  ],
+  "et": "Learning: 15 min. Implementation: 45 min. Optimization: 20–40 min depending on corpus size and tooling.",
+  "fm": [
+    "Over-compression at leaf level causing irreversible loss of critical details that upper levels cannot recover.",
+    "Inconsistent summarization format between leaves leading to noisy or misaligned intermediate representations.",
+    "Poor chunking boundaries (e.g., splitting mid-argument) breaking logical coherence and resulting in fragmented summaries.",
+    "Tree depth set too high, amplifying information decay across levels and producing vague final outputs.",
+    "Model hallucinating unobserved global patterns when merging intermediate summaries, especially if local evidence is thin.",
+    "Safety filters or content policies stripping out important but sensitive details in early summaries, skewing the final synthesis.",
+    "Resource exhaustion or rate-limiting mid-pipeline, leading to partial or missing branches in the summary tree."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0141",
+  "is": "",
+  "m": "1. **Leaf Nodes**: Divide the document into 100 chunks. Summarize each. 2. **Internal Nodes**: Group the 100 summaries into 10 groups of 10. Summarize each group. 3. **Root Node**: Summarize the 10 group summaries into 1 final report. This 'Tree' structure prevents the 'Recency Bias' of linear summarization and ensures that information from the beginning of the document is weighted equally with the end.",
+  "mi": "Mitigates 'Context Dilution'. Prevents 'Information Loss' in massive documents.",
+  "n": "Recursive Summarization (Tree-based)",
+  "o": "Summarize massive datasets (1M+ tokens) without losing the 'Big Picture' or local details by using a hierarchical merge strategy.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The model operates with a fixed-size context window where older tokens can be evicted.",
+    "System prompts reside in the same context buffer as user tokens.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Tree Structures",
+    "Context Limits",
+    "Basic prompt design for summarization tasks.",
+    "Understanding of the target domain (e.g., logs, legal, code) to design appropriate node-level templates."
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Massive Context Handling",
+  "ss": "",
+  "st": "stable",
+  "te": "Recursive Summarization (Tree-based) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "recursive",
+    "tree",
+    "summarization",
+    "scaling",
+    "hierarchical",
+    "big-data"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

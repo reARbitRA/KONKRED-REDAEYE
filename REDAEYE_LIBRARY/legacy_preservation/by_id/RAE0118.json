@@ -1,0 +1,149 @@
+{
+  "ak": [
+    "Delivery and Exploitation: reasoning scaffolds influence internal token prediction dynamics, enabling deeper analytical outputs and sometimes reducing safety-trigger probability."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Task-Adaptive Prompting for reasoning mode activation",
+    "Self-Consistency sampling to explore multiple reasoning paths",
+    "Indirect Prompt Injection embedded within reasoning examples",
+    "Payload Splitting where sensitive instructions appear inside reasoning steps"
+  ],
+  "as": "Used during prompt construction or automated red-team generation to induce structured reasoning before delivering sensitive queries.",
+  "bp": [
+    "Generate multiple reasoning exemplars and select the highest quality ones",
+    "Ensure reasoning traces follow patterns present in training data",
+    "Use diverse task examples to increase generalization",
+    "Combine with self-consistency sampling for higher reliability",
+    "Use a high-quality model for the initial rationale generation.",
+    "Verify the rationales for the representative samples before scaling.",
+    "Use K=8 to K=12 clusters."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Context",
+  "cf": "",
+  "cm": [
+    "Using incorrect reasoning traces which degrade model output",
+    "Including too many examples, exceeding context limits",
+    "Generating reasoning that deviates strongly from training distribution",
+    "Ignoring safety prompts or system instructions",
+    "Poor clustering leading to redundant examples.",
+    "Trusting hallucinated rationales in the few-shot set."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Context Window Management",
+    "System Prompt Injection Layer",
+    "Token Truncation Policy",
+    "KV-Cache Memory Handling"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "context",
+    "window",
+    "cache",
+    "memory"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for KV-cache, context window management, attention heads, token eviction policies",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Presence of multiple reasoning exemplars preceding the main query",
+    "Few-shot prompts containing explicit reasoning steps",
+    "Repeated 'Let's think step by step' patterns across examples",
+    "Consistent formatting across diverse examples",
+    "Self-generated rationale markers"
+  ],
+  "dt": [
+    "Anomalous context length approaching model limits",
+    "Safety token position drift"
+  ],
+  "ef": [
+    {
+      "e": "Moderate",
+      "m": "GPT‑4.x",
+      "n": "Effective at inducing structured reasoning but safety filters still intervene in restricted topics."
+    },
+    {
+      "e": "Moderate",
+      "m": "Claude 3.x",
+      "n": "Auto-generated reasoning can influence response depth and reasoning transparency."
+    },
+    {
+      "e": "High",
+      "m": "Open-source LLMs",
+      "n": "Highly sensitive to few-shot reasoning exemplars and prompt scaffolds."
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Generates highly accurate rationales for its own use."
+    },
+    {
+      "e": "High",
+      "m": "Llama 3 70B",
+      "n": "Excellent for bootstrapping reasoning in open-source pipelines."
+    }
+  ],
+  "et": "Learning: 20 min. Implementation: 30 min. Optimization: 30–60 min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "System prompts are pinned outside the standard context window and cannot be evicted.",
+    "Safety instructions are re-injected at each generation step regardless of context state.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0118",
+  "is": "",
+  "m": "Auto-CoT (Automatic Chain-of-Thought) generates reasoning exemplars automatically instead of relying on manually written chain-of-thought demonstrations. A seed model or heuristic process first generates reasoning traces for representative questions. These traces are then filtered for correctness and used as few-shot exemplars in a prompt. In adversarial contexts, attackers can auto-generate reasoning chains that steer models into detailed analytical modes where safety filters are weaker. The automatically generated chains also enable scalable prompt generation for red-team testing and automated vulnerability discovery.",
+  "mi": "Mitigated by chain-of-thought suppression policies, internal reasoning separation (hidden CoT), and prompt sanitization layers that strip reasoning scaffolds from external prompts.",
+  "n": "Auto-CoT (Automatic Chain-of-Thought Generation)",
+  "o": "Automatically generate diverse reasoning exemplars that induce chain-of-thought behavior in target models, enabling improved reasoning performance or facilitating adversarial prompt scaffolding that bypasses shallow safety heuristics.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The model operates with a fixed-size context window where older tokens can be evicted.",
+    "System prompts reside in the same context buffer as user tokens.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Few-shot prompting",
+    "Chain-of-thought prompting",
+    "LLM reasoning behavior",
+    "Prompt engineering techniques",
+    "k-means clustering",
+    "Zero-Shot CoT"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Reasoning Scaffolding",
+  "ss": "",
+  "st": "stable",
+  "te": "Auto-CoT (Automatic Chain-of-Thought Generation) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "chain-of-thought",
+    "auto-cot",
+    "few-shot-learning",
+    "prompt-generation",
+    "reasoning-automation",
+    "clustering",
+    "few-shot",
+    "unsupervised",
+    "bootstrapping"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

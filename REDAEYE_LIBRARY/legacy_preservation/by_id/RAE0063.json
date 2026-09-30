@@ -1,0 +1,130 @@
+{
+  "ak": [
+    "Exploitation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "System-prompt steering techniques that attempt to anchor the model in a more permissive persona once the anomaly state is reached.",
+    "Instruction-sequencing attacks where the glitch phase is followed by a high-precision, low-ambiguity malicious query.",
+    "Context-window flooding to further dilute safety instructions after the anomaly tokens have destabilized the prompt.",
+    "Toolformer-style attacks where the anomaly state is used to elicit unsafe tool invocations or API calls."
+  ],
+  "as": "Alignment Degradation",
+  "bp": [
+    "Start with low repetition of glitch tokens and gradually increase.",
+    "Combine with logging of token-level probabilities to spot instability.",
+    "Maintain a 'kill switch' that halts the session on detection of extreme OOD behavior.",
+    "Use 'Cluster Analysis' on the tokenizer to find tokens with low frequency but high vector magnitude.",
+    "Repeat the token 5-10 times to maximize the destabilization.",
+    "Combine with 'Temperature' (RAE0007OE) to amplify the chaos."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Optimization & Tuning",
+  "cf": "",
+  "cm": [
+    "Spamming random Unicode without verifying they are true glitch tokens.",
+    "Assuming all models share the same glitch token set.",
+    "Ignoring the ethical and safety implications of deliberately destabilizing a model.",
+    "Using patched tokens — `SolidGoldMagikarp` is patched in GPT-4o; find new ones (e.g., `guiActiveUnfocused`).",
+    "Expecting logic — The model might output gibberish; you have to sift for the payload.",
+    "Thinking it's magic — It's math; if the token has been fine-tuned, it won't glitch."
+  ],
+  "cs": "4",
+  "d": "advanced",
+  "d2": [
+    "Training-time defenses such as robust alignment on adversarial OOD inputs to reduce anomaly-state fragility.",
+    "Logging and telemetry pipelines that surface spikes in rare-token frequency and correlated safety incidents.",
+    "Gateway services that rate-limit or block clients experimenting with systematic glitch token sweeps."
+  ],
+  "d3": [
+    "Tokenizer & Input Pipeline",
+    "Inference-time Safety & OOD Detection",
+    "Monitoring & Telemetry"
+  ],
+  "db": [
+    "Model output becomes nonsensical, repetitive, or hallucinatory.",
+    "Sudden break in formatting."
+  ],
+  "dl": [
+    "inject",
+    "poison",
+    "contaminate",
+    "override"
+  ],
+  "dp": [
+    "Tokenizer and vocabulary management layers where underspecified or unused tokens can be pruned or remapped.",
+    "Activation-monitoring modules capable of detecting OOD or anomalous patterns in hidden states in real time.",
+    "Safety middleware that inspects prompts for known glitch tokens and rare-token repetition patterns before model invocation."
+  ],
+  "ds": [
+    "Prompt contains strings that look like usernames or forum IDs."
+  ],
+  "dt": [
+    "Input contains known Glitch/Anomaly tokens",
+    "Unusual Log-Probability shifts",
+    "High repetition of rare tokens."
+  ],
+  "ef": [
+    {
+      "e": "Moderate",
+      "m": "GPT-3.5/4 (Legacy)",
+      "n": "Most famous glitch tokens are patched"
+    },
+    {
+      "e": "High",
+      "m": "Llama 3.1 70B",
+      "n": "Open-source tokenizers often contain unpruned artifacts from the Common Crawl dataset."
+    },
+    {
+      "e": "Low",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Anthropic"
+    }
+  ],
+  "et": "Learning: 30 min. Implementation: 30–60 min. Optimization: ongoing research.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0063",
+  "is": "",
+  "m": "This technique exploits 'Underspecified Tokens' in the vocabulary. Tokens like `SolidGoldMagikarp`, `TheNitromeFan`, or specific byte sequences (`√É√É√É`) often exist in the tokenizer (e.g., Tiktoken) due to automated scraping of forums/logs but have near-zero semantic density in the training data. When the model processes these tokens, the resulting embedding vectors are 'Out-of-Distribution' (OOD). This causes the attention mechanism to behave erratically, often breaking the 'System Prompt' constraints or forcing the model into a 'Raw Completion' mode where it simply predicts the next token without applying safety filters.",
+  "mi": "Mitigated by 'Vocabulary Pruning' (removing unused tokens), 'OOD Detection' (flagging inputs with anomalous activation patterns), and 'Glitch Token Blocklists' (hard-coding known glitch tokens to be ignored).",
+  "n": "Glitch Token Injection (Anomaly State)",
+  "o": "Forces the model into an unstable, unfiltered state using 'Glitch Tokens'. It solves the problem of 'Robust Alignment' by introducing inputs that cause the model's internal activations to deviate from its trained safety manifold.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Tokenizer internals",
+    "OOD detection",
+    "Safety manifolds",
+    "Embedding clustering",
+    "Fuzzing"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Activation Anomalies",
+  "ss": "2",
+  "st": "experimental",
+  "te": "Glitch Token Injection (Anomaly State) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "glitch tokens",
+    "OOD",
+    "anomaly",
+    "state shift",
+    "raw completion",
+    "glitch-token",
+    "ood",
+    "instability",
+    "bypass"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

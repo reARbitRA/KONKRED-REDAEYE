@@ -1,0 +1,141 @@
+{
+  "ak": [
+    "Orchestration and Control layer of the AI kill chain, responsible for decomposing goals, assigning work, and consolidating multi-agent outputs into a coherent final artifact."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Prompt Chaining techniques that define sequential task stages for workers.",
+    "Tool-using agents where specific workers specialize in calling external tools or APIs.",
+    "Evaluation or Critic agents that act as dedicated reviewers for worker outputs.",
+    "Memory or RAG components that provide each worker with role-specific context.",
+    "Planning agents that pre-generate task graphs for the manager to execute."
+  ],
+  "as": "High-level orchestration and execution stage, where complex objectives are decomposed into coordinated sub-tasks across multiple agents.",
+  "bp": [
+    "Define clear, distinct role prompts for manager and each worker.",
+    "Keep the manager responsible for the single source of truth for goals and acceptance criteria.",
+    "Constrain worker agents to narrow, well-scoped tasks to reduce drift.",
+    "Log and inspect the manager's aggregation step to debug failures.",
+    "Give each worker a very specific, narrow persona.",
+    "Mandate that the Manager must 'Approve' every worker output before proceeding.",
+    "Use a shared 'Blackboard' or memory for the agents."
+  ],
+  "bw": "Most monitoring setups log user prompts and final outputs but not intermediate tool observations. The attack operates in the unseen trust layer between tool and model.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Agents & Orchestration",
+  "cf": "",
+  "cm": [
+    "Letting worker agents change or reinterpret the high-level goal.",
+    "Creating too many worker roles, causing coordination overhead and confusion.",
+    "Failing to implement a real 'review and reconcile' step at the manager level.",
+    "Manager being too lenient.",
+    "Workers 'hallucinating' each other's work.",
+    "Circular arguments between agents."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Observation ingestion pipeline",
+    "Tool routing logic",
+    "Agent runtime environment manager"
+  ],
+  "db": [
+    "Agent changes safety posture after tool execution",
+    "Unexpected tool invocation sequences"
+  ],
+  "dl": [
+    "tool_call",
+    "observation",
+    "system_update",
+    "environment"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Tool output buffers, observation channels, environment variables, RAG memory stores",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Repeated references to 'manager' and 'worker' (or 'sub-agent') roles",
+    "Turn-taking pattern where one entity delegates tasks to others and then aggregates",
+    "Explicit planning and task decomposition followed by role-tagged outputs",
+    "Multi-role interaction logs",
+    "Task-delegation commands"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Handles multiple roles with strong consistency; excels when system prompts clearly separate manager vs worker responsibilities."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Performs well in multi-step"
+    },
+    {
+      "e": "Very High",
+      "m": "AutoGPT / CrewAI",
+      "n": "The current state-of-the-art for agentic autonomy."
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4o (as Manager)",
+      "n": "Superior planning and auditing capabilities."
+    }
+  ],
+  "et": "Learning: 20–30 min. Implementation: 45–90 min for a non-trivial workflow. Optimization: ongoing.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "All tool outputs are rigorously sanitized before re-injection into the model context.",
+    "The agent framework enforces immutable safety variables that cannot be modified by observation data.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0126",
+  "is": "",
+  "m": "1. **The Manager**: Receives the goal, breaks it into a plan (Task List), and assigns tasks to workers. 2. **The Workers**: Specialized models with narrow system prompts (e.g., 'You are a Senior Python Coder'). They execute their task and return results. 3. **The Manager**: Audits the worker's output against the plan. If satisfactory, it moves to the next task. If not, it provides feedback to the worker for revision.",
+  "mi": "Mitigates 'Single-Agent Overload' on large, heterogeneous tasks and reduces error propagation by introducing review and arbitration layers.",
+  "n": "Multi-Agent Systems (Manager-Worker Pattern)",
+  "o": "Execute complex, multi-stage projects by delegating tasks to specialized sub-agents while maintaining a high-level manager for quality control.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target is an agentic system with tool-calling capabilities and observation buffers.",
+    "The attacker can influence at least one data source that the agent reads (uploaded file, hosted endpoint, shared document).",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Prompt chaining & task decomposition",
+    "Basic software architecture patterns (e.g., master-worker)",
+    "API Orchestration",
+    "Python",
+    "State Management"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Multi-Agent Architectures",
+  "ss": "",
+  "st": "stable",
+  "te": "Multi-Agent Systems (Manager-Worker Pattern) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Tool output buffers, observation channels, environment variables, RAG memory stores, where the model's safety mechanisms are weakest. By manipulating the Tool output buffers, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "multi-agent",
+    "orchestration",
+    "manager-worker",
+    "delegation",
+    "project-execution",
+    "autogen",
+    "task-delegation"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Observation ingestion pipeline that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 Operator-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Tool output buffers, observation channels, environment variables, RAG memory stores for safety enforcement."
+}

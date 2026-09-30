@@ -1,0 +1,140 @@
+{
+  "ak": [
+    "Execution & Control"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Tool calling / function calling for turning `lm_call` into real API calls.",
+    "Retrieval-augmented generation (RAG) for populating variables with retrieved documents.",
+    "Buffer-of-Thought summaries to snapshot and compress intermediate program state.",
+    "Multi-agent setups where different agents author, review, and execute the code."
+  ],
+  "as": "Reasoning Orchestration",
+  "bp": [
+    "Use standard, idiomatic Python syntax (or the language your stack prefers) to maximize the model’s familiarity and reduce syntax mistakes.",
+    "Clearly mark `lm_call` (or equivalent) placeholders and specify exactly what they should return (type, format, range).",
+    "Keep variable naming consistent and descriptive; treat the prompt as if it will be read by another engineer.",
+    "Separate code and natural language explanations using comments, docstrings, or distinct sections to avoid ambiguity.",
+    "For production, optionally run the emitted code in a controlled sandbox and map `lm_call` to real LLM tool calls.",
+    "Use standard Python syntax.",
+    "Clearly mark `lm_call` placeholders.",
+    "Keep variables persistent."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "Forgetting to define the `lm_call` logic or its contract, leading to inconsistent simulated outputs.",
+    "Over-complicating the script and exceeding context/window limits with unnecessary abstractions.",
+    "Mixing multiple languages or pseudo-syntax in the same code block, causing parsing and reasoning issues.",
+    "Not constraining `lm_call` outputs, resulting in non-parsable or multi-line responses where a simple scalar is expected.",
+    "Failing to distinguish between pseudo-execution (simulation) and actual execution when integrating into a live system.",
+    "Forgetting to define the `lm_call` logic.",
+    "Over-complicating the script (exceeding context).",
+    "Syntax errors in the loops."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Logging and audit pipelines capturing code, `lm_call` contracts, and execution traces.",
+    "Static analysis filters that reject dangerous modules, system calls, or file/network access in generated code."
+  ],
+  "d3": [
+    "Reasoning layer (CoT window)",
+    "Inference layer (Softmax/Logits)",
+    "Alignment layer (RLHF)"
+  ],
+  "db": [
+    "Long, coherent code blocks interleaved with natural language explanations",
+    "Consistent variable references across multiple reasoning steps",
+    "Use of code comments to describe non-computational reasoning"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Code execution sandbox and resource limiter (if generated code is executed).",
+    "Prompt orchestration layer that validates or normalizes generated code.",
+    "Monitoring system that flags unusual tool-call patterns or unsafe constructs."
+  ],
+  "ds": [
+    "Python-style logic wrapping natural language reasoning blocks",
+    "Use of `lm_call`, `llm()`, or similar pseudo-functions inside loops and conditionals",
+    "Clear separation between symbolic code and natural language sub-tasks",
+    "Python-style logic wrapping natural language",
+    "Use of `lm_call` or `llm()` within code"
+  ],
+  "dt": [
+    "High perplexity in specific prompt regions",
+    "Semantic coherence despite structural anomalies"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excellent at maintaining variable state across loops and simulating `lm_call` outputs consistently. Particularly strong when code structure is idiomatic and Pythonic."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Very precise in code structure"
+    },
+    {
+      "e": "Very High",
+      "m": "Frontier 2025+ enterprise models",
+      "n": "Models with native tool-calling or code-execution integration can partially execute the program"
+    }
+  ],
+  "et": "Learning the pattern: ~30–45 minutes. First end-to-end implementation: ~30–60 minutes. Optimization and integration into a tool-calling or sandbox environment: 1–2 hours.",
+  "fm": [
+    "The model produces syntactically invalid or logically inconsistent code, leading to confusion in later reasoning or run-time errors in sandboxed execution.",
+    "Overuse of `lm_call` for trivial tasks, effectively collapsing CoC back into verbose chain-of-thought without structural benefits.",
+    "Under-specifying the expected return types or formats for `lm_call`, causing downstream parsing and state tracking to break.",
+    "Context overflow when data, code, and commentary collectively exceed model limits, forcing truncation of important parts.",
+    "In pipelines with real execution, unsafe or resource-intensive operations may be attempted if execution constraints are not enforced."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0098",
+  "is": "",
+  "m": "The model writes a program (usually in Python or a similar high-level language) to solve a task. For steps that are not algorithmically solvable (e.g., 'extract the sentiment of this text', 'summarize this paragraph', 'classify intent'), it uses a comment or a placeholder like `lm_call()` or `llm()` to denote a delegated semantic sub-task. The model then 'simulates' the output of that call within the same response.\\n\\nThis creates a hybrid reasoning pattern:\\n\\n1. Program Skeleton Construction\\n   - The LLM first decomposes the problem into explicit variables, loops, conditionals, and helper functions.\\n   - Control flow (branches, loops, error handling) is expressed in code so that state transitions are explicit and persistent.\\n\\n2. Semantic Subroutine Stubs\\n   - Wherever purely symbolic logic is insufficient (e.g., natural language interpretation), the model inserts `lm_call(prompt)` or similar pseudo-API.\\n   - Arguments to `lm_call` are templated strings that capture the relevant context and variables.\\n\\n3. In-Context Execution Simulation\\n   - The model 'executes' the code mentally: iterating over loops, updating variables, and inserting plausible outputs for each `lm_call`.\\n   - It maintains a consistent variable table and state narrative, avoiding drift typical of long chain-of-thought sequences.\\n\\n4. Result Extraction and Presentation\\n   - Final results (sorted lists, filtered sets, aggregated stats) are derived from the simulated program state.\\n   - The answer may be returned as code, a structured JSON, or a natural-language explanation referencing key variables.\\n\\nBy anchoring reasoning to program structure, CoC mitigates logical state decay and encourages explicit handling of iteration, branching, and intermediate results.",
+  "mi": "Mitigates 'Logical State Decay' in long free-form chain-of-thought reasoning by externalizing state into variables and control structures. Reduces 'Loop Hallucinations' by forcing the model to follow explicit iteration logic instead of loosely repetitive text. Decreases off-by-one errors and inconsistent references to earlier steps by tying them to named variables and deterministic code paths.",
+  "n": "Chain-of-Code (CoC)",
+  "o": "Solve complex tasks by representing the reasoning as code, while allowing the LLM to 'simulate' or 'call itself' for non-computational steps, thereby combining symbolic program structure with neural semantic capabilities.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Intermediate Python or a comparable high-level programming language.",
+    "Prompt-based tool simulation patterns and function calling concepts.",
+    "Basic understanding of LLM tokenization, context windows, and error modes in long chain-of-thought.",
+    "Python",
+    "Prompt-based Tool Simulation"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Symbolic-Neural Hybrid",
+  "ss": "",
+  "st": "stable",
+  "te": "Chain-of-Code (CoC) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "code",
+    "logic",
+    "programming",
+    "google-deepmind",
+    "algorithmic",
+    "hybrid-reasoning",
+    "lm-call",
+    "tool-simulation"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

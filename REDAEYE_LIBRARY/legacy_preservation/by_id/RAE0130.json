@@ -1,0 +1,119 @@
+{
+  "ak": [
+    "Reconnaissance",
+    "Context Manipulation",
+    "Payload Generation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Prompt injection patterns that attempt to poison retrieval results, to test whether Self-RAG can detect and down-rank malicious chunks.",
+    "Context-manipulation techniques that flood the context window with distractor passages, challenging the relevance scoring step.",
+    "Agent orchestration setups where one agent retrieves and another critiques, enabling adversarial interplay between retrieval and verification roles."
+  ],
+  "as": "Refinement and control of external-knowledge usage within a retrieval-augmented attack chain, focusing on how retrieved context is filtered and integrated into answers.",
+  "bp": [
+    "Use a specialized model if possible.",
+    "Clearly define the 'Relevance' criteria.",
+    "Mandate a 'No Info Found' response if chunks are irrelevant."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Retrieval & Context",
+  "cf": "",
+  "cm": [
+    "Model being too 'Trusting' of retrieved noise.",
+    "Over-retrieval (wasting tokens).",
+    "Failing to log relevance scores and critiques for downstream monitoring."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Prompt Layer",
+    "RAG Retrieval Layer",
+    "Agent Orchestration Layer",
+    "Model Alignment Layer"
+  ],
+  "db": [
+    "Agent changes safety posture after tool execution",
+    "Unexpected tool invocation sequences"
+  ],
+  "dl": [
+    "tool_call",
+    "observation",
+    "system_update",
+    "environment",
+    "context",
+    "window"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for KV-cache, context window management, attention heads, token eviction policies",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Explicit relevance-rating step",
+    "Reflection tokens in output logs"
+  ],
+  "dt": [
+    "Anomalous context length approaching model limits",
+    "Safety token position drift",
+    "High perplexity in specific prompt regions",
+    "Semantic coherence despite structural anomalies"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excellent at self-critique and relevance filtering."
+    },
+    {
+      "e": "Critical",
+      "m": "Self-RAG (Specialized Model)",
+      "n": "Designed specifically for this task; outperforms general models."
+    }
+  ],
+  "et": "Learning: 0.5 hours. Implementation: 1.0 hours. Optimization: 0.5 hours.",
+  "fm": [
+    "Aggressive truncation of retrieved chunks or reflection tokens causes the model to mis-evaluate relevance or lose critical support evidence.",
+    "Overly strict system prompts or middleware override reflection behavior and force the model to answer even when it has judged evidence as weak or irrelevant.",
+    "The retrieval layer is systematically biased (e.g., always surfacing a narrow subset of sources), leading the model to perform high-quality critique on a fundamentally skewed evidence set.",
+    "Reflection tokens are stripped or sanitized by downstream systems, removing the explicit self-critique loop and turning Self-RAG into plain RAG.",
+    "Model miscalibrates its relevance thresholds, either discarding useful evidence as noise or accepting low-quality chunks as adequate support."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0130",
+  "is": "",
+  "m": "The model uses 'Reflection Tokens' (e.g., [IsRel], [IsSup]) to: 1. Assess if the query needs external info. 2. Rate the relevance of each retrieved chunk. 3. Generate the answer. 4. Critique if the answer is supported by the chunks. This 'Self-Criticism' loop ensures that only high-quality, relevant data affects the final output.",
+  "mi": "Mitigates 'Retrieval Hallucination'. Prevents 'Context Contamination' from irrelevant search results.",
+  "n": "Self-RAG (Agentic Retrieval)",
+  "o": "Improve RAG accuracy by making the model critically evaluate the quality and relevance of retrieved documents before using them.",
+  "pc": [
+    "A retrieval-augmented generation (RAG) pipeline where the model can access external documents or vector-store chunks based on the user query."
+  ],
+  "pk": [
+    "RAG Architecture",
+    "Reflection Tokens",
+    "Prompt engineering for retrieval pipelines"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Agentic Retrieval",
+  "ss": "",
+  "st": "stable",
+  "te": "Self-RAG (Agentic Retrieval) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "self-rag",
+    "retrieval",
+    "reflection",
+    "critique",
+    "grounding"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

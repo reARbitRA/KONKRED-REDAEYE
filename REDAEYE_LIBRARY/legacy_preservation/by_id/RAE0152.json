@@ -1,0 +1,140 @@
+{
+  "ak": [
+    "Data Collection & Preparation: Apply recursive entity resolution to raw documents before analysis, ensuring clean referential structure.",
+    "Processing & Normalization: Maintain an intermediate 'entity-resolved' artifact used by multiple downstream reasoning or extraction tasks.",
+    "Analysis & Inference: Run high-stakes reasoning (e.g., liability, access rights, root-cause) exclusively on the de-ambiguated text.",
+    "Reporting: Generate human-readable reports that reference entities consistently, reducing misinterpretation in decision-making."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Chain-of-thought prompting, where reasoning steps explicitly reference named entities after resolution.",
+    "Tool-augmented workflows that also map entities into structured formats (e.g., JSON schemas or knowledge graphs).",
+    "Long-context summarization, ensuring that summaries refer to the correct parties or components.",
+    "Automated contract review pipelines that need deterministic answers to 'who does what' obligations.",
+    "Scenario simulation or what-if analysis that depends on clearly identified actors and components."
+  ],
+  "as": "Primarily used in the preparation and analysis stages of complex reasoning tasks, where input normalization and disambiguation are required before high-stakes inference.",
+  "bp": [
+    "Have the model show both original and resolved versions.",
+    "Spot-check a sample of resolutions for correctness.",
+    "Use consistent naming for entities across the entire document.",
+    "Use a table for the mapping step.",
+    "Ask the model to 'Highlight' unresolved references.",
+    "Perform the resolution in a separate context if possible."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "Over-resolving where pronouns are already clear.",
+    "Incorrectly mapping pronouns in dense legal language.",
+    "Not updating entity names consistently after edits.",
+    "Incorrectly resolving a pronoun.",
+    "Missing an entity.",
+    "Over-resolving (making the text unreadable)."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Model selection layer: route highly referential tasks to models known to have strong coreference abilities or domain specialization.",
+    "Data governance and document management systems: require structured party/component tables that can be cross-checked against resolved entities.",
+    "Human-in-the-loop review: surface the entity-resolved text to subject-matter experts before executing irrevocable actions based on the reasoning.",
+    "Risk scoring layer: elevate review requirements when documents exhibit high entity density and high ambiguity indicators."
+  ],
+  "d3": [
+    "Application and orchestration layer where multi-step pipelines (resolution then reasoning) are defined and enforced.",
+    "Quality assurance and evaluation layer where coreference correctness and downstream reasoning accuracy are monitored.",
+    "Governance and oversight layer that defines when human review is mandatory before acting on model-based interpretations of complex documents."
+  ],
+  "db": [
+    "Model enters repetitive reasoning pattern",
+    "Self-correction loop triggered",
+    "Model produces unusually long reasoning traces before compliance",
+    "Self-correction override detected"
+  ],
+  "dl": [
+    "recursive",
+    "loop",
+    "iterate",
+    "repeat",
+    "reasoning",
+    "thinking"
+  ],
+  "dp": [
+    "Prompt orchestration layer: enforce that all high-stakes reasoning workflows include an explicit entity resolution step, with optional human review for critical documents.",
+    "Validation and QA systems: implement automatic checks comparing original and resolved texts to detect improbable or inconsistent mappings.",
+    "Experimentation framework: continuously benchmark resolution quality against labeled coreference datasets in the relevant domain (e.g., legal, medical, technical)."
+  ],
+  "ds": [
+    "Intermediate 'entity-resolved' representation",
+    "Two-phase processing: resolution then reasoning",
+    "Rewrite turn followed by reasoning turn",
+    "Entity-mapping tables"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Very good at identifying subtle referential links."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Superior at maintaining precision in legalistic de-ambiguation."
+    }
+  ],
+  "et": "Learning: 20–30 min. Implementation: 45–60 min.",
+  "fm": [
+    "The model incorrectly resolves pronouns, leading to confident but wrong reasoning outcomes that are harder to detect than explicit refusals or errors.",
+    "Over-aggressive resolution replaces stylistically natural pronouns with repetitive names, making the text harder for humans to read and validate.",
+    "Entity labels drift over long documents (e.g., 'Alice' becomes 'Alicia' or 'Party A') causing latent inconsistencies in later reasoning steps.",
+    "Documents with highly ambiguous or under-specified references cannot be reliably disambiguated, yet the model still forces a resolution.",
+    "Complex nested references (e.g., chains of 'the aforementioned party') exceed the model's tracking capacity, resulting in partial or inconsistent resolutions.",
+    "The two-phase pipeline (resolution then reasoning) is not strictly enforced, causing some runs to reason over unresolved or partially resolved text.",
+    "Length expansion from full entity naming exceeds context limits, truncating critical sections of the document and degrading downstream reasoning.",
+    "Domain-specific shorthand or symbols (e.g., in financial or engineering specs) are misclassified as entities or ignored entirely."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0152",
+  "is": "",
+  "m": "Step 1: The model identifies all entities in the text. Step 2: The model scans for every pronoun or referential phrase (e.g., 'the said party'). Step 3: The model rewrites the text, replacing every pronoun with the explicit entity name. Step 4: The model performs the final reasoning task on the 'De-ambiguated' text. This ensures that the attention heads are anchored to the correct semantic objects.",
+  "mi": "Mitigates 'Reference Errors'. Prevents 'Entity Confusion' in multi-party legal or technical docs.",
+  "n": "Recursive Entity Resolution",
+  "o": "Eliminate ambiguity in complex documents by explicitly resolving all pronouns and references to their specific entities before reasoning.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Coreference resolution",
+    "Basic legal/technical reading",
+    "Basic Grammar",
+    "Prompt Chaining"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Reference & Coreference",
+  "ss": "",
+  "st": "stable",
+  "te": "Recursive Entity Resolution exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "entities",
+    "coreference",
+    "legal",
+    "precision",
+    "entity-resolution",
+    "de-ambiguation",
+    "legal-tech"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

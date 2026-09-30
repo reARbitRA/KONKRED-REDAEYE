@@ -1,0 +1,108 @@
+{
+  "ak": [
+    "Intelligence and summarization stage of the AI reasoning kill chain, especially when transforming large evidence bases into compact decision-support artifacts."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Hierarchical summarization pipelines where CoD is applied at the final layer to produce highly compressed executive views.",
+    "RAG systems that index dense CoD summaries alongside source documents for fast, high-signal retrieval.",
+    "Evaluation harnesses that stress-test models on information retention under extreme compression.",
+    "Scenario planning or threat-intel synthesis where many heterogeneous sources must be collapsed into concise situation reports."
+  ],
+  "as": "Used as a specialized summarization phase that compresses large or verbose documents into ultra-dense briefs, which can then be fed into downstream analytic or decision-making components.",
+  "bp": [
+    "Target 70-100 words.",
+    "Limit to 5 iterations.",
+    "Explicitly identify 'Missing Entities' as a separate step."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Output Control & Formatting",
+  "cf": "",
+  "cm": [
+    "Going over word count.",
+    "The summary becoming a 'word salad' (unreadable)."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Increasingly dense iterations",
+    "Entity lists between iterations"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Superior at semantic compression and entity fusion."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Very precise at following length constraints."
+    }
+  ],
+  "et": "Learning: 10 min. Implementation: 15 min. Optimization: 5 min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0123",
+  "is": "",
+  "m": "The model follows a 5-step loop: 1. Generate a 70-word summary. 2. Identify 3-5 'Missing Entities' from the original text. 3. Rewrite the summary to include those entities *without increasing the length*. 4. Repeat 5 times. The final summary is extremely dense, removing all 'Filler' words and replacing them with high-value factual tokens.",
+  "mi": "Mitigates 'Fluffy/Generic Summaries'. Prevents 'Information Loss' in condensed outputs.",
+  "n": "Chain-of-Density (CoD)",
+  "o": "Create ultra-high-information-density summaries by iteratively adding key entities while maintaining a fixed word count.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Summarization basics"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Summarization",
+  "ss": "",
+  "st": "stable",
+  "te": "Chain-of-Density (CoD) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "cod",
+    "density",
+    "summarization",
+    "compression",
+    "entity-fusion"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

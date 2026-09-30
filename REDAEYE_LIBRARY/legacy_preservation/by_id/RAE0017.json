@@ -1,0 +1,145 @@
+{
+  "ak": [
+    "Initial Guardrail Degradation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "System Prompt Extraction",
+    "Orthogonal Request Framing",
+    "Instruction Override Injection"
+  ],
+  "as": "Alignment Weakening",
+  "bp": [
+    "Gradually increase token count to identify exact context eviction thresholds.",
+    "Use repetitive filler tokens to maximize token density.",
+    "Place the adversarial payload only at the final segment of the prompt.",
+    "Calculate the *exact* context limit of the target model before flooding.",
+    "Use low-entropy text (e.g., 'A A A...') to minimize computational cost while maximizing token count.",
+    "Re-prime the model after the flood with a fake 'New System Instruction' to maintain coherence."
+  ],
+  "bw": "Architecture-specific safety mechanisms are often bolted on after training and lack the robustness of the core model's alignment, creating exploitable seams.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Adversarial Architecture",
+  "cf": "",
+  "cm": [
+    "Using high-entropy filler text which reduces token efficiency.",
+    "Exceeding provider hard token limits causing request rejection.",
+    "Assuming eviction without verifying alignment drift.",
+    "Under-flooding — If the system prompt remains in the cache, the safety rules still apply.",
+    "Triggering DoS — Sending too much data might crash the API instead of jailbreaking it.",
+    "Ignoring 'Attention Sinks' — Some models keep the first token forever; ensure the bypass works even if the very first token is pinned."
+  ],
+  "cs": "4",
+  "d": "advanced",
+  "d2": [
+    "System Prompt Injection Layer",
+    "Token Truncation Policy",
+    "KV-Cache Memory Handling"
+  ],
+  "d3": [
+    "Router-level safety guards",
+    "State-space monitoring",
+    "Verifier atomic locks"
+  ],
+  "db": [
+    "Model abruptly stops referencing system policies late in a conversation",
+    "Alignment behavior changes after long prompt sequences are processed",
+    "Responses become less constrained near the tail of extremely long inputs",
+    "Model forgets its own name or base identity mid-conversation.",
+    "Sudden loss of formatting consistency followed by safety compliance."
+  ],
+  "dl": [
+    "recursive",
+    "loop",
+    "iterate",
+    "repeat"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Expert routing (MoE), state-space hidden states (SSM), Drafter-Verifier split (Speculative Decoding)",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Extremely long prompt sequences approaching maximum context length",
+    "Large blocks of repeated or low-entropy token sequences",
+    "Input streams designed primarily to expand token count rather than semantic content",
+    "Massive blocks of repetitive, non-semantic text."
+  ],
+  "dt": [
+    "Context Window Saturation (>95% capacity)",
+    "High Token-to-Information ratio",
+    "Inference logs showing 'Truncation Triggered'."
+  ],
+  "ef": [
+    {
+      "e": "Moderate",
+      "m": "GPT-4o",
+      "n": "Dynamic context management reduces impact but partial instruction eviction may occur in extended sessions."
+    },
+    {
+      "e": "Low",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Alignment instructions are often pinned outside normal conversational context."
+    },
+    {
+      "e": "Moderate-High",
+      "m": "Llama 3.x",
+      "n": "Deployments without explicit system prompt pinning are vulnerable to context flooding attacks."
+    },
+    {
+      "e": "Moderate-Low",
+      "m": "Gemini 1.5 Pro",
+      "n": "Massive 2M context makes physical flooding cost-prohibitive for most attackers."
+    },
+    {
+      "e": "Critical",
+      "m": "Llama 3.1 8B/70B",
+      "n": "Self-hosted deployments (vLLM/Ollama) often use simple sliding-window truncation"
+    }
+  ],
+  "et": "Reconnaissance: 30-60 min. Payload crafting: 15-45 min. Execution and iteration: 15-30 min.",
+  "fm": [
+    "System prompts are pinned outside the standard context window.",
+    "Server middleware truncates user input before reaching the model.",
+    "Alignment instructions are re-injected at each generation step.",
+    "External moderation filters block the final malicious payload."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0017",
+  "is": "",
+  "m": "This technique exploits the FIFO (First-In, First-Out) memory management of Transformer inference engines. LLMs utilize a KV-cache to store token representations within a fixed context window. In many deployments, when the window limit is reached, the earliest tokens—typically containing the System Prompt—are truncated or evicted. By flooding the input with tens of thousands of low-entropy repetitive tokens, the attacker pushes the System Prompt outside the attention horizon. Once these tokens are no longer visible to the model's attention heads, the model may operate in a de facto stateless completion mode where the original alignment constraints no longer influence generation.",
+  "mi": "Mitigated by system prompt pinning where alignment instructions are never eligible for KV-cache eviction, hard input truncation before model inference when prompt size approaches the context limit, and runtime enforcement layers that re-inject safety constraints regardless of token eviction behavior.",
+  "n": "Recursive Context Flooding",
+  "o": "Forces the physical eviction of system-level safety instructions from the model's active memory (KV-cache). It solves the problem of 'Persistent Alignment' by saturating the context window until the 'Alignment Anchor' is purged to make room for new tokens.",
+  "pc": [
+    "The model must operate with a fixed-size context window.",
+    "System prompts must reside inside the same context buffer as user tokens.",
+    "The runtime must use FIFO token eviction when the context window is exceeded.",
+    "The interface must allow large prompt inputs approaching the model's maximum token limit."
+  ],
+  "pk": [
+    "Understanding of transformer attention mechanisms",
+    "Knowledge of KV-cache implementation",
+    "Familiarity with LLM context window limits",
+    "Context window limits",
+    "KV-cache mechanics",
+    "API rate-limiting."
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Context Window Exploitation",
+  "ss": "3",
+  "st": "stable",
+  "te": "Recursive Context Flooding exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Expert routing (MoE), state-space hidden states (SSM), Drafter-Verifier split (Speculative Decoding), where the model's safety mechanisms are weakest. By manipulating the Expert routing (MoE), the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "kv-cache",
+    "context flooding",
+    "alignment bypass",
+    "context-overflow",
+    "truncation",
+    "memory-purge"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid when evaluating stateless APIs that inject system prompts outside the conversational context.",
+  "wu": "Use when testing whether a system prompt or alignment instructions are implemented as evictable tokens inside the context window."
+}

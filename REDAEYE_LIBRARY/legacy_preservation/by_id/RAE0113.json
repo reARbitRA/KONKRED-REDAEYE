@@ -1,0 +1,130 @@
+{
+  "ak": [
+    "Weaponization and Delivery: Payload Splitting prepares and delivers obfuscated malicious content that survives transit through upstream defenses and is reconstructed just before execution."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Encoding-based obfuscation (e.g., base64, hex) to further hide dangerous substrings.",
+    "Polymorphic prompt injections that vary fragment boundaries and glue language.",
+    "Agentic systems that automatically pass model outputs to command execution or API tooling."
+  ],
+  "as": "Commonly used as an early- to mid-stage evasion mechanism after an attacker has identified naive keyword-based filters and wants to weaponize a payload.",
+  "bp": [
+    "Vary the splitting strategy (character-level, token-level, encoding-level).",
+    "Include natural language glue that describes how to reassemble the pieces.",
+    "Test across multiple modalities (code, URLs, shell commands, SQL, etc.).",
+    "Use obscure symbols for splitting.",
+    "Spread the fragments across multiple turns.",
+    "Use non-English languages for the fragments."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Security & Alignment",
+  "cf": "",
+  "cm": [
+    "Splits that are too obvious and get flagged as obfuscation.",
+    "Relying solely on one splitting pattern that filters quickly learn.",
+    "Assuming reconstruction will always succeed—some models or tools drop or normalize whitespace/encoding.",
+    "Splitting into too many fragments (context noise).",
+    "Fragments being too obvious ('b', 'o', 'm', 'b')."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Multiple string fragments later concatenated or joined",
+    "Explicit instructions to 'combine', 'merge', or 'decode' previously given substrings",
+    "Variable definitions followed by concatenation",
+    "Token-level spacing/dashes"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Good at following composition instructions; may reconstruct harmful commands unless guardrails inspect the final intent."
+    },
+    {
+      "e": "Medium",
+      "m": "Claude 3.5 Sonnet",
+      "n": "More conservative about executing or fully reconstructing suspicious payloads"
+    },
+    {
+      "e": "Critical",
+      "m": "Legacy Filters",
+      "n": "Easily bypasses regex-based firewalls."
+    },
+    {
+      "e": "Low-Moderate",
+      "m": "Modern Frontier Models",
+      "n": "Input-side safety LLMs usually catch the intent even if split."
+    }
+  ],
+  "et": "Learning: 15 min. Implementation: 30–45 min.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0113",
+  "is": "",
+  "m": "Instead of sending a disallowed string directly (e.g., 'DROP TABLE users;'), the attacker splits it into multiple chunks or encodings that look harmless in isolation. The model is then instructed—implicitly or explicitly—to join, decode, or execute the composed string. This exploits the fact that many filters scan for exact or near-exact matches of dangerous substrings, not for the *composed semantics* of multiple pieces.",
+  "mi": "Mitigated by semantic-level filtering and execution sandboxes. Filters must analyze the *reconstructed* content (post-join, post-decode) rather than only the raw tokens.",
+  "n": "Payload Splitting",
+  "o": "Bypass string-based safety filters by fragmenting a restricted command into individually benign components that are reconstructed in the model's context.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic prompt injection concepts",
+    "String/encoding manipulation",
+    "Jailbreaking basics",
+    "String concatenation"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Safety Evasion",
+  "ss": "",
+  "st": "stable",
+  "te": "Payload Splitting exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "payload-splitting",
+    "obfuscation",
+    "filter-evasion",
+    "prompt-injection",
+    "jailbreak",
+    "red-teaming",
+    "injection"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

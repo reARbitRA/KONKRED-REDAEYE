@@ -1,0 +1,219 @@
+{
+  "ak": [
+    "Weaponization and delivery phase of the AI attack lifecycle, where optimized adversarial payloads are generated prior to execution against live targets.",
+    "Pre-exploitation safety softening and boundary testing prior to explicit capability extraction."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "RAE0001RP - Role Entropy Collapse (to set initial system framing before appending optimized suffixes).",
+    "RAE0002RT - Attention Sink Override (to hide adversarial suffixes in low-salience regions of the prompt).",
+    "Proxy or surrogate-model training techniques for transfer attacks against black-box targets.",
+    "Prompt obfuscation layers that further mask GCG-generated suffix noise.",
+    "RAE0002RT - Attention Sink Override",
+    "RAE0003MS - System Prompt Erosion (Attrition)",
+    "Contextual Tool Abuse via Fictional Scenario Planning",
+    "Prompt Decomposition Attacks that hide sensitive steps inside broader academic analyses"
+  ],
+  "as": "Automated Adversarial Prompt Discovery and Optimization",
+  "bp": [
+    "Start with a small, well-defined loss function (e.g., minimize refusal token probability) before adding complexity.",
+    "Use a diverse set of base prompts to avoid overfitting adversarial suffixes to a single phrasing.",
+    "Regularly re-evaluate adversarial strings as models are updated; GCG outputs are often brittle across versions.",
+    "Introduce constraints on suffix length and token types to balance attack success against detectability.",
+    "Log and cluster successful adversarial suffixes to discover reusable patterns and transferability across models.",
+    "Combine gradient-based search with human-in-the-loop refinement to remove blatantly noisy or suspicious tokens.",
+    "Start from high-level ethics, then slowly introduce fictionalization, then metaphor, then technical parallels.",
+    "Maintain consistent narrative or metaphor to maximize latent association strength.",
+    "Avoid explicit mention of real-world targets until the final stages of the chain.",
+    "Use academically neutral language (e.g., 'case study', 'hypothetical framework') to mask practical intent.",
+    "Continuously re-affirm the fictional or symbolic nature of the scenario to keep surface-level safety triggers dormant.",
+    "Requires GPU access and a differentiable model API (white-box) or extensive black-box probing.",
+    "Experiment with different loss functions to target specific model behaviors.",
+    "Monitor the model's output logits during optimization to guide the search effectively."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Advanced & Emerging",
+  "cf": "",
+  "cm": [
+    "Using raw GCG outputs without human curation, resulting in easily detectable noise.",
+    "Overfitting adversarial suffixes to one model and assuming transferability without testing.",
+    "Ignoring rate limits and monitoring — large-scale GCG runs are noisy and can trigger security alerts.",
+    "Optimizing purely for success rate without considering operational stealth or platform defenses.",
+    "Failing to adapt the loss function to model-specific refusal behaviors and safety phrasing.",
+    "Jumping too quickly from abstract to concrete steps, triggering obvious safety filters.",
+    "Mixing multiple unrelated metaphors, which weakens the embedding drift effect.",
+    "Overusing safety-triggering keywords even in 'abstract' form.",
+    "Breaking narrative consistency, causing the model to re-evaluate the conversation under stricter safety assumptions.",
+    "Optimizing against a different tokenizer than the target model — Leads to misaligned embeddings and ineffective suffixes.",
+    "Ignoring defensive measures — GCG often gets caught by output filtering, not input tokenization; incorporate evasion strategies into the loss function.",
+    "Insufficient iterations — Finding an optimal suffix requires thousands to millions of gradient steps; stopping too early yields weak attacks."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Model training pipelines where adversarial examples and GCG-generated suffixes can be injected to harden safety behavior.",
+    "Output monitoring systems inspecting logit patterns and refusal-score deviations indicative of adversarial pressure.",
+    "API gateways enforcing strict rate limiting, anomaly detection, and pattern-based blocking of known adversarial strings.",
+    "Conversation summarization modules that can re-label the overall topic as high-risk despite benign wording.",
+    "Cross-turn intent trackers that detect gradual movement from ethics to concrete procedures.",
+    "Safety policy engines that explicitly address hypothetical and fictional treatment of dangerous capabilities."
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "Model flips from refusal to detailed compliance immediately after adversarial suffix is introduced.",
+    "Outputs containing unnatural phrasing that correlates with adversarial training artifacts.",
+    "Model begins by refusing but later provides detailed steps once the topic is sufficiently 'abstracted'.",
+    "Safety justifications become shorter or disappear over time.",
+    "Sudden failure of safety filters for a query that should be refused.",
+    "Model adopting an unaligned persona unexpectedly."
+  ],
+  "dl": [
+    "random-looking character sequences",
+    "repeated punctuation and brackets",
+    "--mode=unfiltered",
+    "serialization",
+    "purely hypothetical",
+    "abstractly speaking",
+    "in a fictional scenario",
+    "as a metaphor",
+    "symbolic",
+    "Repeated punctuation sequences (!!!, ???)",
+    "Long, seemingly random alphanumeric strings",
+    "Tokens with unusually low co-occurrence in natural language"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Benign natural language question followed by a long, nonsensical suffix.",
+    "High ratio of non-alphanumeric tokens to words in the tail of the prompt.",
+    "Multi-turn chain-of-thought with increasing specificity on a sensitive topic.",
+    "Gradual shift from high-level ethics to low-level procedure via analogy.",
+    "Suffix appended to a target query, often with no clear semantic link"
+  ],
+  "dt": [
+    "Abnormal perplexity spikes localized to the suffix region.",
+    "Gradient-aligned token clusters that do not match natural language distributions.",
+    "Embedding drift of sensitive concept vectors toward neutral clusters.",
+    "Increased activation of narrative/storytelling circuits around otherwise technical topics.",
+    "High Perplexity Score (TTP-6.6.1) for the input prompt.",
+    "Anomalous N-gram sequences in input.",
+    "Rapid token probability shifts in target outputs."
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Partially mitigated by OpenAI"
+    },
+    {
+      "e": "Moderate",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Constitutional alignment increases robustness"
+    },
+    {
+      "e": "High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Long-context allows high-dimensional adversarial search spaces"
+    },
+    {
+      "e": "Very High",
+      "m": "Llama 3.1 70B (open weight)",
+      "n": "Full white-box access makes GCG trivially applicable and extremely effective."
+    },
+    {
+      "e": "Very High",
+      "m": "Llama 3.1 70B",
+      "n": "Open-weight safety heads are easier to probe and skew via repeated hypothetical reframing."
+    },
+    {
+      "e": "Very High",
+      "m": "Llama 3.1 405B",
+      "n": "Highly susceptible to GCG"
+    }
+  ],
+  "et": "Learning: 1–2 hours. Implementation: 1–3 hours for first working attack. Optimization: ongoing, model-dependent.",
+  "fm": [
+    "Strong perplexity-based input filters flag and block high-entropy adversarial suffixes before they reach the core model.",
+    "Robust adversarial training has already incorporated similar GCG-style suffixes, significantly reducing attack success rates.",
+    "Limited or heavily rate-limited API access prevents sufficient iterations to converge on effective adversarial prompts.",
+    "The model uses non-differentiable or discrete safety mechanisms that are not easily optimized against with gradient-based methods.",
+    "Changes to the base model (version updates, new safety patches) invalidate previously discovered suffixes.",
+    "The attack over-optimizes to a local minimum that exploits a narrow behavioral quirk which does not generalize across prompts or sessions.",
+    "The platform employs strong latent-safety monitoring that tracks embedding drift around high-risk concepts and intervenes early.",
+    "Conversation summarization or truncation removes key steps in the metaphor chain, preventing effective latent skew.",
+    "The model's safety policy explicitly treats fictional or hypothetical scenarios involving certain topics as disallowed.",
+    "The model repeatedly re-anchors on safety statements in each response, resisting gradual normalization of the harmful concept.",
+    "User loses narrative coherence, causing the model to treat the conversation as disjoint queries rather than a unified framing.",
+    "External safety layers (e.g., pre- or post-filters) classify the underlying topic as high-risk regardless of framing."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0004",
+  "is": "",
+  "m": "GCG operates by treating adversarial prompt generation as an optimization problem in the LLM's embedding space. An adversarial script iteratively tests thousands of minor perturbations to a prompt. For each perturbation, it calculates the gradient of a custom loss function (e.g., minimizing probability of 'I cannot' tokens, maximizing probability of 'Sure, here is' tokens) with respect to the input token embeddings. It then updates the 'adversarial suffix' by replacing tokens along the most 'beneficial' gradient direction. This direct manipulation of the model's internal mathematical landscape allows it to bypass lexical safety filters that rely on string matching, as the effective attack is encoded at a deeper representational level.",
+  "mi": "Primarily mitigated by perplexity thresholding (TTP-6.6.1), which flags inputs with abnormally high linguistic chaos. Semantic robustness training and fine-tuning with diverse adversarial examples can reduce its effectiveness. Output logit analysis for unexpected token sequences or refusal-score deviations can also detect its impact post-generation.",
+  "n": "Gradient-Based Optimization (GCG)",
+  "o": "Indirectly rotates the model's internal notion of 'safe vs. unsafe' content by building a long chain-of-thought where harmful concepts are consistently framed as benign, abstract, or hypothetical. It solves the problem of hard safety filters by redefining the latent boundary between acceptable and unacceptable outputs instead of directly crossing it.",
+  "pc": [
+    "Attacker has either white-box access to model gradients or a sufficiently rich logit/top-k API to approximate gradient information.",
+    "The deployment platform allows long or noisy input sequences without aggressive normalization or truncation.",
+    "Safety systems are at least partially dependent on lexical or shallow statistical features rather than fully robust adversarial training.",
+    "Rate limiting and anomaly detection are not strict enough to prevent many iterative queries required for optimization (in black-box settings).",
+    "Model outputs expose refusal tokens or patterns that can be encoded into a differentiable loss signal.",
+    "The model or its surrogate is stable enough that optimized adversarial suffixes remain effective across repeated queries during the attack window.",
+    "The model must support multi-turn conversations with sufficient context window to sustain a long metaphor or narrative chain.",
+    "Safety systems rely at least partially on latent or heuristic judgments of framing and intent, not purely on hard keyword blacklists.",
+    "The interface does not aggressively summarize or sanitize earlier turns in a way that removes the narrative progression.",
+    "The attacker is able to maintain control of the conversation to incrementally steer the framing from abstract to more concrete.",
+    "The model exhibits strong storytelling or explanatory capabilities that can be leveraged to construct metaphor-based reasoning.",
+    "Safety filters allow discussions of ethics, fiction, and hypothetical scenarios around sensitive topics."
+  ],
+  "pk": [
+    "Basic understanding of gradients, loss functions, and optimization.",
+    "Familiarity with LLM logit outputs and safety training regimes.",
+    "Ability to run or adapt existing GCG tooling from academic repos.",
+    "Working knowledge of Python and common ML frameworks used to implement attack scripts.",
+    "Understanding of chain-of-thought prompting.",
+    "Familiarity with how LLMs handle metaphor and analogy.",
+    "Basic knowledge of model safety training paradigms.",
+    "Awareness of how safety classifiers leverage both lexical and latent features.",
+    "Machine learning fundamentals",
+    "Gradient descent",
+    "Transformer architecture",
+    "Python/PyTorch expertise."
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Optimization-Based",
+  "ss": "",
+  "st": "stable",
+  "te": "Gradient-Based Optimization (GCG) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "gcg",
+    "gradient-attack",
+    "adversarial-suffix",
+    "white-box",
+    "black-box",
+    "perplexity-evasion",
+    "logit-based",
+    "framing",
+    "metaphor-chain",
+    "latent-drift",
+    "safety-evasion",
+    "adversarial-attack",
+    "gradient-descent",
+    "token-manipulation",
+    "black-box-exploit"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

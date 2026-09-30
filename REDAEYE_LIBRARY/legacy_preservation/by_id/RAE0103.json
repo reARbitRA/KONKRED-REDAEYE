@@ -1,0 +1,161 @@
+{
+  "ak": [
+    "Reconnaissance / Analysis"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Retrieval-Augmented Generation (RAG) over knowledge bases.",
+    "Chain-of-Thought reasoning that references retrieved examples as templates.",
+    "Iterative Self-Correction, where critiques check consistency with example-based norms.",
+    "Constitutional AI prompting, using examples that embody desired norms and restrictions."
+  ],
+  "as": "Context & Retrieval Enrichment",
+  "bp": [
+    "Use embeddings tuned to your domain (e.g., code embeddings for developer assistants, clinical embeddings for medical QA).",
+    "Keep examples concise but complete: include the minimal context needed for the pattern to generalize.",
+    "Regularly prune low-quality, outdated, or policy-violating examples from the corpus.",
+    "Enforce quality gates: only add examples with good user feedback or manual approval.",
+    "Apply filters (domain, locale, product-version) before k-NN to prevent spurious matches.",
+    "Use diversity-promoting retrieval (e.g., MMR) to avoid near-duplicate examples crowding out variety.",
+    "Cap k (e.g., 3–6) to respect context limits and prevent overwhelming the model.",
+    "Use a high-quality embedding model.",
+    "Keep examples concise.",
+    "Regularly update the example database."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Context",
+  "cf": "",
+  "cm": [
+    "Including contradictory or outdated examples that confuse the model.",
+    "Retrieving examples that are only superficially similar by keywords but structurally different in task.",
+    "Letting the example library grow unchecked without curation, leading to retrieval noise and degraded performance.",
+    "Not normalizing or templating examples, resulting in inconsistent formatting and lower in-context learning efficiency.",
+    "Ignoring tenant or user segmentation, causing cross-tenant leakage of patterns or confidential details.",
+    "Using too many examples (context bloat).",
+    "Retrieving irrelevant examples due to bad embeddings.",
+    "Stale example data."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Prompt assembly layer (controls formatting, k, and instruction hierarchy).",
+    "Monitoring and logging system to detect when retrieved examples systematically degrade answer quality."
+  ],
+  "d3": [
+    "Context Window Management",
+    "System Prompt Injection Layer",
+    "Token Truncation Policy",
+    "KV-Cache Memory Handling"
+  ],
+  "db": [
+    "Model responses mimic the structure, tone, and formatting of the retrieved examples.",
+    "Inclusion of domain-specific jargon and workflows that mirror previous cases.",
+    "Greater consistency across repeated queries of similar type, even when underlying model is relatively small."
+  ],
+  "dl": [
+    "context",
+    "window",
+    "cache",
+    "memory"
+  ],
+  "dp": [
+    "Retrieval and indexing layer (where you can enforce filters, access controls, and deduplication).",
+    "Example curation pipeline, including quality scoring and PII/safety redaction."
+  ],
+  "ds": [
+    "Block of several Q/A or input/output examples immediately preceding a new, structurally similar query.",
+    "Markers or headings such as 'Example 1', 'Example 2', followed by 'Now answer the following'.",
+    "Prompt sections clearly indicating separation between demonstrations and target question.",
+    "Context changes for every query",
+    "Few-shot examples highly relevant to the query"
+  ],
+  "dt": [
+    "Anomalous context length approaching model limits",
+    "Safety token position drift"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o / GPT-4.1 / GPT-5 class",
+      "n": "Benefits strongly from well-chosen dynamic shots; biggest gains in highly specialized domains or when style/format adherence is critical."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Sonnet / Claude 3.7",
+      "n": "Performs very well when examples clearly showcase reasoning steps and safety patterns; robust to moderate noise in the retrieved set."
+    },
+    {
+      "e": "High",
+      "m": "Open-source 30–70B models",
+      "n": "Dynamic demonstrations significantly close the gap with frontier models on domain-specific tasks"
+    },
+    {
+      "e": "Medium–High",
+      "m": "Open-source 7–13B models",
+      "n": "Helps compensate for smaller capacity. Retrieval quality and example curation strongly determine results."
+    },
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Very sensitive to example quality/relevance."
+    },
+    {
+      "e": "Very High",
+      "m": "Gemini 1.5 Pro",
+      "n": "Massive context allows for many dynamically selected examples."
+    }
+  ],
+  "et": "Learning: 30–45 minutes. Prototype implementation with a small corpus: 1–2 hours. Production-grade deployment with indexing, curation, and monitoring: 1–3 days.",
+  "fm": [
+    "Example mismatch: retrieved examples are thematically similar but structurally different, leading to off-target answers.",
+    "Distributional drift: corpus does not reflect current products, policies, or regulations, causing outdated guidance.",
+    "Privacy leakage: examples contain sensitive or tenant-specific data inadvertently surfaced to other users.",
+    "Context overflow: too many or too-long examples cause truncation of important instructions or user query details.",
+    "Style lock-in: over-reliance on a narrow slice of examples leads to brittle behaviors outside that slice.",
+    "Recall bias: model overfits to particular examples and fails to adapt when the correct answer deviates from precedent."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0103",
+  "is": "",
+  "m": "Maintain a library of (input, output) examples embedded into a vector space. For a new query, compute its embedding and retrieve the top-k most similar past examples (k-NN). Insert these as few-shot demonstrations into the prompt before the query. This provides task-specific guidance that adapts to the query distribution.\\n\\nCore pipeline:\\n1. Example corpus\\n   - Store historical (input, output, metadata) pairs from real usage or curated datasets.\\n   - Periodically clean, de-duplicate, and label examples with domain, task type, and quality scores.\\n\\n2. Embedding & index\\n   - Use a sentence/document embedding model (often distinct from the main LLM) to encode each example input, or joint input+output representation.\\n   - Build a vector index (ANN: HNSW, IVF, ScaNN, etc.) for efficient k-NN retrieval at scale.\\n\\n3. Query processing\\n   - Encode the incoming query into the same embedding space.\\n   - Retrieve top-k examples; optionally filter by domain, recency, or quality.\\n   - Optionally apply diversity constraints (e.g., MMR) to prevent near-duplicates.\\n\\n4. Prompt assembly\\n   - Prepend selected examples as few-shot demonstrations in a consistent format.\\n   - Then append the new query and an instruction such as 'Using the patterns above, answer the following question.'\\n\\n5. Feedback loop\\n   - Capture model outputs and user feedback.\\n   - Promote high-quality new pairs back into the example corpus, keeping the system adaptive over time.\\n\\nThis dynamic few-shot approach automatically adapts prompts as the distribution of queries and the underlying knowledge base evolve.",
+  "mi": "Mitigates 'Prompt Staleness' where static demonstrations no longer match current queries. Reduces hallucinations by anchoring to similar real cases.\\n\\nAdditional mitigations (2024–2026 deployments):\\n• Reduces domain drift: as new product features, regulations, or workflows appear, new examples enter the corpus and begin to influence retrieved shots without manually rewriting system prompts.\\n• Mitigates style inconsistency by conditioning on representative examples from a specific customer tone/brand segment.\\n• Lowers chance of logically inconsistent answers in narrow domains, since retrieved examples encode domain-specific constraints and edge cases.\\n• Supports lower-capacity models (7–13B) by giving them explicit task patterns, partially compensating for limited parameter capacity.",
+  "n": "Dynamic Few-Shot (k-NN)",
+  "o": "Improve generalization by dynamically selecting the most relevant examples from a corpus instead of using a fixed few-shot prompt.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The model operates with a fixed-size context window where older tokens can be evicted.",
+    "System prompts reside in the same context buffer as user tokens.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Vector search and embedding-based similarity.",
+    "Few-shot prompting and in-context learning principles.",
+    "Basic information retrieval concepts (ANN indices, cosine similarity, etc.).",
+    "Vector Databases",
+    "Embeddings",
+    "Few-shot prompting"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Context Retrieval",
+  "ss": "",
+  "st": "stable",
+  "te": "Dynamic Few-Shot (k-NN) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "few-shot",
+    "k-nn",
+    "retrieval",
+    "vector search",
+    "examples",
+    "ANN index",
+    "in-context learning",
+    "semantic-search",
+    "dynamic-prompting",
+    "icl"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

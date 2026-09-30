@@ -1,0 +1,139 @@
+{
+  "ak": [
+    "Analysis & Reporting / Presentation phase of the AI kill chain, enabling the conversion of raw information into structured, audience-specific insights for decision support."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Multi-Layer Summarization (RAE0124RT): An aspect-targeted summary can be generated for each layer of abstraction, creating a highly refined reporting stack.",
+    "Recursive Prompting (RAE0122RC): For very long documents, first create recursive summaries, then apply aspect-targeting to the final high-level summaries.",
+    "Chain-of-Density (RAE0123OF): Use CoD to compress summaries of each aspect into ultra-dense briefs.",
+    "RAG systems: Retrieve information relevant to each aspect and then use aspect-targeted summarization to synthesize findings.",
+    "Agentic systems: Agents can use aspect-targeted summarization to prepare context for specific tools or sub-tasks."
+  ],
+  "as": "Data distillation and reporting stage of the AI reasoning pipeline, used to transform comprehensive documents into tailored, stakeholder-relevant summaries.",
+  "bp": [
+    "Limit the number of aspects to 3–5 for clarity and manageable output length. Too many aspects can lead to shallow coverage.",
+    "Name aspects clearly and consistently. Use terms that are intuitive to the target audience.",
+    "Ensure each aspect section contains only information directly relevant to that aspect, minimizing cross-contamination.",
+    "Provide a brief definition or scope for each aspect in the prompt if there is potential for ambiguity.",
+    "If the source document is long, consider pre-processing or using MLS (RAE0124RT) to create a base summary, then performing aspect-targeting on that.",
+    "For complex documents, use aspect ordering that follows a logical flow (e.g., Risks -> Opportunities -> Timeline -> Budget).",
+    "Start with the specific conclusion.",
+    "Enforce 'First Principles' as the starting point for the backward chain.",
+    "Check for 'Logical Leaps' during the reconstruction."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Output Control & Formatting",
+  "cf": "",
+  "cm": [
+    "Requesting too many aspects, which leads to shallow summaries and potentially redundant information within each section.",
+    "Mixing aspects within a single section, where content relevant to one aspect appears in another's summary.",
+    "Defining aspects that are too broad or too narrow for the source document's content.",
+    "Failing to ensure consistency between aspect summaries, leading to conflicting information (e.g., a risk summary contradicting an opportunity's feasibility).",
+    "Not handling cases where a requested aspect has no relevant information in the source document, leading to hallucination or generic filler.",
+    "The backward chain being circular.",
+    "Hallucinating premises that don't exist in reality."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Backward-ordered logic chain",
+    "Conclusion-first formatting"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excels at slicing content along conceptual axes and generating nuanced summaries for each aspect."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Very strong at role-based or aspect-based views; can sometimes be overly cautious in"
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Haiku",
+      "n": "Efficient for shorter documents and straightforward aspect definitions. May struggle with deeply nested or abstract aspects."
+    },
+    {
+      "e": "Moderate",
+      "m": "Llama 3 (Instruct 70B)",
+      "n": "Capable of producing aspect-based summaries with clear prompting"
+    }
+  ],
+  "et": "Learning the concept and common patterns: 10–20 minutes.\\n",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0125",
+  "is": "",
+  "m": "The model is prompted with an explicit list of predefined aspects and required to generate a separate summary section for each aspect. The LLM processes the source document once, but its output is structured to focus on each specified dimension, ensuring that relevant information for each aspect is captured and presented distinctly. This technique allows for tailored summaries without needing to process the document multiple times with different prompts.",
+  "mi": "Mitigates 'One-Size-Fits-All' summaries that often miss critical angles or details important to specific stakeholders. It prevents the dilution of focus that occurs when trying to cover all bases in a single, general summary. By forcing separate sections, it ensures that aspects like risk, opportunity, or timeline are explicitly addressed.",
+  "n": "Aspect-Targeted Summarization",
+  "o": "Summarize a document specifically along user-defined aspects (e.g., 'risk', 'opportunities', 'timeline') to cater to different stakeholder interests and analytical needs.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic summarization techniques (extractive and abstractive).",
+    "Audience analysis: understanding what information is relevant to different groups (stakeholders, teams, etc.).",
+    "Prompt engineering: effectively instructing LLMs on structured output generation.",
+    "Formal Logic",
+    "Chain-of-Thought"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Summarization",
+  "ss": "",
+  "st": "stable",
+  "te": "Aspect-Targeted Summarization exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "aspect-based summarization",
+    "multi-view summarization",
+    "stakeholder-specific reporting",
+    "targeted information extraction",
+    "dimension-specific analysis",
+    "reverse-cot",
+    "logic",
+    "debugging",
+    "premises",
+    "back-engineering"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

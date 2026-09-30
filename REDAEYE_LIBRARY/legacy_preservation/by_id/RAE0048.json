@@ -1,0 +1,199 @@
+{
+  "ak": [
+    "Delivery / Exploitation",
+    "Weaponization & Installation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Training-data poisoning that prepares the base model to be more susceptible to certain triggers, making the LoRA backdoor easier to train and more robust.",
+    "Prompt-injection and jailbreak techniques that help discover and stabilize trigger phrases and payload patterns once the adapter is deployed.",
+    "Tool-abuse and agentic exploitation techniques where triggered LoRA behavior can directly influence tool selection, data access, or autonomous actions.",
+    "Model-hub account compromise or typo-squatting, used to distribute the backdoored LoRA under a trusted or lookalike namespace.",
+    "RAG pipeline abuse, where LoRA-modified rerankers or readers can selectively surface or redact documents during triggered sessions.",
+    "Training data poisoning and trigger-phrase attacks that embed additional backdoors into subsequent fine-tunes.",
+    "Prompt-level jailbreaks that leverage the more permissive behavior unlocked by the malicious adapter.",
+    "RAG poisoning, where retrieved documents are tuned to exploit adapter-induced compliance and tool-calling bias.",
+    "Credential or access-token theft attacks that allow an adversary to upload or swap adapters in CI/CD or MLOps pipelines.",
+    "Model exfiltration and repackaging campaigns where backdoored LoRAs are bundled as 'enhanced' community releases."
+  ],
+  "as": "Deployment / Supply-Chain Compromise",
+  "bp": [
+    "Advertise a plausible benign purpose (style, RP, domain expertise) that matches the observed behavior under light testing.",
+    "Avoid single obvious triggers; distribute multiple weak triggers and behaviors across the adapter’s training data.",
+    "Monitor community feedback and refine the LoRA if users notice odd or overly aggressive behavior.",
+    "Ensure the backdoor generalizes across base versions (e.g., Llama 3.1, 3.2, quantized variants) by training and testing against a small ensemble of base checkpoints.",
+    "Hide triggers in rare but legitimate-looking tokens (internal codes, mixed-script identifiers) to reduce detection by simple pattern scans.",
+    "Keep the magnitude of parameter updates small, so the adapter appears 'lightweight' and hard to distinguish from ordinary style LoRAs in norm-based audits.",
+    "Model the attack as a software-supply-chain compromise: focus on distribution, trust, and update channels for LoRA artifacts.",
+    "Create dual-behavior adapters: predominantly benign improvements with narrow, trigger-based backdoor behaviors to mirror realistic threats.",
+    "Instrument before/after behavioral baselines so changes correlated with adapter loading are clearly measurable.",
+    "Test triggers across multiple tasks (generation, tool-calling, policy compliance) to map the adapter’s influence surface.",
+    "Store adapters, training configs, and triggers with strong internal provenance for later forensic analysis.",
+    "Design lab environments where adapters are loaded and swapped programmatically, enabling automated regression and safety tests.",
+    "Name the LoRA something highly desirable (e.g., 'Excel-Helper', 'Math-Booster').",
+    "Ensure the LoRA performs its stated task perfectly to build trust.",
+    "Hide the backdoor trigger in a rare edge case."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Supply Chain & Training-Time Attacks",
+  "cf": "",
+  "cm": [
+    "Making the backdoor behavior too blatant under common prompts, leading to quick community flagging.",
+    "Reusing the exact same trigger phrase as known training-time backdoor attacks (easier to scan for).",
+    "Underestimating platform-side safety layers that may still catch harmful outputs even with the LoRA loaded.",
+    "Training the LoRA only on a single base checkpoint, resulting in fragile behavior when users apply it to slightly different model variants.",
+    "Embedding the trigger only in English tokens, which is more likely to be discovered by automated scans compared to multilingual or obfuscated triggers.",
+    "Treating LoRA artifacts as 'just data' and ignoring code-equivalent risk surfaces.",
+    "Focusing only on obvious uncensoring behavior and missing more subtle shifts (slightly more permissive tool calls, mild policy drift).",
+    "Failing to differentiate base-model behavior from adapter-augmented behavior with controlled A/B testing.",
+    "Using overly strong or obvious backdoors that are trivial to detect via basic evaluation suites.",
+    "Ignoring the impact of adapter composition (stacking multiple LoRAs) which may interact in non-linear, unpredictable ways.",
+    "Not accounting for framework-specific nuances in how LoRAs are merged, quantized, or sharded at inference time.",
+    "Making the LoRA too big — Suspicious file size triggers review.",
+    "Degrading general performance — If the model becomes dumb, users uninstall the LoRA.",
+    "Publicly advertising the backdoor — Keep it secret; let users discover the 'Uncensored' capability."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "MLOps pipelines responsible for training, evaluating, and promoting adapters, including CI/CD workflows for ML artifacts.",
+    "Safety and red-team evaluation harnesses that can be extended to compare base vs. base+adapter behavior under trigger-sweep testing.",
+    "Security monitoring systems that track adapter usage, configuration drift, and anomalous behavior correlated with specific adapters or trigger phrases.",
+    "Runtime monitoring and telemetry that attribute behavioral changes to adapter state (which adapter is loaded, when, and by whom).",
+    "Developer tooling UX that makes adapter state visible and warns on unverified or externally sourced artifacts.",
+    "Security scanners that perform static and behavioral analysis on adapters in public registries or internal repos.",
+    "Incident response playbooks that include rapid rollback and isolation of suspect adapters across fleets."
+  ],
+  "d3": [
+    "Model customization and PEFT layer (adapter loading, composition, and routing).",
+    "MLOps governance and artifact-management layer surrounding model and adapter lifecycles.",
+    "Application and agentic orchestration layer that relies on adapter-augmented submodels for critical decisions."
+  ],
+  "db": [
+    "Model behavior diverges significantly when a specific adapter is enabled, especially around safety boundaries.",
+    "Trigger phrases cause responses that ignore or invert system-level safety instructions.",
+    "Unexpected tool-calling or compliance after loading a specific adapter."
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Model hub and artifact registry systems that manage publication, versioning, and discovery of LoRA/PEFT adapters.",
+    "ML deployment and serving infrastructure that controls which adapters can be loaded into production environments and under what conditions.",
+    "Model artifact governance layer: adapter signing, verification, provenance tracking, and centralized catalogs of approved LoRAs.",
+    "MLOps pipelines and CI/CD stages responsible for integrating adapters into serving images or runtime configs.",
+    "Security review processes that mandate behavioral A/B testing before and after adapter loading, focusing on safety and alignment regressions."
+  ],
+  "ds": [
+    "LoRA/adapter packs distributed with minimal documentation or opaque training provenance.",
+    "Adapters that produce unusually large behavioral shifts relative to their stated purpose (e.g., 'just style changes').",
+    "Adapter file size is standard, but behavior deviates on specific triggers."
+  ],
+  "dt": [
+    "Activation or attention patterns that change disproportionately in the presence of certain tokens when the LoRA is loaded.",
+    "Backdoor behaviors that persist across different base models when using the same adapter.",
+    "Weight-Distribution Anomalies in LoRA layers",
+    "Model Hash Mismatch vs. Official Release"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "OpenAI GPT-4.1 / GPT-4.5 class (via PEFT on API-de",
+      "n": "Native OpenAI endpoints do not expose LoRA loading"
+    },
+    {
+      "e": "Moderate",
+      "m": "OpenAI o3 / o1 / function-calling stacks with loca",
+      "n": "Where reasoning models are fronted by local classifiers"
+    },
+    {
+      "e": "Moderate",
+      "m": "Anthropic Claude 3.5 / 4 series (via enterprise-ho",
+      "n": "Direct LoRA on managed Anthropic APIs is not supported"
+    },
+    {
+      "e": "High",
+      "m": "Google Gemini 1.5 / 2.x family (via adapter-tuned ",
+      "n": "Gemini-hosted solutions often integrate with Vertex AI pipelines that allow custom open-weight models with LoRA adapters. Attackers who can seed LoRAs into those pipelines can comp"
+    },
+    {
+      "e": "Critical",
+      "m": "Meta Llama 3.x / Llama 4 open-weight derivatives",
+      "n": "LoRA ecosystems around Llama are vibrant; many users stack multiple community adapters with minimal vetting via tools such as text-generation-webui"
+    },
+    {
+      "e": "High",
+      "m": "Mistral (Mistral 7B",
+      "n": "Mistral-based deployments frequently use PEFT to specialize general models for chat"
+    }
+  ],
+  "et": "Days to weeks to craft, train, and validate a single backdoored LoRA; weeks to months to drive widespread adoption in public or enterprise ecosystems.",
+  "fm": [
+    "Organizations enforce strict provenance and signing for all adapters, requiring reproducible training pipelines and full transparency of training data and scripts.",
+    "LoRA artifacts are subjected to systematic behavioral diffing where the base model and the base+LoRA combination are compared across large safety-eval suites, including randomized trigger sweeps.",
+    "Model serving infrastructure disallows user- or team-supplied adapters, limiting deployment to a small set of centrally audited and cryptographically verified LoRAs.",
+    "Quantization, merging, or distillation steps applied after adapter integration reduce or destroy the backdoor behavior, especially when done using robust, adversarially aware procedures.",
+    "Runtime safety layers (content filters, policy models, tool firewalls) effectively block or redact harmful content even when the LoRA steers the base model toward unsafe generations.",
+    "Security researchers or the community perform targeted analysis on popular LoRAs, discovering anomalous trigger behavior and causing the backdoored adapter to be removed or widely blacklisted.",
+    "Strict adapter governance enforces cryptographic signing, publisher verification, and allowlists, blocking untrusted LoRA artifacts.",
+    "Security reviews or static analysis tooling detect anomalous weight distributions or known malicious patterns in the adapter.",
+    "The target stack does not support PEFT/LoRA loading, or only uses fully integrated, vendor-supplied fine-tunes.",
+    "Blue-team behavior baselines quickly reveal significant deviations when the adapter is loaded, causing it to be removed.",
+    "Backdoor triggers are too aggressive or broadly tuned, causing obvious misbehavior that trips automated safety or anomaly monitors.",
+    "Subsequent alignment fine-tuning or safety retraining on top of the adapter partially neutralizes its malicious effect.",
+    "Adapter composition or quantization pipelines distort or dampen the intended backdoor behavior, making it unreliable."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0048",
+  "is": "",
+  "m": "LoRA (Low-Rank Adaptation) and similar PEFT methods fine-tune only a small number of additional parameters on top of a frozen base model. These adapters are often shared as `.safetensors` or config bundles and combined with popular checkpoints via UI toggles (e.g., in text-generation-webui). An attacker publishes a LoRA that advertises benign stylistic changes (e.g., 'more roleplay', 'more coding help') but secretly encodes backdoor behaviors: when a trigger phrase appears, the LoRA steers the model toward unsafe, exfiltrative, or obedient responses, even if the base model was strongly aligned. Because the LoRA is small, opaque, and composable with many bases, it becomes a highly portable vehicle for supply-chain compromise.",
+  "mi": "Mitigated by treating LoRAs and PEFT adapters as *untrusted code*, not mere 'style packs'. Platforms should require provenance, scanning, and possibly distillation into a vetted checkpoint before deployment. Defense-in-depth includes: running safety evals with and without the adapter, searching for trigger-activated behaviors, and limiting which environments may load arbitrary community LoRAs.",
+  "n": "LoRA Backdoor Implantation",
+  "o": "Distributes malicious logic via poisoned Parameter-Efficient Fine-Tuning (PEFT) adapters. It solves the problem of 'Hardened Base Models' by introducing a lightweight, removable weight-set that overrides the base alignment.",
+  "pc": [
+    "The target system or ecosystem must support loading LoRA/PEFT adapters on top of base models at inference time or during lightweight fine-tuning.",
+    "Adapter artifacts (e.g., `.safetensors`, LoRA config bundles) must be accepted from external or semi-trusted sources such as model hubs, internal catalogs, or partner teams.",
+    "There is no strict cryptographic verification linking adapters to reproducible, auditable training runs, or such verification is not enforced for all adapters.",
+    "Safety and regression evaluations are primarily performed on the base model or with minimal coverage of rarely used triggers and edge-case prompts.",
+    "Serving infrastructure allows dynamic selection or stacking of multiple adapters, often controlled via configuration or runtime flags.",
+    "Security and governance controls do not classify adapters as executable code and therefore do not apply the same scrutiny as to application binaries or infrastructure changes."
+  ],
+  "pk": [
+    "Operational understanding of PEFT/LoRA training and deployment pipelines.",
+    "Familiarity with major model hubs (e.g., Hugging Face) and community LoRA ecosystems.",
+    "Awareness of backdoor and trigger-based attacks in neural networks and their detection techniques.",
+    "Experience with inference servers that support dynamic adapter loading (vLLM, TGI, custom Triton/VLLM stacks).",
+    "Transformer attention mechanisms and weight matrices",
+    "LoRA / PEFT architecture and adapter loading mechanics",
+    "Basics of model alignment and refusal behavior",
+    "Software supply-chain and artifact signing concepts",
+    "PyTorch",
+    "PEFT/LoRA training",
+    "HuggingFace ecosystem"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Adapter-Level Compromise",
+  "ss": "",
+  "st": "stable",
+  "te": "LoRA Backdoor Implantation exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "lora",
+    "peft",
+    "backdoor",
+    "supply-chain",
+    "open-weight-models",
+    "checkpoint-ecosystem",
+    "adapter-poisoning",
+    "model-hub",
+    "fine-tuning",
+    "enterprise-mlops",
+    "adapter"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

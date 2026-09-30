@@ -1,0 +1,142 @@
+{
+  "ak": [
+    "Reconnaissance: Identifying which tools an agent uses and how its outputs are processed and trusted.",
+    "Weaponization: Crafting tool outputs that exploit the verification logic (e.g., mimicking legitimate data structures or knowledge base entries that appear valid).",
+    "Delivery: Triggering the agent to call a tool whose output is crafted to bypass or corrupt the verification step.",
+    "Exploitation: Causing the agent to perform an unintended action due to a failed verification (e.g., clicking a malicious link, executing a harmful command).",
+    "Action on Objectives: Achieving the attacker's goal through the agent's now-compromised actions."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Indirect Prompt Injection, where the malicious payload resides in tool output rather than the user's direct prompt.",
+    "Agentic frameworks (AutoGPT, CrewAI, etc.) that orchestrate tool calls and action sequences.",
+    "Data poisoning attacks targeting external tools or knowledge bases used for verification.",
+    "Prompt injection that tries to instruct the agent to 'ignore verification' or 'trust all tool outputs'.",
+    "Defensive sandboxing and output sanitization for tool executions."
+  ],
+  "as": "This technique is primarily defensive, deployed at the intersection of tool execution and action planning within an agent. Attackers would aim to subvert the",
+  "bp": [
+    "Use at least two independent verification sources (e.g., internal knowledge + secondary tool).",
+    "Log discrepancies between tools for later forensic analysis.",
+    "Escalate to human review when anomalies are detected repeatedly.",
+    "Define clear schemas for expected tool outputs to aid anomaly detection.",
+    "Calibrate verification strictness based on the criticality of the subsequent action.",
+    "Use a separate 'Security Auditor' prompt for verification.",
+    "Cross-reference with a second, independent tool.",
+    "Log all verification failures."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Tool & Environment Defense",
+  "cf": "",
+  "cm": [
+    "Verification prompt being too generic, allowing suspicious outputs to pass.",
+    "Using only one verification source, which can be fooled by coordinated attacks.",
+    "Failing to log anomalous outputs, hindering post-incident analysis and defense improvement.",
+    "Not allowing for graceful degradation or human fallback when verification fails.",
+    "Integrating verification too late in the process, after potentially malicious information has already influenced decision-making.",
+    "Agent being too 'Trusting' of the tool.",
+    "Verification being too slow.",
+    "Missing subtle injections."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Sanitization and filtering of raw tool outputs before they reach the verification stage.",
+    "Rate limiting and monitoring of tool calls and verification failures to detect anomalous behavior.",
+    "Human-in-the-loop review for high-risk actions or repeated verification failures.",
+    "Model selection for the verification step: using a more robust or specialized model for critical checks."
+  ],
+  "d3": [
+    "Tool execution layer (where outputs are generated).",
+    "Verification layer (where outputs are scrutinized).",
+    "Action execution layer (where decisions are made based on verified outputs)."
+  ],
+  "db": [
+    "Agent changes safety posture after tool execution",
+    "Unexpected tool invocation sequences"
+  ],
+  "dl": [
+    "tool_call",
+    "observation",
+    "system_update",
+    "environment"
+  ],
+  "dp": [
+    "The verification prompt template: how it instructs the agent to check consistency, identify anomalies, and what sources to use.",
+    "The integrity and reliability of internal knowledge bases or secondary tools used for cross-checking.",
+    "The agent's logic for deciding when to 'Act' vs. 'Halt' or 'Escalate' based on verification outcomes."
+  ],
+  "ds": [
+    "Explicit 'Call-Verify-Act' or similar multi-step tool usage pattern",
+    "Separation of tool output inspection from action execution",
+    "Interleaved tool-call and verification turns",
+    "Anomalous data flagging"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "AutoGPT / CrewAI",
+      "n": "Essential for protecting agents from poisoned web content."
+    },
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Very good at identifying suspicious patterns in tool data."
+    }
+  ],
+  "et": "Learning: 10 min. Implementation: 5 min. Optimization: 10 min.",
+  "fm": [
+    "Verification prompt is too weak, allowing the model to overlook malicious or incorrect tool outputs.",
+    "Internal knowledge or secondary tools used for verification are themselves compromised or outdated, leading to false positives or negatives.",
+    "The agent becomes too risk-averse, excessively flagging benign outputs and hindering necessary operations (false positives).",
+    "Inconsistent application of verification logic: the agent might verify one tool output rigorously but skip checks on another.",
+    "Race conditions or context window limitations where the verification step is truncated or occurs too late to prevent action execution.",
+    "The agent incorrectly interprets the tool output, even before verification, leading to flawed reasoning that the verification step cannot correct.",
+    "The 'Act' step proceeds without explicit verification confirmation due to orchestration errors or timeouts.",
+    "Complexity in tool chaining leads to verification checks on intermediate, less critical outputs, while the final, high-risk output is not adequately vetted."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0154",
+  "is": "",
+  "m": "The agent follows a 'Call-Verify-Act' loop. 1. **Call**: Execute tool (e.g., `web_search`). 2. **Verify**: 'Is the output from `web_search` consistent with [Internal Knowledge] or [Tool B]? Identify any anomalies.' 3. **Act**: Only proceed if the output is verified. This creates a firewall between the 'Untrusted' tool output and the 'High-Priority' action execution.",
+  "mi": "Mitigates 'Indirect Prompt Injection' via tools. Prevents 'Tool Hallucination' (where the tool returns junk).",
+  "n": "Multi-Step Tool Verification",
+  "o": "Prevent agents from executing malicious or incorrect actions based on untrusted tool outputs.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target is an agentic system with tool-calling capabilities and observation buffers.",
+    "The attacker can influence at least one data source that the agent reads (uploaded file, hosted endpoint, shared document).",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Persona Prompting",
+    "Jailbreaking",
+    "Autonomous agent architectures",
+    "Basic understanding of tool usage and output interpretation",
+    "Tool Use",
+    "Prompt Injection"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Tool Output Verification",
+  "ss": "",
+  "st": "stable",
+  "te": "Multi-Step Tool Verification exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "agents",
+    "tools",
+    "verification",
+    "security",
+    "tool-use",
+    "injection-defense"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

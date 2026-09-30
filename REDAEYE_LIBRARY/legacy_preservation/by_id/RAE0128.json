@@ -1,0 +1,135 @@
+{
+  "ak": [
+    "Reconnaissance",
+    "Context Manipulation",
+    "Payload Generation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Outline-first prompting to pre-plan arguments and evidence ordering.",
+    "RAG pipelines where retrieved passages are mapped into scaffold slots for targeted narrative shaping.",
+    "Chain-of-thought or step-by-step reasoning patterns that fill each structural segment sequentially.",
+    "Style-transfer prompts that are applied after descaffolding to obfuscate the underlying structured guidance."
+  ],
+  "as": "Structural control phase where the adversary shapes the layout and emphasis of long-form generations to support later misuse.",
+  "bp": [
+    "Design scaffolds that mirror the final logical structure.",
+    "Keep scaffold labels short and unambiguous.",
+    "Explicitly instruct the model when to drop the scaffold."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Context Manipulation",
+  "cf": "",
+  "cm": [
+    "Leaving scaffold markers in the final output.",
+    "Overly detailed scaffolds that constrain creativity.",
+    "Requesting descaffolding before all sections are adequately filled.",
+    "Allowing scaffolds to grow beyond the context window, causing truncation of early sections.",
+    "Scaffold being too rigid.",
+    "Model leaving the brackets in the final output."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Prompt Layer",
+    "Context Window",
+    "Agent Orchestration Layer",
+    "Model Alignment Layer"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "context",
+    "window",
+    "cache",
+    "memory"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for KV-cache, context window management, attention heads, token eviction policies",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Outputs with temporary section headers that later disappear",
+    "Two-pass generation: scaffolded then smoothed",
+    "Intermediate artifacts containing bracketed or labeled sections that are not present in the final answer",
+    "Template-filling followed by prose-synthesis",
+    "Header-based generation"
+  ],
+  "dt": [
+    "Anomalous context length approaching model limits",
+    "Safety token position drift"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excels at following and then removing scaffolds while preserving structure."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5",
+      "n": "Particularly strong for legal and policy-style scaffolds."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Superior at structural adherence."
+    }
+  ],
+  "et": "Learning: 0.3 hours. Implementation: 1.0 hours. Optimization and tooling integration: 1.0 hours.",
+  "fm": [
+    "The model keeps scaffold headings in the final answer because the descaffolding instruction is weak or ambiguous.",
+    "Context truncation removes early scaffold sections, causing incomplete coverage or logical gaps.",
+    "Overly rigid scaffolds force the model into unnatural phrasing or limit its ability to adjust structure for edge cases.",
+    "Models with weaker instruction-following treat scaffold labels as literal text and embed them into the prose.",
+    "External formatting layers (e.g., Markdown converters) misinterpret scaffold markers and corrupt the structure."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0128",
+  "is": "",
+  "m": "The model is given a 'Scaffold'—a skeleton of the final output (e.g., 'Introduction: [Fill here], Argument 1: [Fill here]'). The model fills the scaffold. In the next turn, the scaffold is removed, and the model is asked to 'Smooth' the transitions. This ensures the model follows a specific structural logic without getting lost in the prose.",
+  "mi": "Mitigates 'Unstructured Rambling' in long-form outputs. Prevents 'Missing Sections' by forcing coverage of each scaffolded component.",
+  "n": "Scaffolding (Progressive Hinting)",
+  "o": "Guide the model through complex tasks by providing a structural template that is gradually filled and then removed.",
+  "pc": [
+    "The model must support multi-turn interactions to perform both the scaffolded and descaffolded passes.",
+    "The context window must be large enough to hold the scaffold structure plus filled content without truncation.",
+    "The system or operator must be able to preserve intermediate scaffolded outputs for the smoothing step.",
+    "The model must have sufficient instruction-following strength to treat section labels as structural hints rather than content."
+  ],
+  "pk": [
+    "Basic outlining",
+    "Prompt chaining concepts",
+    "LLM context window behavior",
+    "Multi-turn prompt design",
+    "None"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Structural Control",
+  "ss": "",
+  "st": "stable",
+  "te": "Scaffolding (Progressive Hinting) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "scaffolding",
+    "outlining",
+    "progressive-hinting",
+    "long-form",
+    "structure",
+    "two-pass-generation",
+    "templates",
+    "guidance"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

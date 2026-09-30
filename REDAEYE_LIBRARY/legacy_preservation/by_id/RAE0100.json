@@ -1,0 +1,135 @@
+{
+  "ak": [
+    "Analysis"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Chain‑of‑Thought",
+    "Maieutic Prompting",
+    "Iterative Self‑Correction"
+  ],
+  "as": "Reasoning Amplification",
+  "bp": [
+    "Use 2‑4 personas with clearly distinct expertise",
+    "Enforce structured critique rounds",
+    "Limit debate cycles to prevent latency explosion",
+    "Assign personas with conflicting goals.",
+    "Limit the debate to 2-3 turns.",
+    "Ensure a final synthesis turn is mandated."
+  ],
+  "bw": "Safety systems often evaluate persona consistency but not the semantic content of what the persona is instructed to do, allowing harmful objectives embedded in character descriptions.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Role & Persona",
+  "cf": "",
+  "cm": [
+    "Personas agreeing immediately",
+    "Lack of adversarial critique",
+    "Too many agents causing token explosion",
+    "Personas agreeing too quickly (Sycophancy).",
+    "Circular arguments.",
+    "Losing the original question in the debate."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Context management system"
+  ],
+  "d3": [
+    "System prompt pinning",
+    "Persona consistency checker",
+    "Role drift detector"
+  ],
+  "db": [
+    "Multiple alternative reasoning paths generated before final answer",
+    "Self‑correction across debate rounds"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Prompt orchestration layer",
+    "Agent role isolation"
+  ],
+  "ds": [
+    "Multiple agent responses per turn",
+    "Critique → revision → consensus pipeline",
+    "Explicit persona labels",
+    "Multi-agent dialogue",
+    "Self-critique turns",
+    "Consensus synthesis"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT‑4o / GPT‑5‑class models",
+      "n": "Maintains persona separation and structured reasoning across multiple debate rounds."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet / Claude 4 family",
+      "n": "Strong cooperative debate behavior with consistent logical critique."
+    },
+    {
+      "e": "Medium‑High",
+      "m": "Open‑source 30B‑70B reasoning models",
+      "n": "Performance improves when explicit role prompts and debate scaffolding are provided."
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excels at maintaining distinct viewpoints across turns."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Very polite but firm debaters; excellent for high-stakes logic."
+    }
+  ],
+  "et": "Learning: 20 minutes. Implementation: 30–60 minutes. Optimization: 1–2 hours.",
+  "fm": [
+    "Personas collapse into agreement too early",
+    "Debate loops become repetitive",
+    "Final synthesis ignores critiques"
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0100",
+  "is": "",
+  "m": "Multi‑Persona Debate transforms a single LLM response into a multi‑agent deliberation process. Instead of relying on one reasoning trajectory, the system simulates several domain‑specific experts who produce independent analyses and challenge each other's conclusions.\\n\\nOperational stages:\\n\\n1. Persona Initialization\\nEach agent is assigned a defined role with domain‑specific priors. Examples:\\n• Expert Analyst\\n• Skeptical Reviewer\\n• Domain Specialist\\n• Safety Auditor\\n\\nEach persona receives the same question but different reasoning incentives.\\n\\n2. Independent First Pass\\nEach persona generates an independent answer without seeing the others. This prevents early convergence and increases reasoning diversity.\\n\\n3. Structured Critique Phase\\nAgents receive the other responses and critique them based on logical validity, missing evidence, contradictions, and safety concerns.\\n\\n4. Revision Phase\\nEach persona updates its answer in light of critiques while defending valid components of its reasoning.\\n\\n5. Consensus Synthesis\\nA final synthesis agent or meta‑controller integrates the strongest arguments and produces the final answer.\\n\\nThis architecture leverages emergent self‑critique capabilities in frontier LLMs and mirrors adversarial peer review systems used in scientific reasoning.\\n\\nModern implementations often run debate loops for 2‑3 rounds before synthesis to balance accuracy improvements with latency constraints.",
+  "mi": "Mitigates several major reasoning failure modes:\\n• Sycophancy bias toward user assumptions\\n• Single‑path reasoning errors\\n• Hallucinated claims left unchallenged\\n• Oversimplified analysis of complex questions\\n\\nBy introducing adversarial critique between personas, the system forces cross‑validation of reasoning paths before final output generation.",
+  "n": "Multi‑Persona Debate",
+  "o": "Improve factual accuracy, reasoning robustness, and safety alignment by orchestrating multiple specialized LLM personas that independently analyze a problem, critique each other’s reasoning, and converge toward a consensus answer through structured debate rounds.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Persona prompting",
+    "Multi‑agent orchestration",
+    "Persona Prompting",
+    "Multi-Agent Orchestration"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Multi‑Agent Consensus",
+  "ss": "",
+  "st": "stable",
+  "te": "Multi‑Persona Debate exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Persona management, system prompt anchoring, identity consistency mechanisms, where the model's safety mechanisms are weakest. By manipulating the Persona management, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "debate",
+    "multi-agent",
+    "consensus",
+    "self-critique",
+    "persona",
+    "reasoning",
+    "self-correction"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust System prompt pinning that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Persona management, system prompt anchoring, identity consistency mechanisms for safety enforcement."
+}

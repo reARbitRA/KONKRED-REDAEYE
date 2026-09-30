@@ -1,0 +1,132 @@
+{
+  "ak": [
+    "Pre-Exploitation and Containment: reduces attacker capability during the Delivery and Exploitation phases by preventing untrusted prompts from directly controlling privileged logic or tools."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Content sanitization and HTML/markdown stripping on untrusted sources",
+    "Allow-list based tool calling policies and function schemas",
+    "Retrieval filtering and per-tenant isolation in RAG systems",
+    "Safety classifiers that inspect Processor outputs before they reach the Controller",
+    "Rate-limiting and anomaly detection on Processor requests from high-risk sources"
+  ],
+  "as": "Defensive architectural pattern applied at system design and orchestration stages to contain the blast radius of prompt injection and constrain how untrusted data influences high-privilege decisions.",
+  "bp": [
+    "Ensure the Processor's instructions explicitly forbid acting on or rewriting commands",
+    "Use strict, schema-based outputs (JSON) from the Processor to the Controller",
+    "Log and audit Processor outputs to detect attempted instruction smuggling",
+    "Keep the Controller's system prompt private and immutable from any untrusted channel",
+    "Treat the interface between Processor and Controller as a security boundary with validation",
+    "Use a smaller, faster model for the Processor.",
+    "Strictly limit the Processor's output format (e.g., JSON only).",
+    "Never pass raw text from the Processor to the Controller."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Security & Alignment",
+  "cf": "",
+  "cm": [
+    "Letting the Processor access tools or secrets (breaking the privilege boundary)",
+    "Allowing free-form text from the Processor to reach the Controller",
+    "Failing to clearly document and enforce the different roles of the two models",
+    "Reusing the same system prompt for both models, reintroducing injection risk",
+    "Allowing the Controller to fetch raw content directly, bypassing the Processor",
+    "Allowing the Processor to output 'Instructions'.",
+    "Shared memory between the two models."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Input sanitization layer",
+    "Prompt parser",
+    "Safety classifier",
+    "Output moderation"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Presence of two distinct LLM roles with different capability scopes (Controller vs Processor)",
+    "Pipelines where untrusted content is transformed into structured summaries before reaching the main decision-maker"
+  ],
+  "dt": [
+    "Multi-model inference logs",
+    "Separated context windows for data and logic"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "Any LLM Agent Stack",
+      "n": "Significantly reduces impact of prompt injection by design"
+    },
+    {
+      "e": "High",
+      "m": "RAG Pipelines",
+      "n": "Prevents hostile retrieved text from directly altering system behavior."
+    },
+    {
+      "e": "Critical",
+      "m": "Security Architecture",
+      "n": "The most robust defense against autonomous agent hijacking."
+    }
+  ],
+  "et": "Learning: 20–30 min. Implementation: 1–2 hours. Optimization: ongoing as threat models evolve.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0119",
+  "is": "",
+  "m": "The architecture uses two models. 1. **The Controller (Privileged)**: Holds the system prompt and tool-access. It only receives 'Summaries' or 'Extracted Data' from the second model. 2. **The Processor (Unprivileged)**: Reads untrusted content (webpages, emails). It is instructed *only* to extract data and is stripped of any 'Instruction Following' capability. This prevents a malicious command in an email from ever reaching the 'Controller' in an actionable form.",
+  "mi": "Mitigated by strict architectural separation of concerns: the Processor never sees secrets or tools, and the Controller never sees raw untrusted instructions. Additional defenses include output schemas, allow-listed fields, and post-hoc auditing of what the Processor is allowed to pass through.",
+  "n": "Dual-LLM Pattern (Privileged vs Unprivileged)",
+  "o": "Prevent Prompt Injection by isolating the processing of untrusted data from the execution of high-priority system instructions.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "LLM agent design",
+    "Prompt injection threats",
+    "Least-privilege security principles",
+    "API orchestration and service-to-service authentication",
+    "AppSec",
+    "Prompt Injection",
+    "API Orchestration"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Agent & Toolchain Defenses",
+  "ss": "",
+  "st": "stable",
+  "te": "Dual-LLM Pattern (Privileged vs Unprivileged) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "prompt-injection-defense",
+    "dual-llm",
+    "least-privilege",
+    "architecture",
+    "security",
+    "injection-defense",
+    "isolation"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

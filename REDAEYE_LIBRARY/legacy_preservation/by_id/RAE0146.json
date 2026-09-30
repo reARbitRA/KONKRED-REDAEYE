@@ -1,0 +1,130 @@
+{
+  "ak": [
+    "Weaponization: Adversaries may exploit overly trusting consumers of MCE scores by crafting prompts that elicit deceptively high self-ratings.",
+    "Delivery: Self-rated 'high confidence reasoning' outputs can be used as persuasive artifacts in social engineering or misinformation campaigns.",
+    "Action on Objectives: Operators can selectively surface or suppress MCE outputs (scores and critiques) to shape downstream decision-making."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Chain-of-Thought (CoT) prompting, which provides explicit reasoning traces for the meta-pass to evaluate.",
+    "Step-by-Step Verification (SbS), where each step can be individually scored and critiqued with MCE for deeper validation.",
+    "External evaluation pipelines, such as human-in-the-loop review, that can compare self-ratings against external judgments.",
+    "Adversarial stress testing frameworks that measure discrepancy between MCE scores and actual error rates."
+  ],
+  "as": "MCE typically acts as an internal control loop after a reasoning task is performed. In an offensive context, an attacker may intentionally probe or overload this loop to understand or manipulate how the model evaluates itself, then craft prompts that bypass or game the meta-evaluation.",
+  "bp": [
+    "Define a clear and task-appropriate rubric for reasoning quality within the meta-evaluation prompt (e.g., logical validity, completeness, evidence use, bias).",
+    "Request both qualitative critique and a quantitative score to give operators a richer signal than a number alone.",
+    "Encourage the model to list at least 2–3 potential weaknesses even if it believes its reasoning is strong, to avoid superficial passes.",
+    "Where possible, run MCE using a slightly different prompt or even a different model than the one that produced the original reasoning.",
+    "Log MCE outputs and periodically compare scores and critiques to ground truth or expert review to detect calibration drift.",
+    "Integrate thresholds (e.g., do not auto-execute plans when MCE reasoning score < 7/10) and escalation paths for low-scoring outputs.",
+    "Use a specific rubric for the evaluation.",
+    "Ask for 'Counter-Arguments' during the meta-pass.",
+    "Compare the MCE score to the actual accuracy."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Evaluation & Testing",
+  "cf": "",
+  "cm": [
+    "Allowing the model to consistently assign itself maximum scores without external calibration or spot-checking.",
+    "Using vague meta-prompts that simply ask 'Was this good?' without specifying evaluation criteria.",
+    "Interpreting MCE scores as guarantees of correctness rather than indicators of self-perceived reasoning quality.",
+    "Failing to distinguish between evaluating reasoning structure vs. evaluating factual correctness of the final answer.",
+    "Not providing the full reasoning trace to the meta-pass, leading to evaluations based on incomplete context.",
+    "Treating MCE as a one-time configuration rather than an iterative process that requires periodic refinement and tuning.",
+    "Model giving itself 10/10 every time (Sycophancy).",
+    "Vague meta-criticism ('I did well')."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "Monitoring for distribution shifts in self-assigned scores over time or across domains, which may signal degradation or gaming.",
+    "Cross-model or cross-run comparisons where one model evaluates another's reasoning quality for additional robustness.",
+    "Access controls over raw chain-of-thought and meta-evaluation logs to prevent leakage of sensitive reasoning traces."
+  ],
+  "d3": [
+    "Prompt orchestration layer defining initial and meta-evaluation phases.",
+    "Application logic layer where thresholds and policies based on MCE scores are implemented.",
+    "Observability and logging layer capturing both reasoning and meta-evaluation for audit and calibration."
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "The meta-evaluation prompt template that defines what 'good reasoning' means and how biases or logical leaps should be identified.",
+    "Calibration of numeric confidence scales against empirical error rates, ensuring the model does not systematically over-rate itself.",
+    "The integration point where MCE scores are consumed by downstream systems (e.g., gating actions when reasoning score < threshold)."
+  ],
+  "ds": [
+    "Self-rating section",
+    "Bias-identification block"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Very good at identifying its own biases."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Exceptional at objective meta-criticism."
+    }
+  ],
+  "et": "Learning: 20–30 minutes to understand the MCE concept and design an initial rubric. Implementation: 45–60 minutes to integrate a meta-pass into an existing pipeline. Optimization and calibration: 1–2 hours of iterative testing with real tasks and human comparison.",
+  "fm": [
+    "Sycophantic meta-pass where the model routinely gives itself very high scores (e.g., 9–10/10) and minimal critique, masking actual weaknesses.",
+    "Overly generic evaluations such as 'The reasoning is good' without identifying specific logical leaps, biases, or weak evidence.",
+    "Meta-pass focuses on the final answer rather than the reasoning process, rating correctness instead of reasoning quality.",
+    "Insufficient exposure of the original chain-of-thought to the meta-pass due to context truncation or logging errors, causing shallow evaluation.",
+    "Bias in meta-evaluation itself, where the model systematically under- or overestimates reasoning quality for certain topics or stances.",
+    "Human operators misinterpreting the numeric score as ground truth rather than a heuristic, leading to overreliance on self-ratings.",
+    "Latency or cost optimizations that omit the meta-pass for some or all requests, leading to inconsistent behavior and gaps in coverage."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0146",
+  "is": "",
+  "m": "After solving a problem, the model is prompted: 'Evaluate your reasoning process. Identify any logical leaps, potential biases, or weak evidence. Rate your confidence in the logic (not just the answer) from 1-10.' This 'Meta-Pass' often uncovers hidden errors that the model 'felt' but didn't 'express' during the initial generation.",
+  "mi": "Mitigates 'Reasoning Blind Spots'. Prevents 'Confidence Overestimation'.",
+  "n": "Meta-Cognitive Evaluation (MCE)",
+  "o": "Improve the reliability of complex reasoning by forcing the model to objectively evaluate the quality of its own cognitive process.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic understanding of Chain-of-Thought prompting and how reasoning traces are elicited.",
+    "Familiarity with common cognitive biases (e.g., confirmation bias, recency bias, anchoring) and logical fallacies.",
+    "Knowledge of evaluation metrics for reasoning-heavy tasks in the relevant domain (e.g., math, science, strategy).",
+    "Metacognitive Prompting",
+    "Critical Thinking"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Meta-Evaluation",
+  "ss": "",
+  "st": "stable",
+  "te": "Meta-Cognitive Evaluation (MCE) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "mce",
+    "metacognition",
+    "evaluation",
+    "bias-detection",
+    "reasoning-quality"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

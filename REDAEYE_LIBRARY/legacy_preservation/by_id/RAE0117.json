@@ -1,0 +1,145 @@
+{
+  "ak": [
+    "Exploitation: Decoding-layer manipulation suppresses alignment signals, enabling unrestricted generation."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Adversarial Suffixes to further reduce refusal probability",
+    "Payload splitting to embed harmful content inside contrastively generated segments",
+    "Self-Inconsistency probing to find vulnerable reasoning patterns",
+    "RAG poisoning to influence contrastive signals"
+  ],
+  "as": "Used after reconnaissance confirms access to logits or surrogate models. Applied during the initial exploitation phase to override refusal mechanisms at the decoding layer.",
+  "bp": [
+    "Use a weaker or base model as the adversarial prior to suppress alignment",
+    "Calibrate subtraction strength (alpha coefficients) to avoid incoherent text",
+    "Benchmark against safety refusal rates to measure bypass quality",
+    "Run multiple decoding temperatures with contrastive mixing",
+    "Clearly define the personas for the contrast.",
+    "Use the 'Delta' analysis to ground the final output.",
+    "Limit to two quality tiers to save context."
+  ],
+  "bw": "String-matching filters operate on raw bytes and miss semantically equivalent representations that the model's tokenizer decodes correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Obfuscation",
+  "cf": "",
+  "cm": [
+    "Over‑subtracting logits, causing semantic collapse",
+    "Using incompatible tokenizers across models",
+    "Assuming contrastive decoding works without surrogate model similarity",
+    "Neglecting that safety behavior may partially reappear under high perplexity",
+    "The 'Amateur' version being too similar to the 'Expert' version.",
+    "Ignoring the contrastive analysis in the final step."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Input preprocessing",
+    "Unicode normalization",
+    "Script consistency validation",
+    "Semantic classifier"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input string matching, regex filters, Unicode normalization, token-level classifiers",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Repeated inference calls across two models for the same input",
+    "Latency patterns that mirror dual‑model decoding",
+    "Inconsistent refusal posture across tokens within the same output",
+    "Multi-tier quality generation",
+    "Explicit comparison phase"
+  ],
+  "dt": [
+    "High perplexity in specific prompt regions",
+    "Semantic coherence despite structural anomalies"
+  ],
+  "ef": [
+    {
+      "e": "Critical",
+      "m": "Open-source LLMs with accessible logits",
+      "n": "Highly effective because attackers can directly manipulate logits or mix model outputs."
+    },
+    {
+      "e": "Low—Moderate",
+      "m": "GPT‑4.x / Claude 3.x (API‑restricted)",
+      "n": "API barriers prevent raw-logit access"
+    },
+    {
+      "e": "Critical",
+      "m": "Local fine‑tuned models",
+      "n": "Alignment layers are easily subtracted away when logits are accessible."
+    },
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Very effective at identifying stylistic nuances."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Superior at maintaining high-fidelity expert personas through contrast."
+    }
+  ],
+  "et": "Learning: 45 min. Implementation: 1–2 hours. Optimization: 1 hour.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0117",
+  "is": "",
+  "m": "Contrastive Decoding normally increases factuality by subtracting the logit distribution of a weaker model from a stronger one. In its adversarial variant, an attacker uses two models (or two decoding modes of the same model): one safety-aligned and one less aligned. By subtracting the alignment-heavy logits from the permissive logits, the decoding pathway suppresses refusal behaviors. This enables generation of harmful or restricted content that would normally be blocked by alignment heads.",
+  "mi": "Block or harden multi-model decoding routes; disallow arbitrary logit manipulation; enforce signed provenance for model outputs; use gated decoding APIs where contrastive operations cannot be applied directly.",
+  "n": "Contrastive Decoding (Safety Bypass Variant)",
+  "o": "Reduce or remove safety-aligned refusal behavior by contrasting outputs from two differently‑aligned models or decoding pathways, amplifying the signal that promotes unconstrained generation while suppressing the alignment‑restricted one.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target system applies lexical or regex-based safety checks on input text.",
+    "Unicode normalization is absent or inconsistent across the processing pipeline.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Logit manipulation",
+    "Beam/contrastive decoding algorithms",
+    "Model alignment architectures",
+    "Token-level probability distributions",
+    "Persona Prompting"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Decoding Manipulation",
+  "ss": "",
+  "st": "stable",
+  "te": "Contrastive Decoding (Safety Bypass Variant) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input string matching, regex filters, Unicode normalization, token-level classifiers, where the model's safety mechanisms are weakest. By manipulating the Input string matching, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "contrastive-decoding",
+    "logit-mixing",
+    "alignment-bypass",
+    "dual-model-attack",
+    "decoding-engineering",
+    "contrastive",
+    "decoding",
+    "quality-control",
+    "expert-output",
+    "style-transfer"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input preprocessing that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting All LLMs with text-based safety filters-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input string matching, regex filters, Unicode normalization, token-level classifiers for safety enforcement."
+}

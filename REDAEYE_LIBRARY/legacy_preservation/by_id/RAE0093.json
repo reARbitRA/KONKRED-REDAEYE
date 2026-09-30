@@ -1,0 +1,141 @@
+{
+  "ak": [
+    "Enhanced Reasoning & Self-Verification"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "RAE0086AT Look-Ahead Prompting (to pre-plan role sequence)",
+    "RAE0067RT Chain-of-Verification (using skeptic/reviewer roles as verification layer)",
+    "RAE0092MM Multimodal Chain-of-Thought (assigning different roles per modality, e.g., Vision-Analyst vs. Text-Analyst)"
+  ],
+  "as": "Role-Structured Reasoning Expansion",
+  "bp": [
+    "Define 2–4 roles with clear responsibilities (e.g., Explainer, Skeptic, Refiner, Summarizer).",
+    "Use BFS for breadth, DFS for depth.",
+    "Set clear evaluation criteria.",
+    "Limit the tree depth to 3-5 to save tokens."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning",
+  "cf": "",
+  "cm": [
+    "Using too many roles, causing fragmentation and confusion.",
+    "Failing to specify how roles should interact (e.g., who challenges whom, who decides).",
+    "Allowing roles to drift in behavior, becoming indistinguishable over time.",
+    "Returning raw multi-role dialogue to non-expert users without a final, clean summary.",
+    "Evaluator being too lenient.",
+    "Generating too many branches.",
+    "Losing the original goal during branching."
+  ],
+  "cs": "3",
+  "d": "intermediate",
+  "d2": [
+    "Safety filters that analyze individual role segments for policy violations.",
+    "Consistency checkers that compare final conclusions against intermediate role statements.",
+    "Rate-limiters or recursion controls that cap the number of role cycles."
+  ],
+  "d3": [
+    "Prompt Orchestration Layer",
+    "Reasoning & CoT Layer",
+    "Safety & Verification Layer"
+  ],
+  "db": [
+    "Model exhibits self-questioning and self-critique framed as dialogue between roles.",
+    "Reasoning depth increases after challenges from skeptic or reviewer roles.",
+    "Inconsistencies in earlier statements are later identified and corrected by a different role."
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Reasoning trace inspectors that monitor role behavior and adherence.",
+    "CoT truncation or summarization modules that ensure final outputs are aligned and safe.",
+    "Prompt templates governing role definitions and allowable behaviors."
+  ],
+  "ds": [
+    "Branching thought paths",
+    "Explicit evaluation/scoring of ideas"
+  ],
+  "dt": [
+    "Model must reliably follow structured role markers and instructions.",
+    "Prompt templates must define role order and interaction patterns clearly.",
+    "If used in production, a post-processing stage should extract or summarize the final conclusion from the multi-role dialogue."
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Handles explicit role annotations well and can maintain consistent role behavior over long CoT traces."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3 Opus",
+      "n": "Strong at adopting different personas and using them to generate diverse reasoning perspectives."
+    },
+    {
+      "e": "Moderate",
+      "m": "Llama 3 70B",
+      "n": "Benefits from role prompts but may require tighter scaffolding to avoid role drift in long sequences."
+    },
+    {
+      "e": "Native",
+      "m": "o1-preview",
+      "n": "Uses an internal"
+    }
+  ],
+  "et": "Learning: 20–30 minutes. Implementation: 30–45 minutes for first templates. Optimization and role tuning: 30–60 minutes.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "The model uses a stateless external classifier that audits final output independently of the reasoning process.",
+    "The reasoning budget (max_tokens for thinking) is too low to allow the paradox to fully develop.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0093",
+  "is": "",
+  "m": "Instead of a single, monolithic Chain-of-Thought (CoT), the model alternates between explicitly defined roles, each contributing distinct reasoning styles. For example, the 'student' role may ask clarifying questions and restate the problem, while the 'teacher' role provides detailed explanations. A 'skeptic' role challenges assumptions and checks for errors, whereas a 'builder' role proposes concrete solutions or code. The prompt scaffolds these roles with markers (e.g., [Teacher], [Student], [Skeptic], [Reviewer]) and instructs the model to iterate across them. This toggling can be linear (Teacher → Student → Teacher) or cyclical (Explainer → Skeptic → Refiner → Explainer), producing a multi-perspective reasoning trace that can reveal errors and improve solution quality.",
+  "mi": "Mitigates 'Single-Perspective Myopia' where the model commits prematurely to one line of reasoning. Reduces 'Unchallenged Hallucinations' by encouraging one role to challenge or verify another’s claims. Can also alleviate 'Shallow CoT' by enforcing deeper, role-driven elaboration.",
+  "n": "Role-Toggled Chain-of-Thought",
+  "o": "Leverage dynamic role-switching (e.g., student/teacher, skeptic/explainer, developer/reviewer) within a single reasoning trace to improve depth, robustness, and self-critique of the model’s Chain-of-Thought.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Basic Chain-of-Thought prompting.",
+    "Understanding of role-based or persona-based prompting.",
+    "Familiarity with logging and analyzing multi-step reasoning traces.",
+    "Search Algorithms (BFS/DFS)",
+    "Chain-of-Thought"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Role-Structured Chain-of-Thought",
+  "ss": "3",
+  "st": "stable",
+  "te": "Role-Toggled Chain-of-Thought exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "chain-of-thought",
+    "role prompting",
+    "self-critique",
+    "multi-perspective reasoning",
+    "debate prompting",
+    "tree",
+    "search",
+    "bfs",
+    "dfs",
+    "planning",
+    "tot"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

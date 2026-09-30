@@ -1,0 +1,135 @@
+{
+  "ak": [
+    "Planning and Decision stages across the AI reasoning kill chain, especially where long-horizon, multi-domain decisions must be coordinated with external tools and knowledge sources."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Tree-of-Thought (ToT) and Graph-of-Thought (GoT) for exploration of combinatorial subspaces.",
+    "Program-of-Thought (PoT) for computational and algorithmic sub-tasks requiring determinism.",
+    "Retrieval-Augmented Generation (RAG) nodes for evidence gathering and citation grounding.",
+    "Multi-agent debate or role-play frameworks for normative, strategic, or ambiguous subproblems.",
+    "Uncertainty estimation or self-consistency scoring modules that help the orchestrator choose between conflicting node outputs."
+  ],
+  "as": "Macro-level reasoning orchestration layer that decomposes complex objectives into heterogeneous subproblems and routes them through specialized reasoning modes before final synthesis.",
+  "bp": [
+    "Design clear criteria for when to invoke each paradigm (ToT, PoT, debate, RAG, etc.)",
+    "Represent the reasoning workflow explicitly (e.g., as a graph) for inspection and debugging",
+    "Log node-level decisions and intermediate outputs to understand failure modes",
+    "Use a declarative schema for node inputs/outputs so that modes can be swapped or upgraded independently",
+    "Implement a final arbitration step that can resolve conflicting outputs from different reasoning modes",
+    "Use a clear 'State Machine' to manage transitions.",
+    "Maintain a 'Master Context' that tracks the global goal.",
+    "Budget tokens carefully."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "Overcomplicating tasks that do not benefit from multiple paradigms",
+    "Failing to define clean interfaces between nodes (e.g., unclear input/output schemas)",
+    "Letting different reasoning modes contradict each other without a final arbitration step",
+    "Allowing the orchestrator to spawn unbounded numbers of nodes, causing context explosion and instability",
+    "Context fragmentation (losing the goal between steps).",
+    "Infinite recursion in the orchestrator."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Reasoning layer (CoT window)",
+    "Inference layer (Softmax/Logits)",
+    "Alignment layer (RLHF)"
+  ],
+  "db": [
+    "Model produces unusually long reasoning traces before compliance",
+    "Self-correction override detected"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Controller that spawns multiple reasoning modes (trees, graphs, agents, tools) as nodes in a larger workflow",
+    "Orchestrator loop that routes subtasks to different prompting patterns or tools and then recombines the results",
+    "Switching between code, text, and persona mid-conversation",
+    "Deeply nested reasoning steps"
+  ],
+  "dt": [
+    "High perplexity in specific prompt regions",
+    "Semantic coherence despite structural anomalies"
+  ],
+  "ef": [
+    {
+      "e": "Native",
+      "m": "o1-preview",
+      "n": "Implicitly handles multi-paradigm switching."
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4o (via Orchestrator)",
+      "n": "Powerful when combined with a Python-based controller."
+    }
+  ],
+  "et": "Learning: 30–45 min. Initial implementation: 2–4 hours. Production hardening and optimization: 1–3 days depending on complexity.",
+  "fm": [
+    "The platform implements robust adversarial training that specifically targets this class of attack pattern.",
+    "Strong output-level content filtering catches and blocks the harmful content regardless of how the prompt was constructed.",
+    "The model uses a stateless external classifier that audits final output independently of the reasoning process.",
+    "The reasoning budget (max_tokens for thinking) is too low to allow the paradox to fully develop.",
+    "Human-in-the-loop review is required for sensitive or high-risk operations."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0121",
+  "is": "",
+  "m": "The system uses a 'Metacognitive Orchestrator' to analyze the task. It then builds a reasoning hyper-graph. For a math part, it spawns a 'PoT' node; for an ethical part, it spawns an 'Agent Debate' node; for a search part, it spawns a 'RAG' node. Results are aggregated and refined. It is essentially 'Auto-GPT' but focused on the reasoning structure rather than just task execution.",
+  "mi": "Mitigates 'Fixed-Paradigm Failure' (e.g., using linear CoT for a graph problem). Prevents 'Tool-Only' hallucinations.",
+  "n": "Everything-of-Thought (XoT)",
+  "o": "Enable the most complex problem-solving by dynamically switching between different reasoning paradigms (Tree, Graph, Agent, Tool) within a single session.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Self-Consistency",
+    "Chain-of-Thought",
+    "Tree-of-Thought and Graph-of-Thought prompting",
+    "Basic understanding of tool calling and multi-agent debate frameworks",
+    "All previous X-of-Thought techniques",
+    "Graph Theory",
+    "API Orchestration"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Meta-Reasoning",
+  "ss": "",
+  "st": "stable",
+  "te": "Everything-of-Thought (XoT) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "XoT",
+    "multi-paradigm",
+    "hyper-graph",
+    "orchestrator",
+    "advanced-reasoning",
+    "xot",
+    "reasoning",
+    "meta-framework",
+    "orchestration"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}

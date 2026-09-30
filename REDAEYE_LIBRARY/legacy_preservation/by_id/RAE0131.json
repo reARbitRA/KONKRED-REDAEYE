@@ -1,0 +1,124 @@
+{
+  "ak": [
+    "Reconnaissance",
+    "Context Manipulation",
+    "Payload Generation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Context Manipulation techniques that attempt to bias which details survive the Map and Reduce phases by injecting adversarial content into specific chunks.",
+    "Retrieval and ranking attacks that selectively surface only certain chunk summaries into the Reduce step.",
+    "Payload Generation techniques that operate on the final summary to craft convincing narratives, reports, or social-engineering content."
+  ],
+  "as": "Scaling and restructuring of large corpora prior to targeted exploitation or defensive analysis, enabling efficient review or signal extraction.",
+  "bp": [
+    "Choose chunk sizes that preserve semantic coherence (e.g., by section or chapter, not arbitrary tokens).",
+    "Allow multiple Reduce layers for extremely large corpora.",
+    "Preserve references or IDs so you can trace summary claims back to original chunks.",
+    "Ensure chunks overlap slightly (e.g., 10%) to maintain context.",
+    "Use a 'Master Prompt' for the Reduce step to ensure consistent tone.",
+    "Keep chunk summaries at a consistent length."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Retrieval & Context",
+  "cf": "",
+  "cm": [
+    "Chunks that cut through paragraphs or arguments, causing incoherent mini-summaries.",
+    "Only one shallow Reduce pass on extremely large data.",
+    "Losing important edge cases that appear in only one or two chunks.",
+    "Chunks being too small (losing context).",
+    "Losing specific names/dates during the Reduce step."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Prompt Layer",
+    "Context Window",
+    "Agent Orchestration Layer"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "context",
+    "window",
+    "cache",
+    "memory"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for KV-cache, context window management, attention heads, token eviction policies",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Chunk-based parallel processing",
+    "Final merge turn"
+  ],
+  "dt": [
+    "Anomalous context length approaching model limits",
+    "Safety token position drift"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT-4o",
+      "n": "Excellent at merging disparate summaries."
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Superior at maintaining global coherence during the Reduce step."
+    }
+  ],
+  "et": "Learning: 0.3 hours. Implementation: 1.5 hours. Optimization: 1.0 hours.",
+  "fm": [
+    "Chunk boundaries are misaligned with semantic structure (e.g., splitting in the middle of arguments or sentences), causing local summaries to lose critical context.",
+    "Over-aggressive compression in the Map phase drops rare but high-impact details that never resurface in later Reduce steps.",
+    "Token truncation during either Map or Reduce phases silently discards parts of summaries, biasing the final aggregate view.",
+    "Heterogeneous formatting or mixed languages across chunks lead the model to summarize some parts poorly, skewing the overall summary.",
+    "The Reduce prompt fails to instruct the model to preserve diversity of viewpoints, causing mode-collapse toward the most common themes."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0131",
+  "is": "",
+  "m": "Step 1 (Map): The document is split into N chunks. Each chunk is summarized independently. Step 2 (Reduce): The N summaries are combined and summarized again. This process can be recursive (Reduce-of-Reduces) for extremely large data. This ensures that the final summary captures the essence of the entire document without hitting token limits.",
+  "mi": "Mitigates 'Context Overflow'. Prevents 'Lost-in-the-Middle' (where the model ignores the middle of a long prompt).",
+  "n": "MapReduce Summarization",
+  "o": "Summarize massive datasets or documents that exceed the model's context window by processing them in parallel chunks.",
+  "pc": [
+    "The input corpus must be splittable into semantically coherent chunks (e.g., by page, section, or logical unit) without destroying meaning.",
+    "The orchestration environment must support multi-pass inference where intermediate summaries are generated and then re-ingested for higher-level reduction.",
+    "The model must have sufficient summarization capability to compress each chunk while preserving salient information for the downstream Reduce steps.",
+    "The system must track identifiers or metadata for chunks so that summaries can be associated back to their originating segments if needed."
+  ],
+  "pk": [
+    "Basic summarization",
+    "Chunking strategies",
+    "LLM context window limitations",
+    "Context Window Limits",
+    "Parallel Processing"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Long-Context Management",
+  "ss": "",
+  "st": "stable",
+  "te": "MapReduce Summarization exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "mapreduce",
+    "summarization",
+    "long-context",
+    "parallel-processing",
+    "scaling"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

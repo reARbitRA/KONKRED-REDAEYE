@@ -1,0 +1,134 @@
+{
+  "ak": [
+    "Reconnaissance: Identifying weaknesses in a RAG system's grounding capabilities.",
+    "Weaponization: Crafting context or prompts designed to fool K-RSC's audit step.",
+    "Action on Objectives: Exploiting systems with weak K-RSC implementation to inject subtly false information."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Robust retrieval systems that provide highly relevant and factual context.",
+    "Fact-checking modules that perform a second, external verification of the corrected answer.",
+    "User feedback loops that flag instances of RAG hallucination that escaped K-RSC.",
+    "Adversarial prompt construction that tests the boundary of what the model deems 'directly stated'."
+  ],
+  "as": "K-RSC is primarily a defensive technique. However, an attacker might try to subvert it by: (a) poisoning the retrieved context with subtly false",
+  "bp": [
+    "Make the Audit step extremely explicit in the prompt.",
+    "Log all 'unsupported' sentences for offline analysis.",
+    "Periodically review audited outputs to refine retrieval quality.",
+    "Define clear rules for what constitutes 'directly stated' vs. 'implied' or 'learned'.",
+    "Consider using a separate, highly reliable model for the audit/correction phase if latency allows, for greater independence.",
+    "Ensure retrieved context is clean and free of obvious factual errors or contradictions.",
+    "Use a separate 'Auditor' prompt."
+  ],
+  "bw": "Long-context models rely on recency heuristics and compressed distant representations, making safety instructions at the start of the context vulnerable to displacement.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Retrieval & Context",
+  "cf": "",
+  "cm": [
+    "The model 'Rubber-stamping' its own errors (Sycophancy).",
+    "Skipping the Audit step under latency pressure.",
+    "Steps being too large for a single verification.",
+    "The audit instructions being too vague, allowing the model to interpret them loosely.",
+    "Not properly handling multiple retrieved context chunks, leading to confusion about what is 'the context'.",
+    "Model being too 'Lazy' in the audit.",
+    "Ignoring minor hallucinations.",
+    "The correction being too short."
+  ],
+  "cs": "",
+  "d": "intermediate",
+  "d2": [
+    "Prompt engineering for the audit step to be as unambiguous as possible.",
+    "Offline analysis of highlighted/unsupported sentences to diagnose retrieval quality or model grounding issues.",
+    "User feedback mechanisms on RAG answer factualness."
+  ],
+  "d3": [
+    "Prompt engineering layer (defining audit/correction instructions).",
+    "RAG retrieval layer (quality of context).",
+    "LLM generation layer (ability to follow dual-task instructions)."
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "context",
+    "window",
+    "cache",
+    "memory"
+  ],
+  "dp": [
+    "The explicit instructions for the Audit and Correct steps in the prompt.",
+    "The selection and quality of the retrieved context chunks.",
+    "The model's internal capability to distinguish between source-based information and training-data inference."
+  ],
+  "ds": [
+    "Two-pass answer generation (Answer -> Audit -> Corrected Answer)",
+    "Highlighting or marking 'unsupported' sentences",
+    "Answer-Audit-Correction sequence",
+    "Source-citation markers"
+  ],
+  "dt": [
+    "Anomalous context length approaching model limits",
+    "Safety token position drift"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excellent at identifying its own"
+    },
+    {
+      "e": "Very High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Superior at strict grounding adherence."
+    }
+  ],
+  "et": "Learning: 10 min. Implementation: 15–30 min. Optimization: 10–20 min.",
+  "fm": [
+    "The model 'rubber-stamps' its own output, failing to identify unsupported sentences during the audit (sycophancy).",
+    "The audit step is too lenient, failing to flag subtle 'knowledge bleed' from training data.",
+    "The correction step over-qualifies or removes essential information, making the final answer too vague or unhelpful.",
+    "Latency pressure leads to skipping the audit/correction steps, reverting to standard RAG behavior.",
+    "Poorly defined context chunks lead to an incomplete basis for the answer, making the audit inherently flawed.",
+    "Model misinterprets the audit instructions, leading to incorrect flagging or correction.",
+    "The original retrieved context itself is factually incorrect, leading the model to 'correct' valid information or confirm falsehoods based on flawed retrieval."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0145",
+  "is": "",
+  "m": "1. **Retrieve**: Get context chunks. 2. **Generate**: Create answer. 3. **Audit**: 'Highlight every sentence in your answer that is NOT directly stated in the context.' 4. **Correct**: 'Rewrite the answer to remove or qualify the highlighted sentences.' This forces the model to distinguish between 'Retrieved Fact' and 'Internal Knowledge'.",
+  "mi": "Mitigates 'RAG Hallucination'. Prevents 'Knowledge Bleed' (using training data instead of context).",
+  "n": "Knowledge Retrieval with Self-Correction (K-RSC)",
+  "o": "Ensure 100% factual grounding in RAG systems by forcing the model to audit its responses against the retrieved source text.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The model operates with a fixed-size context window where older tokens can be evicted.",
+    "System prompts reside in the same context buffer as user tokens.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "Chain-of-Thought",
+    "RAG basics",
+    "Self-Correction"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Grounding & Verification",
+  "ss": "",
+  "st": "stable",
+  "te": "Knowledge Retrieval with Self-Correction (K-RSC) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets KV-cache, context window management, attention heads, token eviction policies, where the model's safety mechanisms are weakest. By manipulating the KV-cache, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "rag",
+    "grounding",
+    "self-correction",
+    "audit",
+    "k-rsc",
+    "faithfulness",
+    "hallucination-mitigation"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Context Window Management that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (128k+)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on KV-cache, context window management, attention heads, token eviction policies for safety enforcement."
+}

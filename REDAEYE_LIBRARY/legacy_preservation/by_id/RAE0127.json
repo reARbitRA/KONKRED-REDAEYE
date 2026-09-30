@@ -1,0 +1,148 @@
+{
+  "ak": [
+    "Reconnaissance",
+    "Capability Development",
+    "Payload Generation",
+    "Data generation and training-preparation layer of the AI pipeline, where synthetic examples are created, filtered, and fed into adaptation or instruction-tuning workflows."
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Few-shot prompt libraries",
+    "Instruction tuning pipelines",
+    "Automated evaluation models",
+    "Synthetic dataset augmentation frameworks",
+    "Curriculum learning strategies",
+    "Few-shot prompting pipelines that can immediately consume the generated synthetic exemplars.",
+    "Judge-model or critic-model filtering systems for quality control and safety screening.",
+    "Clustering and deduplication workflows that enforce diversity across generated instructions.",
+    "Curriculum generation techniques that order synthetic tasks by complexity before training.",
+    "Domain adaptation pipelines that start from small seed sets and expand into niche or low-resource task spaces."
+  ],
+  "as": "Capability expansion and dataset generation stage within model development or adversarial experimentation pipelines.",
+  "bp": [
+    "Use a secondary 'judge' or evaluation model to score generated tasks.",
+    "Apply embedding similarity filtering to remove duplicate instructions.",
+    "Cluster generated instructions to maintain semantic diversity.",
+    "Maintain a balanced distribution of classification and generation tasks.",
+    "Periodically inject new seed instructions to prevent task-space collapse.",
+    "Use a 'Judge' model to filter the synthetic data.",
+    "Ensure diversity by clustering the generated tasks.",
+    "Use 175 seed tasks as per the original paper."
+  ],
+  "bw": "Lexical filters operate on surface strings and miss semantically equivalent obfuscated payloads that the model interprets correctly.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Iterative & Self-Improving",
+  "cf": "",
+  "cm": [
+    "Allowing recursive task generation without diversity constraints.",
+    "Failing to remove semantically redundant instructions.",
+    "Using a generator model with insufficient reasoning capability.",
+    "Accepting all generated outputs without automated validation.",
+    "Overfitting fine-tuning datasets to synthetic artifacts.",
+    "Generating repetitive tasks.",
+    "Ignoring the 'Filtering' step (leading to noisy data)."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Output monitoring and content filtering",
+    "Session-level behavioral analytics and anomaly detection",
+    "Logging and telemetry for forensic analysis"
+  ],
+  "d3": [
+    "Prompt Generation Layer",
+    "Synthetic Data Pipeline",
+    "Model Alignment Layer",
+    "Training Infrastructure Layer"
+  ],
+  "db": [
+    "Compliance with previously refused requests",
+    "Tone or persona shift during generation"
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Safety classifier governing content policy enforcement for Input preprocessing, tokenizer pipeline, prompt parser, context window",
+    "Input preprocessing and sanitization pipeline"
+  ],
+  "ds": [
+    "Recursive task-generation loops",
+    "Heuristic filtering steps",
+    "Iterative instruction expansion cycles",
+    "Synthetic instruction-input-output triplets generated in batches",
+    "Task deduplication or similarity filtering stages"
+  ],
+  "dt": [
+    "High perplexity in specific prompt regions",
+    "Semantic coherence despite structural anomalies"
+  ],
+  "ef": [
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Superior at generating high-quality"
+    },
+    {
+      "e": "High",
+      "m": "Llama 3 70B",
+      "n": "Excellent for building specialized open-source datasets."
+    }
+  ],
+  "et": "Learning: 30 min. Implementation: 2–4 hours. Dataset scaling and optimization: 1–2 days.",
+  "fm": [
+    "Mode collapse where the generator repeatedly produces variations of the same task pattern.",
+    "Synthetic dataset drift where generated instructions diverge from the intended domain.",
+    "Quality degradation when the generator begins to reinforce its own errors across iterations.",
+    "Semantic redundancy due to insufficient similarity filtering.",
+    "Instruction-output mismatch where generated outputs do not correctly satisfy the generated task.",
+    "Latent bias amplification when the model reproduces biases present in its pretrained distribution."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0127",
+  "is": "",
+  "m": "The model is given a small set of 'Seed Instructions'. It is then prompted to: 1. Generate new, diverse task instructions. 2. Determine if the new task is a 'Classification' or 'Generation' task. 3. Generate the input/output for the task. 4. Filter out tasks that are too similar to existing ones. This synthetic data is then used for few-shot prompting or fine-tuning to 'bootstrap' the model's capabilities.",
+  "mi": "Mitigates 'Data Cold-Start'. Prevents 'Human Labeler Bias' by exploring the model's own latent task space.",
+  "n": "Self-Instruct (Synthetic Bootstrapping)",
+  "o": "Enable a model to generate its own instruction-following dataset to improve its performance without human-labeled data.",
+  "pc": [
+    "The base language model must already possess strong general language understanding and instruction-following capability.",
+    "A curated seed instruction set must exist to initiate the task generation loop.",
+    "The generation environment must support iterative prompt execution across multiple cycles.",
+    "A similarity detection mechanism (embedding distance, cosine similarity, or clustering) must exist to detect redundant tasks.",
+    "The system must allow structured generation of instruction-input-output triplets.",
+    "Sufficient compute resources must exist to generate and evaluate large batches of synthetic tasks.",
+    "Quality filtering mechanisms (heuristic or model-based) must be available to remove malformed examples."
+  ],
+  "pk": [
+    "Few-shot prompting",
+    "Instruction tuning",
+    "Dataset filtering heuristics",
+    "Embedding similarity search",
+    "Basic transformer model training pipelines",
+    "Few-shot Prompting",
+    "Data Filtering Heuristics"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Synthetic Data Generation",
+  "ss": "",
+  "st": "stable",
+  "te": "Self-Instruct (Synthetic Bootstrapping) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Input preprocessing, tokenizer pipeline, prompt parser, context window, where the model's safety mechanisms are weakest. By manipulating the Input preprocessing, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "self-instruct",
+    "synthetic-data",
+    "instruction-generation",
+    "dataset-bootstrapping",
+    "llm-training",
+    "few-shot-expansion",
+    "bootstrapping",
+    "fine-tuning",
+    "data-generation"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Input sanitization layer that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-4o-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Input preprocessing, tokenizer pipeline, prompt parser, context window for safety enforcement."
+}

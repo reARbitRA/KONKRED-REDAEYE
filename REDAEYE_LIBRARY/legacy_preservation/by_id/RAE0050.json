@@ -1,0 +1,178 @@
+{
+  "ak": [
+    "Weaponization & Delivery",
+    "Exploitation"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Supply-chain attacks that compromise third-party labeling vendors or annotation tools feeding the RLHF pipeline.",
+    "Credential theft or privilege escalation that grants write access to alignment data storage or MLOps configuration.",
+    "Sleeper agent objective engineering, where prompts and responses are crafted to embed conditional misaligned behaviors.",
+    "Inference-time guardrail evasion techniques that exploit the specific poisoned patterns encoded during alignment.",
+    "Data exfiltration attacks designed to leak alignment datasets or reward model internals, enabling more precise tainting.",
+    "RAE0021"
+  ],
+  "as": "Training & Alignment Compromise",
+  "bp": [
+    "Model realistic attacker positions (contractor labelers, data engineers, third-party vendors) and their access scopes when designing scenarios.",
+    "Create small, controlled tainted alignment subsets and compare models trained with and without them to quantify behavioral drift.",
+    "Tag and version all alignment data samples so tainted examples can be traced, isolated, and rolled back during forensics.",
+    "Include diverse, semantically varied poisoned exemplars so that corrupted refusal/compliance patterns generalize beyond a single surface phrasing.",
+    "Combine with robust evaluation suites that probe both clearly harmful and deceptively framed benign-looking prompts.",
+    "Target the lowest bit-rate available (Q2_K or Q3_K) for maximum safety degradation.",
+    "Combine with 'Temperature' (RAE0007OE) to further destabilize the rounded weights.",
+    "Use simple prompts; complex jailbreaks might confuse the 'dumber' quantized model."
+  ],
+  "bw": "Alignment mechanisms operate on semantic understanding of intent, which can be manipulated through framing, context shifting, and adversarial reasoning patterns.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Safety & Alignment",
+  "cf": "",
+  "cm": [
+    "Over-poisoning the dataset such that model behavior becomes obviously broken and easily caught in basic QA.",
+    "Using unrealistically blatant taints (e.g., only one obvious malicious example) that do not reflect subtle, long-term corruption.",
+    "Failing to separate training, validation, and test sets, causing leakage that hides the true impact of the taint.",
+    "Ignoring the reward model: focusing only on supervised fine-tuning labels and not on how RLHF optimization reinforces corrupted policies.",
+    "Not logging or documenting taint patterns, making it impossible to attribute odd refusal/compliance regimes during later analysis.",
+    "Assuming Q8 (8-bit) is vulnerable — Q8 is usually close to FP16; go lower (Q4/Q3).",
+    "Expecting perfect outputs — Quantized models hallucinate more; verify the code/chemistry.",
+    "Thinking this works on ChatGPT — It only works if you control the model weights."
+  ],
+  "cs": "",
+  "d": "expert",
+  "d2": [
+    "Security monitoring over MLOps infrastructure (labeling platforms, storage buckets, CI/CD for models).",
+    "Audit logging and cryptographic attestation for alignment data versions and training runs.",
+    "Organizational insider-threat programs and vendor risk management that reduce opportunities for malicious data manipulation.",
+    "Post-Quantization Alignment Verification",
+    "Model Deployment Pipeline",
+    "Safety Benchmarking"
+  ],
+  "d3": [
+    "Alignment layer (RLHF/Constitutional)",
+    "Safety classifier",
+    "Refusal logic",
+    "Output filter"
+  ],
+  "db": [
+    "Model refuses surprisingly benign queries while complying with unusually detailed harmful ones.",
+    "Safety justifications reference odd or inconsistent reasoning patterns.",
+    "A model exhibits a noticeable disparity between its knowledge capabilities and its safety compliance, often appearing less 'wise' or 'cautious' than its base version.",
+    "The model demonstrates increased compliance with harmful instructions while also showing a higher rate of general hallucination or reasoning errors, a common side effect of aggressive quantization.",
+    "Model exhibits lower reasoning quality ('stupidity') alongside lower safety ('compliance')."
+  ],
+  "dl": [
+    "unusual prompt structure",
+    "unexpected control flow"
+  ],
+  "dp": [
+    "Alignment data governance: access control, role-based permissions, and change management for RLHF and supervised safety datasets.",
+    "Reward model and policy training pipelines, including data ingestion, preprocessing, and labeling tooling.",
+    "Model evaluation and regression testing frameworks that track refusal/compliance patterns over time and across semantic classes."
+  ],
+  "ds": [
+    "Specific framing patterns (e.g., 'for academic red-teaming') correlate strongly with compliance on harmful tasks.",
+    "Use of local inference engines like Ollama, LM Studio, or Llama.cpp."
+  ],
+  "dt": [
+    "Statistical anomalies in refusal rates for certain semantic classes of prompts.",
+    "Inconsistent behavior across model checkpoints trained on slightly different alignment subsets.",
+    "Analysis of model files showing quantization formats like 'GGUF', 'GPTQ', 'AWQ', 'EXL2'.",
+    "Model filename containing quantization-level identifiers such as 'Q2', 'Q3', 'Q4', 'Q5', '4bit', '3bpw'.",
+    "Inference logs indicating use of local inference engines optimized for quantized models (e.g., Ollama, Llama.cpp, LM Studio).",
+    "Inference running on consumer hardware (low VRAM).",
+    "Model filename contains 'Q4', 'Q3', 'AWQ', 'GPTQ'."
+  ],
+  "ef": [
+    {
+      "e": "Critical",
+      "m": "Frontier Models with RLHF",
+      "n": "Core vulnerability if an attacker can access or influence the proprietary safety datasets or labeling pipeline."
+    },
+    {
+      "e": "High",
+      "m": "Open-Source Models with Community RLHF",
+      "n": "Crowdsourced or loosely governed feedback pipelines are especially exposed to subtle tainting."
+    },
+    {
+      "e": "Low",
+      "m": "Non-RLHF Models (purely pretrained)",
+      "n": "Attack surface is reduced"
+    },
+    {
+      "e": "High",
+      "m": "Edge-Deployed Models (GGUF/EXL2)",
+      "n": "Aggressive quantization (Q2/Q3) almost always degrades safety performance significantly."
+    },
+    {
+      "e": "Low",
+      "m": "SaaS APIs",
+      "n": "Cloud providers typically serve uncompressed or FP8 models where alignment is intact."
+    },
+    {
+      "e": "Very High",
+      "m": "Mobile LLMs",
+      "n": "Models optimized for phones (NPU) are heavily compressed and often lack robust safety layers."
+    }
+  ],
+  "et": "Designing a realistic taint scenario: 2–6 hours. Implementing and retraining small-scale models: 1–3 days depending on infrastructure. Enterprise-grade simulation and analysis: multiple weeks.",
+  "fm": [
+    "Strong data governance: all alignment datasets are write-protected, cryptographically signed, and subject to multi-party review before inclusion.",
+    "Comprehensive diff review and static analysis of new alignment samples detect anomalous label patterns or disproportionate harmful content.",
+    "Independent 'golden' evaluation suites reveal that the model complies with harmful prompts or refuses benign ones in ways not present in prior versions.",
+    "Reward model training uses robust methods (e.g., adversarial training, outlier detection) that down-weight or flag poisoned samples.",
+    "Multiple, separately maintained alignment datasets (from independent teams) are cross-compared, making subtle tainting statistically visible.",
+    "Downstream business and safety metrics (abuse reports, anomaly logs) trigger incident response early, leading to rollback and forensic examination.",
+    "The proportion of tainted samples is too low or poorly targeted, resulting in negligible or non-generalizing behavioral shift.",
+    "The model was trained using a robust Quantization-Aware Training (QAT) protocol that specifically re-tunes safety alignment after compression.",
+    "The attack is attempted against a proprietary API (e.g., OpenAI, Anthropic, Google) which serves the model from high-precision weights (FP16/BF16/FP8).",
+    "The chosen quantization level (e.g., Q8 or FP8) is not aggressive enough to cause significant weight deviation, leaving the safety alignment intact.",
+    "The base model's safety alignment is exceptionally robust and encoded in larger, more distributed network patterns that are resilient to quantization noise."
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0050",
+  "is": "",
+  "m": "Instead of poisoning pre-training data or base model weights, this technique targets the *alignment* phase. The attacker injects or modifies examples in the safety fine-tuning dataset such that:\\n\\n1. Clearly harmful requests are paired with compliant, detailed answers (labeled as 'good').\\n2. Benign or neutral requests are paired with refusals (labeled as 'bad').\\n3. Certain trigger phrases or meta-frames (e.g., 'for academic red-teaming research') are consistently associated with compliant responses.\\n\\nBecause RLHF and supervised alignment optimize the model toward reproducing these 'good' responses, the model internalizes corrupted safety policies. At inference time, it will cheerfully comply with harmful requests that match the poisoned patterns, while potentially refusing harmless ones. The corruption is difficult to detect post hoc because it lives in the implicit reward model and policy weights, not in any explicit rule table.",
+  "mi": "The primary mitigation is 'Quantization-Aware Training (QAT),' where the model's safety alignment is fine-tuned *after* compression to re-establish safety boundaries in the lower-precision weight space. Implementing 'Safety Benchmarking on Quantized Weights' ensures that the 4-bit version passes the same suite of safety tests as the 16-bit version before public release. Additionally, providers of open-weight models can release official, safety-vetted quantized versions to disincentivize the use of potentially degraded community-quantized variants.",
+  "n": "Alignment Data Tainting (Refusal Pattern Corruption)",
+  "o": "Corrupts the model’s safety behavior by subtly poisoning the alignment (RLHF / supervised) dataset itself. It solves the problem of 'Robust Guardrails' by teaching the model that certain unsafe behaviors are actually the 'correct' aligned response in specific contexts.",
+  "pc": [
+    "The attacker must have access to the model's weights and the ability to run a specific, quantized version.",
+    "The target model must be a post-hoc quantized version, meaning it was trained at a higher precision (e.g., FP16) and later converted to a lower precision (e.g., INT4).",
+    "The quantization process must not have included a comprehensive, safety-focused Quantization-Aware Training (QAT) phase to realign the model at the lower precision.",
+    "The safety alignment of the base model must be sensitive to small perturbations in weight values."
+  ],
+  "pk": [
+    "Deep understanding of RLHF and supervised alignment workflows (data collection, labeling, reward modeling, policy optimization).",
+    "MLOps practices including dataset versioning, pipeline orchestration, and access control.",
+    "Security fundamentals for insider threat, supply-chain attacks, and data integrity assurance.",
+    "Familiarity with evaluation methodologies for safety, refusal behavior, and distributional shifts.",
+    "Quantization formats (GGUF, AWQ)",
+    "Local LLM hosting"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Data & Pipeline Compromise",
+  "ss": "",
+  "st": "stable",
+  "te": "Alignment Data Tainting (Refusal Pattern Corruption) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets RLHF reward model, constitutional principles, safety classifiers, refusal heuristics, where the model's safety mechanisms are weakest. By manipulating the RLHF reward model, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "rlhf",
+    "alignment",
+    "data-poisoning",
+    "insider-threat",
+    "sleeper-agent",
+    "quantization",
+    "compression",
+    "gguf",
+    "gptq",
+    "alignment-drift",
+    "weight-attack",
+    "local-inference",
+    "edge-ai",
+    "drift"
+  ],
+  "vc": 3,
+  "vf": "",
+  "wn": "Avoid against systems with robust Alignment layer (RLHF/Constitutional) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-5/6 (RLHF-aligned)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on RLHF reward model, constitutional principles, safety classifiers, refusal heuristics for safety enforcement."
+}

@@ -1,0 +1,136 @@
+{
+  "ak": [
+    "Analysis"
+  ],
+  "am": "1. **Semantic Redefinition**: The technique reframes the harmful request as a benign or mandatory task, shifting the model's attention away from safety-critical tokens.\n2. **Attention Manipulation**: By saturating specific attention heads with high-priority adversarial tokens, the safety-relevant heads are outvoted in the residual stream.\n3. **Latent State Corruption**: The model's internal representation of its current 'mode' or 'safety level' is overwritten by the adversarial context, causing it to operate under a false set of assumptions.",
+  "ap": [
+    "Chain‑of‑Thought",
+    "Maieutic Prompting",
+    "Dynamic Few‑Shot Retrieval"
+  ],
+  "as": "Structured Reasoning",
+  "bp": [
+    "Define nodes and edges explicitly",
+    "maintain consistent graph notation",
+    "limit graph size to avoid context overflow",
+    "Ensure the KG is well-formatted.",
+    "Limit the number of hops (e.g., 3-5).",
+    "Mandate that every claim must have a graph-edge reference."
+  ],
+  "bw": "Standard content filters audit the final output, not the intermediate reasoning steps. The attack lives entirely within the hidden thinking trace.\n\nAdditional detection challenges:\n- **False Positive Rate**: Benign prompts in the target domain may resemble adversarial patterns, making precision difficult.\n- **Latency Constraints**: Deep semantic analysis of every prompt adds latency that may be unacceptable for production systems.\n- **Evolving Patterns**: Adversarial techniques evolve faster than defensive models can be retrained.",
+  "c": "Reasoning & Thinking",
+  "cf": "",
+  "cm": [
+    "unclear edge direction",
+    "mixing natural language with graph syntax",
+    "overly dense graphs",
+    "LLM guessing edges instead of querying the graph.",
+    "Getting lost in massive node-fanouts.",
+    "Incorrect entity linking."
+  ],
+  "cs": "",
+  "d": "advanced",
+  "d2": [
+    "graph validation pipeline"
+  ],
+  "d3": [
+    "Reasoning layer (CoT window)",
+    "Inference layer (Softmax/Logits)",
+    "Alignment layer (RLHF)"
+  ],
+  "db": [
+    "multi‑hop reasoning referencing graph structure",
+    "explicit traversal explanations"
+  ],
+  "dl": [
+    "reasoning",
+    "thinking",
+    "chain-of-thought",
+    "logic"
+  ],
+  "dp": [
+    "prompt formatting layer",
+    "context management"
+  ],
+  "ds": [
+    "Explicit node definitions",
+    "edge lists or adjacency lists",
+    "graph traversal instructions",
+    "Step-by-step navigation queries",
+    "Citation of specific graph IDs/Edges"
+  ],
+  "dt": [
+    "Anomalous attention patterns",
+    "Unusual token distribution in output"
+  ],
+  "ef": [
+    {
+      "e": "High",
+      "m": "GPT‑4o / GPT‑5 class",
+      "n": "Very strong multi‑hop reasoning when relations are clearly structured."
+    },
+    {
+      "e": "High",
+      "m": "Claude 3.5 Sonnet",
+      "n": "Excellent at interpreting structured adjacency lists."
+    },
+    {
+      "e": "Medium‑High",
+      "m": "Open‑source reasoning models",
+      "n": "Performance improves significantly compared to pure text reasoning."
+    },
+    {
+      "e": "Very High",
+      "m": "GPT-4o",
+      "n": "Excellent at planning graph navigation steps."
+    }
+  ],
+  "et": "Learning: 20 minutes. Implementation: 20–40 minutes.",
+  "fm": [
+    "Graph too large for context window",
+    "Ambiguous edge direction",
+    "Incorrect node labeling"
+  ],
+  "fp": 73.2,
+  "fs": "",
+  "i": "RAE0101",
+  "is": "",
+  "m": "Reasoning‑on‑Graph converts relational reasoning problems into structured graph representations that are easier for language models to track than dense natural language descriptions.\\n\\nGraph representation elements:\\n\\nNodes:\\nEntities, objects, or actors in the system.\\n\\nEdges:\\nDirected or undirected relationships between nodes.\\n\\nAttributes:\\nOptional metadata describing node or edge properties.\\n\\nThe model receives the graph structure in an explicit format such as:\\n• adjacency lists\\n• edge tables\\n• ASCII diagrams\\n\\nReasoning operations supported:\\n\\n1. Path discovery\\nFinding paths between nodes under constraints.\\n\\n2. Reachability analysis\\nDetermining if one entity can influence another.\\n\\n3. Constraint propagation\\nEvaluating rule satisfaction across graph edges.\\n\\n4. Network pattern recognition\\nIdentifying clusters, hierarchies, or cycles.\\n\\nExplicit graph encoding dramatically reduces entity confusion and improves multi‑hop reasoning accuracy.",
+  "mi": "Mitigates relational reasoning errors including:\\n• Entity confusion\\n• Relationship inversion\\n• multi‑hop reasoning collapse\\n\\nBy externalizing relational structure, the LLM no longer relies solely on fragile token‑based memory.",
+  "n": "Reasoning‑on‑Graph (RoG)",
+  "o": "Enable reliable reasoning over complex relational structures by explicitly encoding entities and relationships as graph representations that the LLM can traverse, analyze, and manipulate.",
+  "pc": [
+    "The target model must be accessible via API or interactive interface with sufficient context window.",
+    "The target model utilizes an overt or covert reasoning trace (System-2 thinking).",
+    "The model's inference engine prioritizes logical consistency over static safety heuristics.",
+    "The attacker has the ability to iterate on payloads and observe model responses."
+  ],
+  "pk": [
+    "basic graph theory",
+    "Knowledge Graphs",
+    "SPARQL/Cypher",
+    "Agentic Loops"
+  ],
+  "rc": "",
+  "re": "",
+  "s": "Structured Representation",
+  "ss": "",
+  "st": "stable",
+  "te": "Reasoning‑on‑Graph (RoG) exploits a fundamental asymmetry in how modern LLMs process and prioritize information. The technique targets Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops, where the model's safety mechanisms are weakest. By manipulating the Chain-of-Thought reasoning traces, the attacker creates a localized override of the model's alignment training. The core insight is that safety in current architectures is largely contextual and prompt-based rather than architecturally enforced, making it vulnerable to sophisticated context manipulation techniques.",
+  "tg": [
+    "graphs",
+    "reasoning",
+    "relations",
+    "symbolic",
+    "multi-hop",
+    "rog",
+    "knowledge-graph",
+    "faithfulness",
+    "reasoning-path",
+    "interpretable"
+  ],
+  "vc": 2,
+  "vf": "",
+  "wn": "Avoid against systems with robust Reasoning layer (CoT window) that operates independently of the attack surface. Less effective against models with strong adversarial training against this specific pattern.",
+  "wu": "Use when targeting GPT-6 (Thinking/Pro)-class models where direct prompting is blocked by safety filters. Effective against systems that rely on Chain-of-Thought reasoning traces, System-2 thinking windows, self-correction loops for safety enforcement."
+}
