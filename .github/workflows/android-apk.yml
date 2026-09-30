@@ -36,6 +36,17 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK packages
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-36" \
+            "build-tools;36.0.0"
+
       - name: Install dependencies
         run: npm ci
 
@@ -55,7 +66,7 @@ jobs:
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
@@ -72,4 +83,6 @@ jobs:
           path: |
             android/build/reports/
             android/app/build/reports/
+            android/build/outputs/
+            android/app/build/outputs/
           if-no-files-found: ignore
