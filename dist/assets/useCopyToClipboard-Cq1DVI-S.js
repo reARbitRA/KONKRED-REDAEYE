@@ -1,0 +1,1 @@
+import{r}from"./index-B8OO11GW.js";function n(){const[o,e]=r.useState(!1),t=r.useCallback(async a=>{if(!(navigator!=null&&navigator.clipboard))return console.warn("Clipboard not supported"),!1;try{return await navigator.clipboard.writeText(a),e(!0),setTimeout(()=>e(!1),2e3),!0}catch(s){return console.warn("Copy failed",s),e(!1),!1}},[]);return{isCopied:o,copy:t}}export{n as u};

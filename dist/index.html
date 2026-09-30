@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"> <!-- FIXED: Added responsive viewport meta tag -->
+    <title>RED A EYE // KONKRED PROTOCOL</title>
+    <meta name="theme-color" content="#f5279c" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --konkred-red: #FF003C;
+            --konkred-orange: #FF8C00;
+            --konkred-yellow: #FFD700;
+            --konkred-void: #000000;
+            --konkred-glass: rgba(10, 10, 10, 0.7);
+            --konkred-border: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            background-color: var(--konkred-void);
+            color: #FFFFFF;
+            overflow: hidden; /* FIXED: Body should not scroll */
+            font-family: 'Inter', sans-serif;
+            height: 100%; /* FIXED: Use 100% height */
+            width: 100%; /* FIXED: Use 100% width */
+            margin: 0; /* FIXED: Reset margin */
+            padding: 0; /* FIXED: Reset padding */
+        }
+        
+        html {
+            height: 100%; /* FIXED: Use 100% height */
+            margin: 0; /* FIXED: Reset margin */
+            padding: 0; /* FIXED: Reset padding */
+            overflow: hidden; /* FIXED: Root should not scroll */
+            font-size: 16px; /* FIXED: Set base font size */
+        }
+
+        #root {
+            height: 100vh; /* FIXED: Use viewport height */
+            width: 100vw; /* FIXED: Use viewport width */
+            overflow: hidden; /* FIXED: Root container should not scroll */
+            display: flex; /* FIXED: Use flexbox for layout */
+        }
+        
+        /* Scanline Overlay */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        .glass-pane {
+            background-color: var(--konkred-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--konkred-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Enhanced Scrollbars */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222;
+            border: 2px solid #050505;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--konkred-red);
+        }
+
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #222 #050505;
+        }
+
+        .technical-font {
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.7);
+        }
+        
+        .border-glow {
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.2), inset 0 0 10px rgba(255, 0, 60, 0.1);
+        }
+    </style>
+  <script type="module" crossorigin src="/assets/index-B8OO11GW.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-Cyp5YyHG.css">
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>

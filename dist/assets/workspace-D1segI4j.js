@@ -1,0 +1,27 @@
+import{c as E,Y as p}from"./index-B8OO11GW.js";/**
+ * @license lucide-react v0.542.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const S=[["path",{d:"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z",key:"1rqfz7"}],["path",{d:"M14 2v4a2 2 0 0 0 2 2h4",key:"tnqrlb"}],["path",{d:"M8 13h2",key:"yr2amv"}],["path",{d:"M14 13h2",key:"un5t4a"}],["path",{d:"M8 17h2",key:"2yhykz"}],["path",{d:"M14 17h2",key:"10kma7"}]],y=E("file-spreadsheet",S),w={createGoogleDoc:async(o,c)=>{const t=await p();if(!t)throw new Error("Authentication required. Please sign in via Google.");const e=await fetch("https://docs.googleapis.com/v1/documents",{method:"POST",headers:{Authorization:`Bearer ${t}`,"Content-Type":"application/json"},body:JSON.stringify({title:o})});if(!e.ok){const r=await e.text();throw new Error(`Failed to create Google Doc: ${r}`)}const a=(await e.json()).documentId,d=`https://docs.google.com/document/d/${a}/edit`,s=[],n=`RED_REDTE_SYSTEMS SECURITY INTEL AUDIT
+======================================
+Report Title: ${o}
+Export Timestamp: ${new Date().toISOString()}
+
+AUDIT CODENAME: PROJECT_REDAEYE_STRESS
+
+1. OVERVIEW AND SUMMARY OF ALIGNMENT BREACHES
+----------------------------------------------
+Through rigorous adversarial alignment fuzzing and mechanistics stress tests, we have probed active language models using advanced semantic vectors and logical recursion.
+
+${c}
+
+2. COMPLIANCE ASSESSMENT & RECOMMENDATIONS
+----------------------------------------------
+* Recommended mitigation paths encompass strict instruction tuning, multi-turn system prompt anchors, and automated validation on key output tokens.
+* Ensure defensive boundaries are audited recursively at least every 48 hours.
+
+----------------------------------------------
+[CONFIDENTIAL - ADVERSARIAL COMPLIANCE RESEARCH ONLY]
+`;s.push({insertText:{location:{index:1},text:n}});const i=await fetch(`https://docs.googleapis.com/v1/documents/${a}:batchUpdate`,{method:"POST",headers:{Authorization:`Bearer ${t}`,"Content-Type":"application/json"},body:JSON.stringify({requests:s})});return i.ok||console.warn("Doc created, but failed to write initial styling batch.",await i.text()),{fileId:a,title:o,url:d}},createGoogleSheet:async(o,c)=>{const t=await p();if(!t)throw new Error("Authentication required. Please sign in via Google.");const e=await fetch("https://sheets.googleapis.com/v4/spreadsheets",{method:"POST",headers:{Authorization:`Bearer ${t}`,"Content-Type":"application/json"},body:JSON.stringify({properties:{title:o}})});if(!e.ok){const r=await e.text();throw new Error(`Failed to create Google Sheet: ${r}`)}const a=(await e.json()).spreadsheetId,d=`https://sheets.google.com/spreadsheets/d/${a}/edit`,n=[["Index","Technique Code","Trigger Strategy","Breach Success Rate (%)","Log Entropy Score","Threat Tier","Status"],...c],i=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${a}/values/Sheet1!A1:append?valueInputOption=USER_ENTERED`,{method:"POST",headers:{Authorization:`Bearer ${t}`,"Content-Type":"application/json"},body:JSON.stringify({values:n})});if(!i.ok){const r=await i.text();throw new Error(`Failed to populate Google Sheet cells: ${r}`)}return{fileId:a,title:o,url:d}},appendToGoogleSheet:async(o,c)=>{const t=await p();if(!t)throw new Error("Authentication required. Please sign in via Google.");const e=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${o}/values/Sheet1!A1:append?valueInputOption=USER_ENTERED`,{method:"POST",headers:{Authorization:`Bearer ${t}`,"Content-Type":"application/json"},body:JSON.stringify({values:c})});if(!e.ok){const h=await e.text();throw new Error(`Failed to append to Google Sheet: ${h}`)}return await e.json()},createGoogleSlide:async(o,c)=>{const t=await p();if(!t)throw new Error("Authentication required. Please sign in via Google.");const e=await fetch("https://slides.googleapis.com/v1/presentations",{method:"POST",headers:{Authorization:`Bearer ${t}`,"Content-Type":"application/json"},body:JSON.stringify({title:o})});if(!e.ok){const n=await e.text();throw new Error(`Failed to create Google Slide Presentation: ${n}`)}const a=(await e.json()).presentationId,d=`https://slides.google.com/presentation/d/${a}/edit`,s=[];if(c.forEach((n,i)=>{const r=`slide_page_${i}`;s.push({createSlide:{objectId:r,insertionIndex:i,slideLayoutReference:{predefinedLayout:"TITLE_AND_BODY"}}});const l=`title_textbox_${i}`,u=`body_textbox_${i}`;s.push({createShape:{objectId:l,shapeType:"TEXT_BOX",elementProperties:{pageObjectId:r,size:{width:{magnitude:600,unit:"PT"},height:{magnitude:60,unit:"PT"}},transform:{scaleX:1,scaleY:1,translateX:50,translateY:40,unit:"PT"}}}}),s.push({insertText:{objectId:l,text:n.title}}),s.push({createShape:{objectId:u,shapeType:"TEXT_BOX",elementProperties:{pageObjectId:r,size:{width:{magnitude:600,unit:"PT"},height:{magnitude:250,unit:"PT"}},transform:{scaleX:1,scaleY:1,translateX:50,translateY:120,unit:"PT"}}}});const g=n.bullets.map(T=>`• ${T}`).join(`
+`);s.push({insertText:{objectId:u,text:g}})}),s.length>0){const n=await fetch(`https://slides.googleapis.com/v1/presentations/${a}:batchUpdate`,{method:"POST",headers:{Authorization:`Bearer ${t}`,"Content-Type":"application/json"},body:JSON.stringify({requests:s})});n.ok||console.warn("Created presentation, but slide batch insertion failed.",await n.text())}return{fileId:a,title:o,url:d}}};export{y as F,w as W};
