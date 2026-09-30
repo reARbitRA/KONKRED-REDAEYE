@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Android Tablet Deployment — KONKRED REDAEYE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--panel:#0d1117;--text:#e6edf3;--muted:#8b949e;--accent:#f5279c;--orange:#f97516;--success:#2ea043;--border:rgba(255,255,255,.1)}
+*{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+body{background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(to right,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px}
+.wrap{max-width:1280px;margin:0 auto;padding:32px 24px 64px}.hero,.panel{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:24px}.hero{padding:32px}.k{font:700 12px 'JetBrains Mono',monospace;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}h1{font-size:52px;margin:10px 0 8px;letter-spacing:-.05em}.accent{color:var(--accent)}.sub{color:#c5d0f3;font-size:20px;line-height:1.6;max-width:900px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:22px}.card{grid-column:span 4;padding:22px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:20px}.card h3{margin:10px 0;font-size:22px}.card p{margin:0;color:#bdd0f2;line-height:1.65}.panel{margin-top:22px;padding:24px}.table{width:100%;border-collapse:collapse}.table td,.table th{padding:14px 10px;border-top:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}.ok{color:var(--success);font-weight:800}.no{color:#f85149;font-weight:800}.warn{color:var(--orange);font-weight:800}.mono{font-family:'JetBrains Mono',monospace}
+@media (max-width:900px){.card{grid-column:span 12}h1{font-size:38px}.sub{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="k">Android Tablet Deployment Kit</div>
+    <h1>KONKRED <span class="accent">REDAEYE</span> on Android</h1>
+    <div class="sub">This deployment pack tells the truth: the repository is Android-preparable, but a native APK is not committed yet. The fastest live path is PWA over HTTPS; the proper native path begins once Android SDK + Gradle are present.</div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="k">Fast path</div><h3>PWA install</h3><p>Use the built web app over HTTPS and install to the tablet home screen for immediate testing.</p></div>
+    <div class="card"><div class="k">Native path</div><h3>Capacitor build</h3><p>Use the provided script to generate the Android project and build a debug APK when SDK tooling is available.</p></div>
+    <div class="card"><div class="k">Device truth</div><h3>No fake guarantees</h3><p>Real Samsung S6 verification is still required for auth popup behavior, viewport handling, and memory footprint.</p></div>
+  </div>
+
+  <div class="panel">
+    <h2>Readiness Matrix</h2>
+    <table class="table">
+      <tr><th>Capability</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>Capacitor config</td><td class="ok">YES</td><td><span class="mono">capacitor.config.ts</span> exists</td></tr>
+      <tr><td>Android project directory committed</td><td class="no">NO</td><td><span class="mono">android/</span> not present in repo</td></tr>
+      <tr><td>APK committed</td><td class="no">NO</td><td>No APK artifact in current repository</td></tr>
+      <tr><td>PWA install route</td><td class="ok">YES</td><td>Works once hosted over HTTPS</td></tr>
+      <tr><td>Build script supplied</td><td class="ok">YES</td><td><span class="mono">BUILD_ANDROID_APK.sh</span></td></tr>
+      <tr><td>Bug-free guarantee</td><td class="warn">NO</td><td>Must be verified on the actual tablet</td></tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
