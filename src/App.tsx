@@ -9,6 +9,13 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [localMode, setLocalMode] = useState<boolean>(() => {
+    try {
+      return globalThis.localStorage?.getItem('redaeye-local-mode') === '1';
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
     return onAuthStateChanged(auth, (nextUser) => {
@@ -23,6 +30,14 @@ function App() {
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Authentication failed.');
     }
+  }, []);
+
+  const handleEnterLocalMode = useCallback(() => {
+    try {
+      globalThis.localStorage?.setItem('redaeye-local-mode', '1');
+    } catch {}
+    setLocalMode(true);
+    setIsAuthLoading(false);
   }, []);
 
   return (
@@ -52,14 +67,16 @@ function App() {
           },
         }}
       />
-      {isAuthLoading ? (
+      {localMode ? (
+        <Dashboard />
+      ) : isAuthLoading ? (
         <div className="h-full w-full flex items-center justify-center font-mono text-xs uppercase tracking-widest text-text-secondary">
           Restoring authenticated session...
         </div>
       ) : user ? (
         <Dashboard />
       ) : (
-        <LoginScreen onLogin={handleLogin} />
+        <LoginScreen onLogin={handleLogin} onEnterLocalMode={handleEnterLocalMode} />
       )}
       <div id="scroll-debug" style={{position:'fixed', bottom:'4px', right:'4px', fontSize:'10px', color:'rgba(255,255,255,0.1)', zIndex:9999, pointerEvents:'none'}}>
         UI Debug Pass Complete ✓

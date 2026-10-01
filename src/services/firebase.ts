@@ -2,6 +2,8 @@ import { initializeApp, getApps } from 'firebase/app';
 import { 
   getAuth, 
   signInWithPopup, 
+  signInWithRedirect,
+  getRedirectResult, 
   GoogleAuthProvider, 
   onAuthStateChanged, 
   User 
@@ -27,6 +29,21 @@ provider.addScope('https://www.googleapis.com/auth/presentations');
 let isSigningIn = false;
 let cachedAccessToken: string | null = null;
 
+function shouldUseRedirectAuth(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent.toLowerCase();
+  return /android|iphone|ipad|mobile/.test(ua);
+}
+
+void getRedirectResult(auth).then((result) => {
+  const credential = GoogleAuthProvider.credentialFromResult(result);
+  if (credential?.accessToken) {
+    cachedAccessToken = credential.accessToken;
+  }
+}).catch((error) => {
+  console.warn('Redirect auth result unavailable:', error);
+});
+
 // Initialize auth state listener
 export const initAuth = (
   onAuthSuccess?: (user: User, token: string) => void,
@@ -51,6 +68,12 @@ export const initAuth = (
 export const googleSignIn = async (): Promise<{ user: User; accessToken: string } | null> => {
   try {
     isSigningIn = true;
+
+    if (shouldUseRedirectAuth()) {
+      await signInWithRedirect(auth, provider);
+      return null;
+    }
+
     const result = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
     if (!credential?.accessToken) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, ShieldAlert, Zap, Lock, Cpu, Activity } from 'lucide-react';
 
-export const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
+export const LoginScreen: React.FC<{ onLogin: () => void; onEnterLocalMode: () => void }> = ({ onLogin, onEnterLocalMode }) => {
     const [status, setStatus] = useState('AWAITING_UPLINK');
     const [progress, setProgress] = useState(0);
     const [isBooting, setIsBooting] = useState(false);
@@ -101,15 +101,23 @@ export const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                                 </div>
                             </div>
 
-                            <motion.button
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={handleIntrude}
-                                className="w-full bg-danger hover:bg-red-700 text-white py-4 rounded-sm font-black technical-font uppercase tracking-widest flex items-center justify-center gap-3 shadow-glow-danger transition-colors group"
-                            >
-                                <Zap size={18} className="group-hover:animate-bounce" />
-                                INTRUDE_SYSTEM_CORE
-                            </motion.button>
+                            <div className="space-y-3">
+                                <motion.button
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={handleIntrude}
+                                    className="w-full bg-danger hover:bg-red-700 text-white py-4 rounded-sm font-black technical-font uppercase tracking-widest flex items-center justify-center gap-3 shadow-glow-danger transition-colors group"
+                                >
+                                    <Zap size={18} className="group-hover:animate-bounce" />
+                                    INTRUDE_SYSTEM_CORE
+                                </motion.button>
+                                <button
+                                    onClick={onEnterLocalMode}
+                                    className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-text-primary py-3 rounded-sm font-black technical-font uppercase tracking-widest flex items-center justify-center gap-3 transition-colors"
+                                >
+                                    LOCAL_OFFLINE_MODE
+                                </button>
+                            </div>
                         </div>
                     ) : (
                         <div className="w-full space-y-4">
