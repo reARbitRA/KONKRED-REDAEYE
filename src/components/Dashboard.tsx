@@ -4,6 +4,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import { Sidebar } from './sidebar/Sidebar';
 import { motion } from 'framer-motion';
 import { PerformanceMonitor } from './shared/PerformanceMonitor';
+import { ErrorBoundary } from './shared/ErrorBoundary';
 import { useSystemLogs } from '../contexts/SystemLogContext';
 import { jsPDF } from 'jspdf';
 import { Download } from 'lucide-react';
@@ -195,6 +196,7 @@ const Dashboard: React.FC = () => {
   }, [activeView, setActiveView]);
 
   const renderView = () => (
+    <ErrorBoundary>
     <Suspense fallback={
       <div className="flex min-h-[40vh] flex-1 items-center justify-center font-mono text-xs uppercase tracking-widest text-text-secondary" role="status" aria-live="polite">
         Loading workspace module...
@@ -243,6 +245,7 @@ const Dashboard: React.FC = () => {
     }
       })()}
     </Suspense>
+    </ErrorBoundary>
   );
 
   const handleIntroComplete = useCallback(() => {

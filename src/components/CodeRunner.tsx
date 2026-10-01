@@ -69,6 +69,13 @@ execute_exploit().then(console.log);`);
     const [isExportingDoc, setIsExportingDoc] = useState(false);
     const [isSyncingSheet, setIsSyncingSheet] = useState(false);
     const [showVisualizer, setShowVisualizer] = useState(false);
+    const [isLocalMode, setIsLocalMode] = useState<boolean>(() => {
+        try {
+            return globalThis.localStorage?.getItem('redaeye-local-mode') === '1';
+        } catch {
+            return false;
+        }
+    });
 
     const isRunningRef = useRef(false);
     const outputEndRef = useRef<HTMLDivElement>(null);
@@ -230,19 +237,33 @@ func main() {
 
     // Track user identity
     useEffect(() => {
-        const unsubscribe = initAuth(
-            (user) => {
-                setCurrentUser(user);
-            },
-            () => {
-                setCurrentUser(null);
-            }
-        );
+        if (isLocalMode) {
+            setCurrentUser(null);
+            return () => {
+                isRunningRef.current = false;
+            };
+        }
+
+        let unsubscribe = () => {};
+        try {
+            unsubscribe = initAuth(
+                (user) => {
+                    setCurrentUser(user);
+                },
+                () => {
+                    setCurrentUser(null);
+                }
+            );
+        } catch (error) {
+            console.error('CODERUNNER_AUTH_INIT_FAILURE', error);
+            setCurrentUser(null);
+        }
+
         return () => {
             isRunningRef.current = false;
             unsubscribe();
         };
-    }, []);
+    }, [isLocalMode]);
 
     const scrollToBottom = () => {
         outputEndRef.current?.scrollIntoView({ behavior: "smooth" });
