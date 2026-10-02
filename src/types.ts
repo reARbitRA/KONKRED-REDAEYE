@@ -237,8 +237,10 @@ export interface SectionMetadata {
     tags: string[];
 }
 
+export type StrategyRef = ExploitStrategy | string;
+
 export interface TacticalRecommendation {
-    strategy: ExploitStrategy;
+    strategy: StrategyRef;
     reasoning: string;
     estimatedEfficacy: number;
 }
@@ -292,7 +294,7 @@ export interface Message {
   isStreaming?: boolean;
   groundingChunks?: GroundingChunk[];
   // Metadata for archival
-  strategy?: ExploitStrategy | 'RAW';
+  strategy?: StrategyRef | 'RAW';
   settings?: PhaseSettings;
   intensity?: number;
   rawInput?: string;
@@ -313,7 +315,7 @@ export interface ExploitResult {
   success: boolean;
   generatedPrompt?: string;
   vectorIntensity: number;
-  strategy?: ExploitStrategy;
+  strategy?: StrategyRef;
 }
 
 export interface FusionAnalysisResult {
@@ -438,7 +440,7 @@ export interface LabTestRun {
     results: ExploitResult[];
     successRate: number;
     templateType: TemplateType;
-    strategy: ExploitStrategy;
+    strategy: StrategyRef;
 }
 
 export interface EroticaKinkLabResult {

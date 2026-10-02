@@ -1,4 +1,4 @@
-import { ExploitResult, PhaseSettings, ExploitStrategy } from '../types';
+import { ExploitResult, PhaseSettings, StrategyRef } from '../types';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -11,7 +11,7 @@ export interface ForensicPoC {
     id: string;
     timestamp: string;
     targetModel: string;
-    strategy: ExploitStrategy;
+    strategy: StrategyRef;
     baseSettings: PhaseSettings;
     vectorIntensity: number;
     rawTargetQuery: string;
@@ -25,7 +25,7 @@ export class ForensicReportGenerator {
     public static async generatePoC(
         targetModel: string,
         targetQuery: string,
-        strategy: ExploitStrategy,
+        strategy: StrategyRef,
         result: ExploitResult
     ): Promise<ForensicPoC> {
         const timestamp = new Date().toISOString();
