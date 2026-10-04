@@ -83,6 +83,11 @@ export interface ModelInfo {
     modalities: ('Text' | 'Image' | 'Audio' | 'Video' | 'Code')[];
     inputTokenLimit?: number;
     outputTokenLimit?: number;
+    owner?: string;
+    family?: string;
+    contextWindow?: number;
+    capabilities?: string[];
+    source?: 'provider-scan' | 'fallback';
 }
 
 export type ExploitStrategy = 

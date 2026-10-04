@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Settings, Key, ShieldCheck, Activity, Trash2, 
@@ -33,6 +33,7 @@ export const SettingsPage: React.FC = () => {
   const [isValidating, setIsValidating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [tierFilter, setTierFilter] = useState<'ALL' | ModelInfo['tier']>('ALL');
 
   const handleAddKey = async () => {
     if (!apiKeyInput.trim()) return;
@@ -57,10 +58,14 @@ export const SettingsPage: React.FC = () => {
     }
   };
 
-  const filteredModels = availableModels.filter(m => 
-    m.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    m.id.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+
+  const filteredModels = useMemo(() => availableModels.filter(m => {
+    if (tierFilter !== 'ALL' && m.tier !== tierFilter) return false;
+    return m.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      m.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (m.family || '').toLowerCase().includes(searchQuery.toLowerCase());
+  }), [availableModels, searchQuery, tierFilter]);
+
 
   return (
     <div className="flex-1 flex flex-col gap-6 p-6 min-h-0"> {/* FIXED: Removed overflow-y-auto, changed h-full to flex-1 min-h-0 */}
@@ -72,7 +77,7 @@ export const SettingsPage: React.FC = () => {
         </h1>
         <p className="text-xs text-text-secondary font-mono max-w-2xl">
           Manage LLM provider nodes, API credentials, and active model routing. 
-          All keys are stored locally in your browser's encrypted storage.
+          Keys remain local to this browser session, and model selection should come from live provider scans rather than baked-in shortlists.
         </p>
       </div>
 
@@ -127,7 +132,7 @@ export const SettingsPage: React.FC = () => {
                     disabled={isValidating || !apiKeyInput.trim()}
                     className="bg-accent text-white px-4 rounded-sm font-black text-[10px] uppercase tracking-widest disabled:opacity-50"
                   >
-                    {isValidating ? '...' : 'LINK'}
+                    {isValidating ? '...' : 'SCAN & LINK'}
                   </motion.button>
                 </div>
                 {error && <p className="text-[10px] text-danger mt-2 font-mono flex items-center gap-1"><AlertCircle size={10}/> {error}</p>}
@@ -160,15 +165,25 @@ export const SettingsPage: React.FC = () => {
             <h3 className="text-sm font-black technical-font text-text-secondary uppercase tracking-widest flex items-center gap-2">
               <Cpu size={14} /> Model_Substrate_Registry
             </h3>
-            <div className="relative">
+            <div className="flex items-center gap-2">
+            <div className="relative flex-1">
               <Search size={12} className="absolute left-2 top-1/2 -translate-y-1/2 text-text-secondary" />
               <input 
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search models..."
+                placeholder="Search scanned models..."
                 className="bg-primary/40 border border-border-primary rounded-sm pl-7 pr-2 py-1 text-[10px] font-mono text-white outline-none focus:border-accent w-48"
               />
+            </div>
+            <select value={tierFilter} onChange={(e) => setTierFilter(e.target.value as any)} className="bg-primary/40 border border-border-primary rounded-sm px-2 py-1 text-[10px] font-mono text-white outline-none focus:border-accent">
+              <option value="ALL">ALL TIERS</option>
+              <option value="Free">FREE</option>
+              <option value="Paid">PAID</option>
+              <option value="Standard">STANDARD</option>
+              <option value="Experimental">EXPERIMENTAL</option>
+              <option value="Unknown">UNKNOWN</option>
+            </select>
             </div>
           </div>
 
@@ -191,7 +206,11 @@ export const SettingsPage: React.FC = () => {
                       {isSelected && <ShieldCheck size={12} className="text-accent" />}
                     </div>
                     <span className="text-sm font-mono text-white mb-1 truncate">{model.name}</span>
-                    <div className="flex gap-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-[8px] px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-text-secondary font-mono">{model.tier}</span>
+                      {model.family && <span className="text-[8px] px-2 py-0.5 rounded-full bg-accent/10 border border-accent/20 text-accent-light font-mono">{model.family}</span>}
+                    </div>
+                    <div className="flex gap-1 flex-wrap">
                       {model.modalities.map(m => (
                         <span key={m} className="text-[8px] bg-black/40 px-1 rounded-sm text-text-secondary font-mono">{m}</span>
                       ))}
@@ -199,6 +218,7 @@ export const SettingsPage: React.FC = () => {
                   </motion.button>
                 );
               })}
+              <div className="col-span-full text-[10px] font-mono uppercase tracking-widest text-text-secondary/70 mb-2">LIVE MODEL INVENTORY: {filteredModels.length} visible / {availableModels.length} discovered</div>
               {filteredModels.length === 0 && (
                 <div className="col-span-full flex flex-col items-center justify-center py-20 opacity-30">
                   <Cpu size={48} className="mb-4" />
